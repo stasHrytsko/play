@@ -88,7 +88,81 @@ npm run typecheck && npm run lint && npm test && npm run build && npm run e2e
 
 `npm run check` runs all five. All must pass before declaring anything done.
 
-## Workflow
+## New game
+
+Making `games/<slug>/` a real, buildable game is one pass, not several — end
+of it, `npm run check` is green, levels included. There is no separate
+"levels" step to leave for later.
+
+1. Read the task's spec/rules carefully. If anything a rule in §4 (decision
+   table), §5 (win), §6 (loss) of the rules-template format would need is
+   missing or ambiguous, stop and ask — do not invent it (same rule as
+   editing an existing game's mechanic).
+2. Copy `games/tap-targets/` as the starting skeleton — folder structure,
+   not content: `game.config.ts`, `main.ts`, `index.html`, `rules.md`,
+   `mechanic/{index.ts, engine/, levels/, render/}`, `tests/{*.test.ts, e2e/}`.
+   `games/tap-targets/mechanic/index.ts` shows the exact `MechanicHost`
+   wiring; `main.ts` shows the three-line `bootShell(GAME, createMechanicHost())`
+   entry every game uses unchanged.
+3. `game.config.ts`: new `id`/`title`/`tagline`/`onboarding` from the rules.
+   `levelCount: 5` — never anything else (`src/game-definition.ts` explains
+   why). `analytics.postHogProjectToken`/`postHogHost` — copy from
+   `games/tap-targets/game.config.ts` verbatim, every game shares the one
+   PostHog project. `feedback.web3formsAccessKey` — copy the placeholder
+   unless a real key has been provided for this game specifically.
+4. `mechanic/engine/`: pure functions implementing the rules' decision table
+   exactly — no DOM, no Phaser, no `fetch`, no `ui-kit`, no `render-kit` (the
+   linter enforces this, see Boundaries). This is where the rules document
+   becomes code; if a rule can't be written as a test per the rules-template
+   standard, that's the ambiguity to raise in step 1, not to guess past here.
+5. `mechanic/levels/`: `levels.json` with real content for all 5 levels
+   (Способ А or Б from `docs/rules-template.md` §8 — whichever the rules
+   used), plus a `loadLevels.ts` that validates the pack's length against
+   `GAME.levelCount` on import, same pattern as `games/tap-targets`'s. A
+   build that doesn't typecheck/build because `levels.json` is still a stub
+   is the expected state mid-step-5, not a bug — but the game is not done
+   until it's real content matching the difficulty curve the rules describe
+   (`docs/rules-template.md` §9), not a placeholder.
+6. `mechanic/render/`: `theme.ts` — copy `games/tap-targets/mechanic/render/theme.ts`
+   as-is (it calls `ui-kit`'s `readUiTheme()`, nothing here is game-specific).
+   The scene itself: build every animation from `render-kit` (`punch`,
+   `invalidShake`, `successFlash`, `fadeCollapse`, `cameraShake`, `moveTo`)
+   and every DOM overlay/HUD element from `ui-kit`, rather than writing a new
+   tween or a new button. If neither kit has what a moment in this game
+   needs, that is a "does this become a 7th render-kit effect / a new
+   ui-kit component" decision (Boundaries: add deliberately) — raise it,
+   don't write a one-off inline version to route around asking.
+7. `tests/`: unit tests for the engine (pure, `environment: 'node'`, picked
+   up automatically by `vitest.config.ts`'s `games/*/tests/**/*.test.ts`
+   glob — nothing to register), plus `tests/e2e/*.spec.ts` modelled on
+   `games/tap-targets/tests/e2e/` (`playthrough.spec.ts` intercepts the real
+   PostHog/Web3Forms network calls; there is no test-only signal sink).
+8. Nothing to register anywhere else — `vite.config.ts` globs every
+   `games/*/index.html` automatically, `playwright.config.ts` globs every
+   `games/*/tests/e2e/**/*.spec.ts` automatically.
+9. `npm run check`. All five must pass. Report failures with their output —
+   never describe a red suite as green.
+
+## Kill-criterion (bot check)
+
+Only for a game whose mechanic has a solver — a definable best-play
+algorithm for the engine, not "a bot that plays okay". Most of the 30/30
+games don't have one; check the game's entry in the concept portfolio before
+assuming it needs this at all. If it doesn't, skip this section entirely —
+don't add a bot for a game that was never meant to have one.
+
+When it does apply: simulate on the real `mechanic/engine` — a random-play
+bot and a greedy/solver-play bot, on the real `levels.json` from step 5
+above, not a hand-picked easy case. Compare the metric the kill-criterion
+document defines (win rate, survival rate — whatever the specific game's
+rules named) against the threshold set for that game. This is deliberately
+not built as reusable infrastructure ahead of time (no `scripts/greedy-check.ts`
+exists yet) — build the simulation for the first game that actually has a
+solver, learn from that one what's actually shared across games with
+solvers, and only generalize it once there is a second real case to compare
+against, not from guessing ahead of either.
+
+
 
 Before coding: read the task, `games/<slug>/rules.md` (or `docs/decisions.md`
 D-011 if the task is about the shell itself) and `src/shell-contract.ts`,
