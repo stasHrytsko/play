@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { fadeCollapse } from '../../../../src/render-kit/index.ts';
 import { tapEngine } from '../engine/tapEngine.ts';
 import type { Level, LevelState } from '../engine/types.ts';
 import type { SceneTheme } from './theme.ts';
@@ -101,13 +102,9 @@ export class LevelScene extends Phaser.Scene {
     const circle = this.#circles.get(targetId);
     if (circle !== undefined && !this.#state.remaining.includes(targetId)) {
       circle.disableInteractive();
-      this.tweens.add({
-        targets: circle,
-        scale: 0,
-        alpha: 0,
-        duration: 140,
-        ease: 'Quad.easeIn',
-      });
+      // destroy: false — #layout() on resize still looks this circle up by
+      // id and repositions it; scaled to zero is invisible without being gone.
+      void fadeCollapse(circle, { destroy: false });
     }
 
     this.#options.onStateChange(this.#state);
