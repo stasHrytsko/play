@@ -7,17 +7,19 @@
  */
 export interface SceneTheme {
   background: number;
-  target: number;
+  targetPalette: readonly number[];
   targetStroke: number;
-  cleared: number;
+  targetShadow: number;
+  targetHighlight: number;
   text: string;
 }
 
 const FALLBACK: SceneTheme = {
   background: 0xf8f7f3,
-  target: 0xd9785f,
-  targetStroke: 0xc96851,
-  cleared: 0xd9d6cf,
+  targetPalette: [0x7da7d9, 0x8fbb95, 0xe0c16b, 0xdf8ca0, 0xb9a7d9, 0xd9785f],
+  targetStroke: 0x2f2f2f,
+  targetShadow: 0x2f2f2f,
+  targetHighlight: 0xffffff,
   text: '#6f6f6b',
 };
 
@@ -32,10 +34,18 @@ export function readTheme(root: Element = document.documentElement): SceneTheme 
   const token = (name: string): string => styles.getPropertyValue(name);
 
   return {
-    background: hexToNumber(token('--surface'), FALLBACK.background),
-    target: hexToNumber(token('--accent'), FALLBACK.target),
-    targetStroke: hexToNumber(token('--accent-hover'), FALLBACK.targetStroke),
-    cleared: hexToNumber(token('--border'), FALLBACK.cleared),
+    background: hexToNumber(token('--surface-soft'), FALLBACK.background),
+    targetPalette: [
+      hexToNumber(token('--piece-blue'), FALLBACK.targetPalette[0] ?? 0x7da7d9),
+      hexToNumber(token('--piece-sage'), FALLBACK.targetPalette[1] ?? 0x8fbb95),
+      hexToNumber(token('--piece-mustard'), FALLBACK.targetPalette[2] ?? 0xe0c16b),
+      hexToNumber(token('--piece-rose'), FALLBACK.targetPalette[3] ?? 0xdf8ca0),
+      hexToNumber(token('--piece-lavender'), FALLBACK.targetPalette[4] ?? 0xb9a7d9),
+      hexToNumber(token('--accent'), FALLBACK.targetPalette[5] ?? 0xd9785f),
+    ],
+    targetStroke: hexToNumber(token('--text'), FALLBACK.targetStroke),
+    targetShadow: hexToNumber(token('--text'), FALLBACK.targetShadow),
+    targetHighlight: FALLBACK.targetHighlight,
     text: token('--text-muted').trim() || FALLBACK.text,
   };
 }
