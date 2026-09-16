@@ -244,3 +244,44 @@ new layout and the rating flow but not executed — no headless browser was
 available where this fork was built. `npm run typecheck`, `npm run lint`,
 `npm test` (67 tests) and `npm run build` all pass; `npm run e2e` needs a
 local run before it's trusted.
+
+---
+
+## D-012 — render-kit: six effects, no new dependency, 2026-09-16
+
+**Decision:** `src/render-kit/` ships six Phaser tween helpers — `punch`,
+`invalidShake`, `successFlash`, `fadeCollapse`, `cameraShake`, `moveTo` —
+hand-written on Phaser's own Tween/Camera API. Every mechanic's render
+module reaches for these instead of writing its own tween.
+
+**Why six, not five:** the original plan (05 — Архитектура шаблона) named
+five in-place effects. Reading the 30/30 canonical shelf (Google Sheet,
+29 concepts) before writing any code showed most concepts move something
+from A to B, not just in place — a screw into a container, a car into a
+slot, a branch tip advancing, water along a pipe segment. `moveTo` is the
+sixth, the same kind of primitive as the other five (a thin wrapper around
+one Phaser tween), added on survey evidence rather than guessed.
+
+**Why not `phaser4-rex-plugins`:** researched, not adopted. It's compatible
+with the installed Phaser 4.2.1 and its individual effect functions (PopUp,
+ScaleDownDestroy, ShakePosition, Fade) can be imported standalone without
+the plugin-registration system — better than D-002's experience with a
+different, version-lagging plugin. But it's ~156 MB unpacked, the deep
+import paths (`phaser4-rex-plugins/plugins/...`) aren't a documented stable
+surface, and the effects themselves are 10-20 lines each. Its parameter
+naming (`duration`, `magnitude`, `ease`) was kept as a reference for our own
+API, not the dependency.
+
+**`successFlash` requires a `Tintable` target.** Tint is a Sprite/Image
+feature; Phaser Shapes (Arc, Rectangle — what the stub mechanic uses) don't
+have it. Calling `successFlash` on one is a compile error, not a silent
+no-op — a mechanic using shapes reaches for `punch` instead.
+
+**Every effect returns `Promise<void>`**, resolving when visually done, so
+a render module can `await` a sequence instead of nesting `onComplete`
+callbacks. A future cascade helper (chained flashes with a stagger) can be
+built on top of these without needing a seventh primitive.
+
+**Dogfooded, not just typechecked:** `games/tap-targets/mechanic/render/LevelScene.ts`'s
+one hand-written inline tween now calls `fadeCollapse`. Same visual result;
+proves the API against real usage.
