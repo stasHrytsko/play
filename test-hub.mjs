@@ -4,12 +4,6 @@ import vm from 'node:vm';
 
 const stored = new Map();
 const listeners = {};
-const cards = Array.from({ length: 30 }, (_, index) => ({ id: index + 1 }));
-const appended = [];
-const grid = {
-  querySelectorAll: () => cards,
-  appendChild: (card) => appended.push(card)
-};
 const upcomingLabel = { textContent: 'Next release' };
 const upcoming = {
   dataset: { releaseDate: '2026-10-01' },
@@ -26,7 +20,6 @@ const document = {
   body: { dataset: {} },
   addEventListener: (type, listener) => { listeners[type] = listener; },
   querySelector: (selector) => ({
-    '[data-shuffle-grid]': grid,
     '[data-upcoming-card]': upcoming,
     '[data-analytics-toggle]': analyticsToggle
   })[selector] || null
@@ -64,9 +57,8 @@ listeners.DOMContentLoaded();
 const attribution = JSON.parse(stored.get('pvp_attribution_v1'));
 if (attribution.firstTouch.utm_source !== 'linkedin') throw new Error('UTM source was not persisted');
 if (attribution.firstTouch.utm_medium !== 'social') throw new Error('UTM medium was not persisted');
-if (appended.length !== 30) throw new Error(`Expected 30 shuffled cards, got ${appended.length}`);
 if (typeof window.pvpTrack !== 'function') throw new Error('Tracking adapter was not exposed');
 if (!analyticsToggle.hidden) throw new Error('Analytics control must stay hidden until PostHog is configured');
 if (upcomingLabel.textContent !== 'Tomorrow') throw new Error('Upcoming card was not labelled Tomorrow');
 
-console.log('hub behavior checks passed: UTM persistence, 30-card shuffle, Tomorrow label, tracking adapter');
+console.log('hub behavior checks passed: UTM persistence, Tomorrow label, tracking adapter');

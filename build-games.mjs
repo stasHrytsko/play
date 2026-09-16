@@ -43,7 +43,7 @@ const addDays = (iso, offset) => {
 };
 const scheduledDate = (game) => game.date || addDays(data.project.startDate, game.day - 1);
 
-// Cards ship in chronological source order; hub.js shuffles them on every page load.
+// Cards ship in chronological source order and stay that way on the page.
 function logCard(game) {
   const date = scheduledDate(game);
   if (game.status !== 'published') {

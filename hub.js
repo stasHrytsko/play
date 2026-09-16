@@ -118,19 +118,6 @@
 
   window.pvpTrack = track;
 
-  function shuffleCards() {
-    const grid = document.querySelector('[data-shuffle-grid]');
-    if (!grid) return;
-    const cards = Array.from(grid.querySelectorAll('[data-shuffle-card]'));
-    for (let index = cards.length - 1; index > 0; index -= 1) {
-      const random = new Uint32Array(1);
-      window.crypto.getRandomValues(random);
-      const swapWith = random[0] % (index + 1);
-      [cards[index], cards[swapWith]] = [cards[swapWith], cards[index]];
-    }
-    cards.forEach((card) => grid.appendChild(card));
-  }
-
   function madridDateParts(date = new Date()) {
     const formatter = new Intl.DateTimeFormat('en-GB', {
       timeZone: config.timeZone || 'Europe/Madrid',
@@ -192,7 +179,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    shuffleCards();
     updateUpcomingCard();
     setupAnalyticsControl();
     setupTracking();

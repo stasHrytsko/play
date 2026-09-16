@@ -36,14 +36,15 @@ status from `scheduled` to `published`, mark the next concept as
 `scheduled`, and run the generator.
 
 Run `node test-hub.mjs` to check the client-side hub behavior (UTM
-persistence, card shuffle, the "Tomorrow" label, the tracking adapter)
+persistence, the "Tomorrow" label, the tracking adapter)
 without a browser.
 
 ## Analytics
 
-`hub.js` shuffles the prototype cards on each visit, labels a release as
-"Tomorrow" when appropriate, persists first/latest UTM attribution in local
-storage and attaches that attribution to every custom event.
+`hub.js` labels a release as "Tomorrow" when appropriate, persists
+first/latest UTM attribution in local storage and attaches that attribution
+to every custom event. Cards render in schedule order (Day 01 → Day 30), not
+shuffled.
 
 PostHog is intentionally inactive until `projectToken` and `apiHost` are
 filled in `analytics-config.js`. Use the Project API token from PostHog
@@ -55,7 +56,7 @@ recording are disabled; the hub emits explicit project events only.
 - `index.html` — the hub: hero, upcoming release, prototype log grid.
 - `games.json` — source of truth for the schedule, concepts, links, metrics and feedback.
 - `analytics-config.js` — launch date, timezone and PostHog client configuration.
-- `hub.js` — card shuffle, upcoming-date logic, UTM attribution, analytics controls and event capture.
+- `hub.js` — upcoming-date logic, UTM attribution, analytics controls and event capture.
 - `build-games.mjs` — dependency-free generator for the log grid and per-prototype pages.
 - `test-hub.mjs` — headless behavior check for `hub.js`.
 - `styles.css` — shared visual design, carried over from hrytsko.com for a consistent brand.
