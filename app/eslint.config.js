@@ -52,6 +52,7 @@ export default tseslint.config(
             { group: ['phaser', 'phaser/*'], message: 'engine must stay pure — no Phaser imports.' },
             { group: ['**/render/**'], message: 'engine must not depend on rendering.' },
             { group: ['**/render-kit/**'], message: 'engine must not depend on rendering.' },
+            { group: ['**/ui-kit/**'], message: 'engine must stay pure — ui-kit touches the DOM.' },
             { group: ['**/shell/**'], message: 'engine must not depend on the shell.' },
             { group: ['@capacitor/*'], message: 'engine must stay pure — no platform imports.' },
           ],
@@ -123,7 +124,33 @@ export default tseslint.config(
               group: ['**/mechanic/**'],
               message: 'render-kit must not depend on any specific game — mechanic/render imports render-kit, never the reverse.',
             },
+            { group: ['**/ui-kit/**'], message: 'render-kit is Phaser-only — ui-kit is a separate, DOM-only kit.' },
             { group: ['@capacitor/*'], message: 'render-kit must stay platform-agnostic — no Capacitor imports.' },
+          ],
+        },
+      ],
+    },
+  },
+
+  {
+    // ui-kit is a DOM component library, not a game: no Phaser, no coupling
+    // to a specific game's mechanic, no coupling to the shell. Not consumed
+    // by anything yet — see docs/decisions.md for the open question of
+    // whether src/shell/** adopts it or keeps its own dom.ts/button().
+    files: ['src/ui-kit/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            { group: ['phaser', 'phaser/*'], message: 'ui-kit is DOM-only — no Phaser imports.' },
+            { group: ['**/render-kit/**'], message: 'ui-kit is DOM-only — render-kit is a separate, Phaser-only kit.' },
+            { group: ['**/shell/**'], message: 'ui-kit must not depend on the shell.' },
+            {
+              group: ['**/mechanic/**'],
+              message: 'ui-kit must not depend on any specific game — a game imports ui-kit, never the reverse.',
+            },
+            { group: ['@capacitor/*'], message: 'ui-kit must stay platform-agnostic — no Capacitor imports.' },
           ],
         },
       ],
