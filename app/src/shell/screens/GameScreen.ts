@@ -1,4 +1,4 @@
-import { button, el } from '../dom.ts';
+import { uiButton, uiEl } from '../../ui-kit/index.ts';
 import type { Screen } from '../Screen.ts';
 
 export interface GameScreenHandlers {
@@ -14,16 +14,18 @@ export interface GameScreen extends Screen {
 }
 
 export function GameScreen(levelIndex: number, handlers: GameScreenHandlers): GameScreen {
-  const stats = el('span', { className: 'game-header__stats', testId: 'game-stats' });
-  const surface = el('div', { className: 'game-surface', testId: 'game-surface' });
+  const stats = uiEl('span', { className: 'game-header__stats', testId: 'game-stats' });
+  const surface = uiEl('div', { className: 'game-surface', testId: 'game-surface' });
 
-  const element = el('section', { className: 'screen screen--game', testId: 'game-screen' }, [
-    el('header', { className: 'game-header' }, [
-      button({
-        text: `← УР. ${String(levelIndex + 1)}`,
+  const element = uiEl('section', { className: 'screen screen--game', testId: 'game-screen' }, [
+    uiEl('header', { className: 'game-header' }, [
+      uiButton({
+        label: `← УР. ${String(levelIndex + 1)}`,
         variant: 'ghost',
-        block: false,
-        className: 'game-header__back',
+        // Same intent as the old .game-header__back CSS (removed): a smaller
+        // button so it doesn't compete with the level counter next to it.
+        // ui-kit's own compact modifier covers it now.
+        compact: true,
         testId: 'game-back',
         onClick: handlers.onBack,
       }),

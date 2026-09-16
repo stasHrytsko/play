@@ -1,5 +1,5 @@
 import type { GameDefinition } from '../../game-definition.ts';
-import { button, el } from '../dom.ts';
+import { uiButton, uiEl } from '../../ui-kit/index.ts';
 import { staticScreen, type Screen } from '../Screen.ts';
 
 /**
@@ -10,17 +10,23 @@ import { staticScreen, type Screen } from '../Screen.ts';
  */
 export function Onboarding(game: GameDefinition, onContinue: () => void): Screen {
   const items = game.onboarding.rules.map((rule, index) =>
-    el('li', { className: 'rules__item' }, [
-      el('span', { className: 'rules__marker', text: String(index + 1) }),
-      el('span', { text: rule }),
+    uiEl('li', { className: 'rules__item' }, [
+      uiEl('span', { className: 'rules__marker', text: String(index + 1) }),
+      uiEl('span', { text: rule }),
     ]),
   );
 
-  const screen = el('section', { className: 'screen', testId: 'onboarding' }, [
-    el('h2', { className: 'section-title', text: game.onboarding.title }),
-    el('ul', { className: 'rules' }, items),
-    el('div', { className: 'screen__spacer' }),
-    button({ text: 'Понятно, играем', variant: 'primary', testId: 'onboarding-continue', onClick: onContinue }),
+  const screen = uiEl('section', { className: 'screen', testId: 'onboarding' }, [
+    uiEl('h2', { className: 'section-title', text: game.onboarding.title }),
+    uiEl('ul', { className: 'rules' }, items),
+    uiEl('div', { className: 'screen__spacer' }),
+    uiButton({
+      label: 'Понятно, играем',
+      variant: 'primary',
+      block: true,
+      testId: 'onboarding-continue',
+      onClick: onContinue,
+    }),
   ]);
 
   return staticScreen(screen);

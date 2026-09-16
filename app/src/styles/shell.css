@@ -107,49 +107,6 @@ body {
   text-align: center;
 }
 
-/* --- Buttons ------------------------------------------------------------ */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--tap-target);
-  padding: var(--space-3) var(--space-5);
-  border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  background: var(--surface-raised);
-  color: var(--text);
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-.btn:active {
-  transform: translateY(1px);
-}
-
-.btn--primary {
-  background: var(--accent);
-  color: var(--text-inverse);
-}
-
-.btn--ghost {
-  border-color: var(--border);
-  background: transparent;
-  color: var(--text-muted);
-}
-
-.btn--block {
-  width: 100%;
-}
-
-.btn:disabled {
-  opacity: 0.45;
-  cursor: default;
-}
-
 /* --- Level list ----------------------------------------------------------
  * A single vertical strip of 5, not a 3x3 grid with a difficulty legend —
  * dropped along with difficulty.ts (docs/decisions.md, 2026-09-16). */
@@ -199,12 +156,6 @@ body {
   gap: var(--space-3);
   align-items: center;
   justify-content: space-between;
-}
-
-.game-header__back {
-  min-height: 40px;
-  padding: var(--space-2) var(--space-3);
-  font-size: 15px;
 }
 
 .game-header__stats {

@@ -6,6 +6,7 @@ export interface UiTheme {
   text: string;
   textMuted: string;
   accent: string;
+  accentHover: string;
   blue: string;
   sage: string;
   mustard: string;
@@ -21,6 +22,7 @@ const FALLBACK: UiTheme = {
   text: '#2f2f2f',
   textMuted: '#6f6f6b',
   accent: '#d9785f',
+  accentHover: '#c96851',
   blue: '#7da7d9',
   sage: '#8fbb95',
   mustard: '#e0c16b',
@@ -40,6 +42,7 @@ export function readUiTheme(root: Element = document.documentElement): UiTheme {
     text: token('--text', FALLBACK.text),
     textMuted: token('--text-muted', FALLBACK.textMuted),
     accent: token('--accent', FALLBACK.accent),
+    accentHover: token('--accent-hover', FALLBACK.accentHover),
     blue: token('--piece-blue', FALLBACK.blue),
     sage: token('--piece-sage', FALLBACK.sage),
     mustard: token('--piece-mustard', FALLBACK.mustard),

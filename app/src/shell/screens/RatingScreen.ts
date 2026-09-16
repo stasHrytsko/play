@@ -1,4 +1,4 @@
-import { button, el } from '../dom.ts';
+import { uiButton, uiEl } from '../../ui-kit/index.ts';
 
 export interface RatingSubmission {
   /** 1-5. Always set — the button is disabled until the player picks one. */
@@ -29,7 +29,7 @@ export function RatingScreen(handlers: RatingScreenHandlers): HTMLElement {
 
   const stars: HTMLButtonElement[] = [];
 
-  const comment = el('textarea', {
+  const comment = uiEl('textarea', {
     className: 'rating__comment',
     testId: 'rating-comment',
     attrs: {
@@ -39,8 +39,8 @@ export function RatingScreen(handlers: RatingScreenHandlers): HTMLElement {
     },
   });
 
-  const submit = button({
-    text: 'К уровням',
+  const submit = uiButton({
+    label: 'К уровням',
     variant: 'primary',
     block: true,
     testId: 'rating-submit',
@@ -61,7 +61,7 @@ export function RatingScreen(handlers: RatingScreenHandlers): HTMLElement {
   }
 
   for (let index = 0; index < STAR_COUNT; index += 1) {
-    const star = el('button', {
+    const star = uiEl('button', {
       className: 'rating__star',
       testId: `rating-star-${String(index + 1)}`,
       text: '☆',
@@ -82,15 +82,15 @@ export function RatingScreen(handlers: RatingScreenHandlers): HTMLElement {
     stars.push(star);
   }
 
-  return el('div', { className: 'popup-overlay', testId: 'rating-popup' }, [
-    el(
+  return uiEl('div', { className: 'popup-overlay', testId: 'rating-popup' }, [
+    uiEl(
       'div',
       { className: 'popup rating', attrs: { role: 'dialog', 'aria-modal': 'true' } },
       [
-        el('div', { className: 'popup__emoji', text: '🏆', attrs: { 'aria-hidden': 'true' } }),
-        el('h3', { className: 'popup__title', text: 'Все уровни пройдены!' }),
-        el('p', { className: 'popup__body', text: 'Оцени игру' }),
-        el('div', { className: 'rating__stars', attrs: { role: 'radiogroup', 'aria-label': 'Оценка от 1 до 5' } }, stars),
+        uiEl('div', { className: 'popup__emoji', text: '🏆', attrs: { 'aria-hidden': 'true' } }),
+        uiEl('h3', { className: 'popup__title', text: 'Все уровни пройдены!' }),
+        uiEl('p', { className: 'popup__body', text: 'Оцени игру' }),
+        uiEl('div', { className: 'rating__stars', attrs: { role: 'radiogroup', 'aria-label': 'Оценка от 1 до 5' } }, stars),
         comment,
         submit,
       ],

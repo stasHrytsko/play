@@ -1,5 +1,5 @@
 import type { GameDefinition } from '../../game-definition.ts';
-import { button, el } from '../dom.ts';
+import { uiButton, uiEl } from '../../ui-kit/index.ts';
 import {
   isLevelCompleted,
   isLevelUnlocked,
@@ -33,7 +33,7 @@ export function LevelSelect(
     const completed = isLevelCompleted(progress, index);
     const state = completed ? 'completed' : unlocked ? 'unlocked' : 'locked';
 
-    const cell = el(
+    const cell = uiEl(
       'button',
       {
         className: 'level-cell',
@@ -47,8 +47,8 @@ export function LevelSelect(
         },
       },
       [
-        el('span', { text: unlocked ? String(index + 1) : '🔒' }),
-        completed ? el('span', { className: 'level-cell__badge', text: '✓' }) : null,
+        uiEl('span', { text: unlocked ? String(index + 1) : '🔒' }),
+        completed ? uiEl('span', { className: 'level-cell__badge', text: '✓' }) : null,
       ],
     );
 
@@ -63,11 +63,11 @@ export function LevelSelect(
     cells.push(cell);
   }
 
-  const screen = el('section', { className: 'screen', testId: 'level-select' }, [
-    el('h2', { className: 'section-title', text: 'Выбери уровень' }),
-    el('div', { className: 'level-list' }, cells),
-    el('div', { className: 'screen__spacer' }),
-    button({ text: '← Назад', variant: 'ghost', testId: 'levels-back', onClick: handlers.onBack }),
+  const screen = uiEl('section', { className: 'screen', testId: 'level-select' }, [
+    uiEl('h2', { className: 'section-title', text: 'Выбери уровень' }),
+    uiEl('div', { className: 'level-list' }, cells),
+    uiEl('div', { className: 'screen__spacer' }),
+    uiButton({ label: '← Назад', variant: 'ghost', block: true, testId: 'levels-back', onClick: handlers.onBack }),
   ]);
 
   return staticScreen(screen);

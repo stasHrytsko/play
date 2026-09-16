@@ -13,6 +13,13 @@ Shared DOM shell + Phaser mechanic. One game per `games/<slug>/`; only
   Read D-011 first; it is the fork's own entry.
 - `src/shell-contract.ts` — the Shell ↔ Mechanic boundary.
 - `src/game-definition.ts` — the shared `GameDefinition` shape.
+- `src/ui-kit/` — shared DOM interface primitives (buttons, counters, queues,
+  inventory, meters). `src/shell/**` and `games/<slug>/mechanic/render/**`
+  both build their DOM through this, not through their own `document.createElement`
+  wrapper — see `src/ui-kit/README.md`.
+- `src/render-kit/` — shared Phaser effects (punch, shake, flash, collapse,
+  camera shake, move). `games/<slug>/mechanic/render/**` builds its tweens
+  through this instead of writing a new one per game.
 - `games/<slug>/game.config.ts` — one game's concrete definition.
 - `games/<slug>/rules.md` — the rules of that game.
 
@@ -20,8 +27,14 @@ Shared DOM shell + Phaser mechanic. One game per `games/<slug>/`; only
 
 - `src/shell/**` — do not modify unless explicitly asked to fix a shell bug.
   A change here affects every game in `games/**` on the next build.
+- `src/ui-kit/**` and `src/render-kit/**` — same rule as `src/shell/**`:
+  shared, so a change here affects every game and the shell chrome at once.
+  Add to them deliberately (docs/decisions.md D-012 is the render-kit
+  precedent for what "deliberately" looks like), not as a one-off for a
+  single game's need.
 - `games/<slug>/mechanic/**` — this is what changes per game. Implement
-  `MechanicHost` from `src/shell-contract.ts`.
+  `MechanicHost` from `src/shell-contract.ts`, and build its DOM/render
+  through `ui-kit`/`render-kit` rather than reinventing either.
 - Do not change `src/shell-contract.ts` without approval — every field added
   there is a field every future game has to care about. This includes adding
   `onFail`/a first-action hook for the `level_fail` / `retry` / `first_action`
@@ -30,9 +43,13 @@ Shared DOM shell + Phaser mechanic. One game per `games/<slug>/`; only
   a rule is missing or ambiguous, stop and ask — do not invent it.
 
 The linter enforces the boundaries; it is not a style preference.
-`games/*/mechanic/engine/**` cannot import Phaser, the DOM, storage, `fetch`
-or anything under `src/shell/`. `src/shell/**` cannot import Phaser or
-anything under `mechanic/`, and cannot touch `window.localStorage`.
+`games/*/mechanic/engine/**` cannot import Phaser, the DOM, `ui-kit`,
+`render-kit`, storage, `fetch`, or anything under `src/shell/`. `src/shell/**`
+cannot import Phaser, `render-kit`, or anything under `mechanic/`, and cannot
+touch `window.localStorage`. `src/ui-kit/**` cannot import Phaser, `render-kit`,
+`src/shell/**` or `mechanic/**`. `src/render-kit/**` cannot import `ui-kit`,
+`src/shell/**` or `mechanic/**`. ui-kit and render-kit are siblings, not
+layered on each other — DOM interface and Phaser juice stay orthogonal.
 
 ## Tech
 

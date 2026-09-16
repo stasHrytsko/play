@@ -285,3 +285,45 @@ built on top of these without needing a seventh primitive.
 **Dogfooded, not just typechecked:** `games/tap-targets/mechanic/render/LevelScene.ts`'s
 one hand-written inline tween now calls `fadeCollapse`. Same visual result;
 proves the API against real usage.
+
+---
+
+## D-013 — shell adopts ui-kit; per-game theme.ts stops duplicating readUiTheme, 2026-09-16
+
+**Decision:** `src/shell/dom.ts` (`el`, `button`, an unused `clear`) is
+deleted. Every shell screen (`MainMenu`, `Onboarding`, `GameScreen`,
+`Popup`, `LevelSelect`, `RatingScreen`) and `App.ts`'s popup actions now
+build their DOM through `src/ui-kit/` (`uiEl`, `uiButton`) instead of a
+second, near-identical implementation. `games/tap-targets/mechanic/render/theme.ts`
+now calls `ui-kit`'s `readUiTheme()` for the CSS-token read instead of
+re-doing `getComputedStyle` itself — it keeps only the one thing `ui-kit`
+can't do (turning a colour string into the numeric hex Phaser wants).
+
+**Why:** two DOM builders with the same shape (`className`/`text`/`testId`/
+`attrs`) under different names was the actual duplication, not a stylistic
+gap — one of them had to go, and `ui-kit` is the one meant to outlive a
+single game.
+
+**What that required:**
+- `UiButtonOptions` gained `block?: boolean` (full width) — shell's buttons
+  are almost all full-width, ui-kit's weren't tracking that at all before.
+  `.ui-button--block { width: 100%; }` in `ui-kit.css`.
+- The dead `.btn`/`.btn--primary`/`.btn--ghost`/`.btn--block`/`.game-header__back`
+  rules in `shell.css` are gone — `.ui-button--compact` already covered what
+  `.game-header__back` existed for.
+- `PopupAction` is now `Omit<UiButtonOptions, 'block'>` (Popup always passes
+  `block: true` itself) instead of its own near-duplicate of the old
+  `ButtonOptions`. Every `{ text: ... }` action object in `App.ts` became
+  `{ label: ... }` to match.
+- `UiTheme` (ui-kit/theme.ts) gained `accentHover`, read from `--accent-hover`
+  — the one field the per-game theme.ts needed that `readUiTheme()` didn't
+  expose yet.
+
+**Cost:** `src/shell/**` now depends on `src/ui-kit/**` — the eslint
+boundary for `src/ui-kit/**` (D-012's commit) explicitly left this direction
+open rather than deciding it; this entry is that decision. `render-kit`
+stays independent of `ui-kit` on both sides (Phaser juice and DOM interface
+are orthogonal) — only `ui-kit` gained a new consumer, not a new dependency.
+
+**Verified:** typecheck, lint, test (67/67, same data-testid values
+throughout so nothing needed to change on the test side), build — all pass.

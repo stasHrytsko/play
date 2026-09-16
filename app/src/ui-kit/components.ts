@@ -10,11 +10,14 @@ export interface UiButtonOptions {
   testId: string;
   disabled?: boolean;
   compact?: boolean;
+  /** Full width of its container. Default false — most buttons are inline. */
+  block?: boolean;
 }
 
 export function uiButton(options: UiButtonOptions): HTMLButtonElement {
   const classes = ['ui-button', `ui-button--${options.variant ?? 'secondary'}`];
   if (options.compact === true) classes.push('ui-button--compact');
+  if (options.block === true) classes.push('ui-button--block');
 
   const children: Node[] = [];
   if (options.icon !== undefined) {

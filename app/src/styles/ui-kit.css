@@ -43,6 +43,11 @@
   padding-inline: var(--space-3);
 }
 
+.ui-button--block {
+  display: flex;
+  width: 100%;
+}
+
 .ui-button--primary {
   background: var(--accent);
   color: var(--text-on-accent);

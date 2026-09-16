@@ -230,7 +230,7 @@ export class ShellApp {
             ? []
             : [
                 {
-                  text: `Уровень ${String(next + 1)} →`,
+                  label: `Уровень ${String(next + 1)} →`,
                   variant: 'primary' as const,
                   testId: 'next-level',
                   onClick: (): void => {
@@ -239,14 +239,14 @@ export class ShellApp {
                 },
               ]),
           {
-            text: 'Ещё раз',
+            label: 'Ещё раз',
             testId: 'replay-level',
             onClick: (): void => {
               this.goLevel(levelIndex);
             },
           },
           {
-            text: 'К уровням',
+            label: 'К уровням',
             variant: 'ghost' as const,
             testId: 'to-levels',
             onClick: (): void => {
