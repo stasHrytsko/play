@@ -1,22 +1,18 @@
 /**
- * Bridge between the CSS design tokens and the Phaser scene.
+ * Bridge between the shared CSS/UI theme and the Phaser scene.
  *
- * The DOM shell and the canvas render through completely different stacks; the
- * only way to stop them drifting apart visually is to make src/styles/tokens.css
- * the single source and have the canvas read it at runtime.
- *
- * The reading itself is not reimplemented here — src/ui-kit/theme.ts already
- * does it (readUiTheme), and every DOM component in the shell now goes through
- * that same function. This file's only job is the part ui-kit can't do:
- * turning a CSS colour string into the numeric 0xRRGGBB Phaser wants.
+ * The DOM shell and the canvas render through different stacks. readUiTheme()
+ * remains the single token reader; this file only converts its string colours
+ * into numeric 0xRRGGBB values for Phaser.
  */
 import { readUiTheme } from '../../../../src/ui-kit/index.ts';
 
 export interface SceneTheme {
   background: number;
-  target: number;
+  targetPalette: readonly number[];
   targetStroke: number;
-  cleared: number;
+  targetShadow: number;
+  targetHighlight: number;
   text: string;
 }
 
@@ -33,9 +29,17 @@ export function readTheme(root: Element = document.documentElement): SceneTheme 
 
   return {
     background: hexToNumber(ui.surface),
-    target: hexToNumber(ui.accent),
-    targetStroke: hexToNumber(ui.accentHover),
-    cleared: hexToNumber(ui.border),
+    targetPalette: [
+      hexToNumber(ui.blue),
+      hexToNumber(ui.sage),
+      hexToNumber(ui.mustard),
+      hexToNumber(ui.rose),
+      hexToNumber(ui.lavender),
+      hexToNumber(ui.accent),
+    ],
+    targetStroke: hexToNumber(ui.text),
+    targetShadow: hexToNumber(ui.text),
+    targetHighlight: 0xffffff,
     text: ui.textMuted,
   };
 }
