@@ -14,11 +14,11 @@ export interface SceneTheme {
 }
 
 const FALLBACK: SceneTheme = {
-  background: 0x171a21,
-  target: 0x5b8cff,
-  targetStroke: 0x7aa2ff,
-  cleared: 0x333a46,
-  text: '#98a2b3',
+  background: 0xf8f7f3,
+  target: 0xd9785f,
+  targetStroke: 0xc96851,
+  cleared: 0xd9d6cf,
+  text: '#6f6f6b',
 };
 
 function hexToNumber(value: string, fallback: number): number {
