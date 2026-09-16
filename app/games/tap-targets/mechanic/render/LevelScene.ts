@@ -25,6 +25,8 @@ export interface LevelSceneOptions {
 export class LevelScene extends Phaser.Scene {
   readonly #options: LevelSceneOptions;
   readonly #circles = new Map<string, Phaser.GameObjects.Arc>();
+  readonly #shadows = new Map<string, Phaser.GameObjects.Arc>();
+  readonly #highlights = new Map<string, Phaser.GameObjects.Arc>();
   /**
    * Hit areas are kept by reference rather than read back off `circle.input`,
    * whose `hitArea` is typed `any`. Phaser hit-tests in the object's local
@@ -50,9 +52,36 @@ export class LevelScene extends Phaser.Scene {
   create(): void {
     this.cameras.main.setBackgroundColor(this.#options.theme.background);
 
-    for (const target of this.#options.level.targets) {
-      const circle = this.add.circle(0, 0, MIN_TARGET_RADIUS, this.#options.theme.target);
-      circle.setStrokeStyle(3, this.#options.theme.targetStroke);
+    const paletteLength = Math.max(1, this.#options.theme.targetPalette.length);
+
+    this.#options.level.targets.forEach((target, index) => {
+      const fill =
+        this.#options.theme.targetPalette[index % paletteLength] ??
+        this.#options.theme.targetPalette[0] ??
+        0xd9785f;
+
+      const shadow = this.add.circle(
+        0,
+        0,
+        MIN_TARGET_RADIUS,
+        this.#options.theme.targetShadow,
+        0.1,
+      );
+      shadow.setDepth(0);
+
+      const circle = this.add.circle(0, 0, MIN_TARGET_RADIUS, fill);
+      circle.setDepth(1);
+      circle.setStrokeStyle(2, this.#options.theme.targetStroke, 0.12);
+
+      // A tiny matte highlight keeps the piece tactile without turning it glossy.
+      const highlight = this.add.circle(
+        0,
+        0,
+        MIN_TARGET_RADIUS * 0.18,
+        this.#options.theme.targetHighlight,
+        0.2,
+      );
+      highlight.setDepth(2);
 
       const hitArea = new Phaser.Geom.Circle(
         MIN_TARGET_RADIUS,
@@ -66,9 +95,11 @@ export class LevelScene extends Phaser.Scene {
         this.#tap(target.id);
       });
 
+      this.#shadows.set(target.id, shadow);
       this.#circles.set(target.id, circle);
+      this.#highlights.set(target.id, highlight);
       this.#hitAreas.set(target.id, hitArea);
-    }
+    });
 
     this.#layout(this.scale.width, this.scale.height);
     this.scale.on(Phaser.Scale.Events.RESIZE, this.#handleResize);
@@ -84,12 +115,26 @@ export class LevelScene extends Phaser.Scene {
 
     for (const target of this.#options.level.targets) {
       const circle = this.#circles.get(target.id);
+      const shadow = this.#shadows.get(target.id);
+      const highlight = this.#highlights.get(target.id);
       const hitArea = this.#hitAreas.get(target.id);
-      if (circle === undefined || hitArea === undefined) continue;
+      if (circle === undefined || shadow === undefined || highlight === undefined || hitArea === undefined) {
+        continue;
+      }
+
+      const x = target.x * width;
+      const y = target.y * height;
 
       // setRadius also updates the Arc's size and display origin.
+      shadow.setRadius(radius * 1.01);
+      shadow.setPosition(x, y + radius * 0.1);
+
       circle.setRadius(radius);
-      circle.setPosition(target.x * width, target.y * height);
+      circle.setPosition(x, y);
+
+      highlight.setRadius(radius * 0.18);
+      highlight.setPosition(x - radius * 0.28, y - radius * 0.3);
+
       hitArea.setTo(radius, radius, radius);
     }
   }
@@ -102,9 +147,15 @@ export class LevelScene extends Phaser.Scene {
     const circle = this.#circles.get(targetId);
     if (circle !== undefined && !this.#state.remaining.includes(targetId)) {
       circle.disableInteractive();
-      // destroy: false — #layout() on resize still looks this circle up by
-      // id and repositions it; scaled to zero is invisible without being gone.
-      void fadeCollapse(circle, { destroy: false });
+
+      const shadow = this.#shadows.get(targetId);
+      const highlight = this.#highlights.get(targetId);
+
+      // destroy: false — #layout() on resize still looks these objects up by id;
+      // scaled to zero is invisible without breaking the resize path.
+      void fadeCollapse(circle, { destroy: false, duration: 170 });
+      if (shadow !== undefined) void fadeCollapse(shadow, { destroy: false, duration: 190 });
+      if (highlight !== undefined) void fadeCollapse(highlight, { destroy: false, duration: 130 });
     }
 
     this.#options.onStateChange(this.#state);
@@ -112,7 +163,7 @@ export class LevelScene extends Phaser.Scene {
     if (tapEngine.isComplete(this.#state)) {
       this.#completed = true;
       // Let the last tween land before the shell drops a popup over the board.
-      this.time.delayedCall(180, this.#options.onComplete);
+      this.time.delayedCall(220, this.#options.onComplete);
     }
   }
 }

@@ -1,19 +1,18 @@
 /**
  * The single source of truth about *this* game.
  *
- * `npm run new-game` (see scripts/new-game.ts — being redefined for the
- * games/<slug> layout as part of the /new-game skill) rewrites this file.
- * The values below are a working stub ("Tap Targets"), not shipping content:
- * this folder exists to prove the shared shell + multi-page build work, the
- * same role the placeholder mechanic played in the original template.
+ * Tap Targets doubles as the smallest playable reference implementation for
+ * the shared shell, render-kit and UI kit. Keep the mechanic intentionally
+ * simple: the point of this folder is to prove the common game foundation in
+ * a real, tappable level before the 30/30 concepts start using it.
  */
 import type { GameDefinition } from '../../src/game-definition.ts';
 
 export const GAME: GameDefinition = {
   id: 'tap-targets',
   title: 'Tap Targets',
-  tagline: 'Заглушка механики: собери все круги',
-  version: 1,
+  tagline: 'Очисти поле одним касанием',
+  version: 2,
 
   levelCount: 5,
 

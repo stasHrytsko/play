@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import type { CreateLevelParams, LevelSession, MechanicHost } from '../../../src/shell-contract.ts';
+import { counter, objectiveCard, progressBar, uiEl } from '../../../src/ui-kit/index.ts';
 import type { LevelState } from './engine/types.ts';
 import { getLevel } from './levels/loadLevels.ts';
 import { LevelScene } from './render/LevelScene.ts';
@@ -18,16 +19,60 @@ export function createMechanicHost(): MechanicHost {
     createLevel(params: CreateLevelParams): LevelSession {
       const level = getLevel(params.levelIndex);
       const theme = readTheme();
+      const totalTargets = level.targets.length;
 
-      // The container belongs to the mechanic, so its HUD lives here rather
-      // than in the shell — the shell must not know what "remaining" means.
-      const hud = document.createElement('div');
-      hud.className = 'mechanic-hud';
-      hud.dataset['testid'] = 'mechanic-hud';
+      params.container.classList.add('tap-targets-surface');
+
+      const layout = uiEl('div', { className: 'tap-targets-layout' });
+      const hud = uiEl('div', {
+        className: 'tap-targets-hud',
+        testId: 'mechanic-hud',
+      });
+      const board = uiEl('div', {
+        className: 'tap-targets-board',
+        testId: 'tap-targets-board',
+      });
+
+      layout.append(hud, board);
+      params.container.append(layout);
 
       const onStateChange = (state: LevelState): void => {
-        hud.textContent = `Осталось: ${String(state.remaining.length)}`;
+        const cleared = totalTargets - state.remaining.length;
+
+        hud.replaceChildren(
+          objectiveCard({
+            title: 'Goal',
+            text: 'Clear all targets',
+            icon: '◎',
+            current: cleared,
+            target: totalTargets,
+            testId: 'tap-targets-objective',
+          }),
+          uiEl('div', { className: 'tap-targets-hud__stats' }, [
+            counter({
+              label: 'Left',
+              value: state.remaining.length,
+              icon: '●',
+              tone: state.remaining.length <= 1 ? 'warning' : 'default',
+              testId: 'targets-left',
+            }),
+            counter({
+              label: 'Taps',
+              value: state.taps,
+              icon: '↗',
+              testId: 'tap-count',
+            }),
+          ]),
+          progressBar({
+            value: cleared,
+            max: totalTargets,
+            label: 'Progress',
+            testId: 'target-progress',
+          }),
+        );
+
         hud.dataset['remaining'] = String(state.remaining.length);
+        hud.dataset['taps'] = String(state.taps);
       };
 
       const scene = new LevelScene({
@@ -39,7 +84,7 @@ export function createMechanicHost(): MechanicHost {
 
       const game = new Phaser.Game({
         type: Phaser.AUTO,
-        parent: params.container,
+        parent: board,
         backgroundColor: theme.background,
         // No sound in the placeholder mechanic; this also keeps headless CI quiet.
         audio: { noAudio: true },
@@ -51,8 +96,6 @@ export function createMechanicHost(): MechanicHost {
         scene: [scene],
       });
 
-      params.container.append(hud);
-
       // params.onExit exists for mechanics that own their own exit affordance
       // (a pause menu inside the canvas). This one does not: the shell header
       // has the back button, so it is deliberately never called.
@@ -62,7 +105,7 @@ export function createMechanicHost(): MechanicHost {
         destroy(): void {
           if (destroyed) return;
           destroyed = true;
-          hud.remove();
+          layout.remove();
           game.destroy(true);
         },
       };
