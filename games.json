@@ -1,0 +1,473 @@
+{
+  "project": {
+    "startDate": "2026-10-01",
+    "timeZone": "Europe/Madrid"
+  },
+  "metricsUpdated": null,
+  "games": [
+    {
+      "day": 1,
+      "slug": "incoming-box",
+      "date": "2026-10-01",
+      "title": "Incoming Box",
+      "sourceTitle": "Ящик приезжает",
+      "pitch": "Receiver boxes change on a schedule—remove the right screws before their color becomes unavailable.",
+      "status": "scheduled",
+      "links": {},
+      "metrics": {},
+      "concept": {
+        "howItPlays": "Remove the available screws. Two coloured receiver boxes sit below the board, with the next boxes visible in the queue. A box leaves after three moves and its colour becomes unavailable. A screw of the wrong colour goes into a three-slot holding pocket; overflow the pocket and the run ends.",
+        "verb": "Extraction",
+        "pressure": "Forced sequence",
+        "twist": null,
+        "emotion": "Rhythm",
+        "family": "Screw",
+        "difference": "Unlike Screw Jam, finding the colour is not enough—you must catch its availability window.",
+        "levels": "Generated",
+        "solver": "Not required",
+        "trend": true,
+        "killCriterion": "Previewing the receiver-box queue does not change the order in which players remove screws."
+      },
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 2,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 3,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 4,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 5,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 6,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 7,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 8,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 9,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 10,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 11,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 12,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 13,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 14,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 15,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 16,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 17,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 18,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 19,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 20,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 21,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 22,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 23,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 24,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 25,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 26,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 27,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 28,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 29,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    },
+    {
+      "day": 30,
+      "slug": null,
+      "date": null,
+      "title": null,
+      "pitch": null,
+      "status": "planned",
+      "links": {},
+      "metrics": {},
+      "notes": {},
+      "feedback": {
+        "liked": [],
+        "didntWork": []
+      }
+    }
+  ]
+}
