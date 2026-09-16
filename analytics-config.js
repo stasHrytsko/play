@@ -5,8 +5,8 @@ window.PVP_CONFIG = Object.freeze({
   startDate: '2026-10-01',
   timeZone: 'Europe/Madrid',
   posthog: Object.freeze({
-    projectToken: '',
-    apiHost: '',
+    projectToken: 'phc_uT9HfgYBxEeHxK2FP9LFJY5ct5ZBtPFD2znLAxPCRFDL',
+    apiHost: 'https://eu.i.posthog.com',
     defaults: '2026-05-30'
   })
 });
