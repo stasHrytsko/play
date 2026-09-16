@@ -94,16 +94,19 @@ Making `games/<slug>/` a real, buildable game is one pass, not several — end
 of it, `npm run check` is green, levels included. There is no separate
 "levels" step to leave for later.
 
-1. Read the task's spec/rules carefully. If anything a rule in §4 (decision
+1. The spec is `../specs/<slug>.md` (one level up from `app/` — see
+   `specs/README.md`) if it's on the 30/30 shelf, or given directly in the
+   task otherwise. Read it carefully. If anything a rule in §4 (decision
    table), §5 (win), §6 (loss) of the rules-template format would need is
    missing or ambiguous, stop and ask — do not invent it (same rule as
    editing an existing game's mechanic).
 2. Copy `games/tap-targets/` as the starting skeleton — folder structure,
-   not content: `game.config.ts`, `main.ts`, `index.html`, `rules.md`,
-   `mechanic/{index.ts, engine/, levels/, render/}`, `tests/{*.test.ts, e2e/}`.
-   `games/tap-targets/mechanic/index.ts` shows the exact `MechanicHost`
-   wiring; `main.ts` shows the three-line `bootShell(GAME, createMechanicHost())`
-   entry every game uses unchanged.
+   not content: `game.config.ts`, `main.ts`, `index.html`, `rules.md` (copy
+   the spec from `specs/<slug>.md` into this file — `specs/` stays the source,
+   this is the copy that ships with the game), `mechanic/{index.ts, engine/,
+   levels/, render/}`, `tests/{*.test.ts, e2e/}`. `games/tap-targets/mechanic/index.ts`
+   shows the exact `MechanicHost` wiring; `main.ts` shows the three-line
+   `bootShell(GAME, createMechanicHost())` entry every game uses unchanged.
 3. `game.config.ts`: new `id`/`title`/`tagline`/`onboarding` from the rules.
    `levelCount: 5` — never anything else (`src/game-definition.ts` explains
    why). `analytics.postHogProjectToken`/`postHogHost` — copy from
