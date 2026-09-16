@@ -5,8 +5,8 @@ const config: CapacitorConfig = {
   appName: 'Game Template',
   webDir: 'dist',
   android: {
-    // Matches --bg in src/styles/tokens.css so there is no white flash on boot.
-    backgroundColor: '#0f1115',
+    // Matches --bg in src/styles/tokens.css so there is no flash on boot.
+    backgroundColor: '#efefec',
     zoomEnabled: false,
   },
   plugins: {
