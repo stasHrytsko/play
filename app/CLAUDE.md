@@ -122,7 +122,12 @@ of it, `npm run check` is green, levels included. There is no separate
    build that doesn't typecheck/build because `levels.json` is still a stub
    is the expected state mid-step-5, not a bug — but the game is not done
    until it's real content matching the difficulty curve the rules describe
-   (`docs/rules-template.md` §9), not a placeholder.
+   (`docs/rules-template.md` §9), not a placeholder. Standard genre
+   convention applies unless the rules say otherwise: level 1 close to a
+   tutorial (a player should clear it without failing), difficulty rises
+   step to step without a spike, level 5 is the hardest and meant to take
+   real effort. If a level plays no harder than the one before it, that is
+   a levels.json bug, the same as any other.
 6. `mechanic/render/`: `theme.ts` — copy `games/tap-targets/mechanic/render/theme.ts`
    as-is (it calls `ui-kit`'s `readUiTheme()`, nothing here is game-specific).
    The scene itself: build every animation from `render-kit` (`punch`,
