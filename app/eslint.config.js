@@ -51,6 +51,7 @@ export default tseslint.config(
           patterns: [
             { group: ['phaser', 'phaser/*'], message: 'engine must stay pure — no Phaser imports.' },
             { group: ['**/render/**'], message: 'engine must not depend on rendering.' },
+            { group: ['**/render-kit/**'], message: 'engine must not depend on rendering.' },
             { group: ['**/shell/**'], message: 'engine must not depend on the shell.' },
             { group: ['@capacitor/*'], message: 'engine must stay pure — no platform imports.' },
           ],
@@ -74,8 +75,12 @@ export default tseslint.config(
         'error',
         {
           patterns: [
-            { group: ['phaser', 'phaser/*'], message: 'shell is DOM-only — Phaser lives in src/mechanic/render.' },
+            {
+              group: ['phaser', 'phaser/*'],
+              message: 'shell is DOM-only — Phaser lives in games/*/mechanic/render and src/render-kit.',
+            },
             { group: ['**/mechanic/**'], message: 'shell talks to the game only through src/shell-contract.ts.' },
+            { group: ['**/render-kit/**'], message: 'shell is DOM-only — render-kit is a Phaser effects library.' },
           ],
         },
       ],
@@ -97,6 +102,30 @@ export default tseslint.config(
         'error',
         { name: 'fetch', message: 'use SignalSink — screens do not talk to the network.' },
         { name: 'localStorage', message: 'use ProgressRepository.' },
+      ],
+    },
+  },
+
+  {
+    // render-kit is a Phaser effects library, not a game: no coupling to a
+    // specific game's mechanic, no coupling to the shell, no platform APIs.
+    // Consumed by games/*/mechanic/render/** only — nothing here restricts
+    // that direction, only the reverse ones (see the engine and shell blocks
+    // above, which also forbid importing render-kit).
+    files: ['src/render-kit/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            { group: ['**/shell/**'], message: 'render-kit must not depend on the shell.' },
+            {
+              group: ['**/mechanic/**'],
+              message: 'render-kit must not depend on any specific game — mechanic/render imports render-kit, never the reverse.',
+            },
+            { group: ['@capacitor/*'], message: 'render-kit must stay platform-agnostic — no Capacitor imports.' },
+          ],
+        },
       ],
     },
   },

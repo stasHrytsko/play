@@ -35,7 +35,7 @@ export function readTheme(root: Element = document.documentElement): SceneTheme 
     background: hexToNumber(token('--surface'), FALLBACK.background),
     target: hexToNumber(token('--accent'), FALLBACK.target),
     targetStroke: hexToNumber(token('--accent-hover'), FALLBACK.targetStroke),
-    cleared: hexToNumber(token('--locked'), FALLBACK.cleared),
+    cleared: hexToNumber(token('--border'), FALLBACK.cleared),
     text: token('--text-muted').trim() || FALLBACK.text,
   };
 }
