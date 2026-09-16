@@ -67,3 +67,20 @@ Supabase, ни своя serverless-функция с почтовым прова
 
 **Что отдельно:** число звёзд (1–5) параллельно летит в PostHog как
 событие `rating_submit` — комментарии по почте эту метрику не заменяют.
+
+## 2026-09-16 — PostHog проект подключён
+
+**Project token (client-safe):** `phc_uT9HfgYBxEeHxK2FP9LFJY5ct5ZBtPFD2znLAxPCRFDL`
+**Project ID:** 275631
+**Region:** EU Cloud
+
+Это Project API Key — write-only, предназначен для клиентских библиотек,
+публикация в открытом репозитории безопасна (PostHog сам это подтверждает
+в UI: "Safe to use in public apps").
+
+**Важно для реализации PostHogSignalSink:** раз регион EU, capture-эндпоинт
+для клиента — `https://eu.i.posthog.com`, а не `us.i.posthog.com` (дефолт
+у большинства SDK-примеров). Это должно быть явно указано при инициализации
+клиента, иначе события будут либо не долетать, либо писаться не в тот регион.
+
+**Web3Forms:** access_key пока не заведён, в `game.config.ts` — плейсхолдер.
