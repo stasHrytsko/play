@@ -3,29 +3,45 @@
  *
  * The DOM shell and the Phaser canvas have to look like the same application,
  * and they render through completely different stacks. Every colour a scene
- * uses is read from here at runtime (see src/mechanic/render/theme.ts) so the
- * two halves cannot drift apart.
+ * uses is read from here at runtime so the two halves cannot drift apart.
  */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* Surfaces */
-  --bg: #0f1115;
-  --surface: #171a21;
-  --surface-raised: #1f232c;
-  --border: #2a3039;
+  /* Core surfaces — aligned with the SH project site. */
+  --bg: #efefec;
+  --surface: #f8f7f3;
+  --surface-raised: #ffffff;
+  --surface-soft: #ebe9e3;
+  --surface-muted: #ddd9d1;
+  --border: #d9d6cf;
 
   /* Text */
-  --text: #e8ecf3;
-  --text-muted: #98a2b3;
-  --text-inverse: #0b1020;
+  --text: #2f2f2f;
+  --text-muted: #6f6f6b;
+  --text-inverse: #ffffff;
+  --text-on-accent: #ffffff;
 
-  /* Accent */
-  --accent: #5b8cff;
-  --accent-hover: #7aa2ff;
+  /* Brand / interaction */
+  --accent: #d9785f;
+  --accent-hover: #c96851;
+  --danger: #c86f62;
+  --danger-soft: #f3dfda;
+  --danger-text: #7c4038;
+  --star: #d7aa55;
 
-  /* Rating popup */
-  --star: #fbbf24;
+  /* Gameplay palette — deliberately muted, never neon. */
+  --piece-blue: #7da7d9;
+  --piece-sage: #8fbb95;
+  --piece-mustard: #e0c16b;
+  --piece-rose: #df8ca0;
+  --piece-lavender: #b9a7d9;
+  --piece-neutral: #c8c3b9;
+
+  /* Tactility: flat at a glance, slightly juicy up close. */
+  --shadow-soft: 0 2px 8px rgb(47 47 47 / 6%);
+  --shadow-piece: inset 0 1px 0 rgb(255 255 255 / 35%), inset 0 -2px 0 rgb(47 47 47 / 7%),
+    0 3px 6px rgb(47 47 47 / 10%);
 
   /* Spacing scale */
   --space-1: 4px;
@@ -55,8 +71,6 @@
    *      documentElement. This is what actually works on Android.
    *   2. env(safe-area-inset-*) covers iOS and desktop browsers, where
    *      Capacitor injects nothing.
-   * Using only env() looks fine in Chrome and clips under the status bar on a
-   * real phone, which is exactly the bug that only shows up on device.
    */
   --safe-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
   --safe-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
