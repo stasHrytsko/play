@@ -1,4 +1,152 @@
 Date,Time,Accounts,Language,Type,Game,Text,Link,Media,Labels
+2026-09-26,19:00,X,en,warmup,— why,"30 days, 30 playable prototypes, one a day. Every metric public, including the embarrassing ones. One rule: if it fails, it gets buried, not fixed.
+
+Starts October 1.
+
+https://play.hrytsko.com/?utm_source=x&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=x&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why,,warmup-why day-5 warm
+2026-09-26,19:00,Bluesky,en,warmup,— why,"30 days, 30 playable prototypes, one a day. Every metric public, including the embarrassing ones. One rule: if it fails, it gets buried, not fixed.
+
+Starts October 1.
+
+https://play.hrytsko.com/?utm_source=bluesky&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=bluesky&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why,,warmup-why day-5 warm
+2026-09-26,19:00,Threads,en,warmup,— why,"30 days, 30 playable prototypes, one a day. Every metric public, including the embarrassing ones. One rule: if it fails, it gets buried, not fixed.
+
+Starts October 1.
+
+https://play.hrytsko.com/?utm_source=threads&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=threads&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why,,warmup-why day-5 warm
+2026-09-26,19:00,LinkedIn,en,warmup,— why,"Thirty days. Thirty playable prototypes. One a day, shipped the same evening.
+
+Why: most ideas get tested six months into development. I want to test thirty of them in a month, on numbers instead of feelings.
+
+Every metric public — how many reach level five, how many come back the next day. Including the embarrassing ones.
+
+One rule: no fixing. If it fails, it gets buried and I move on.
+
+Starts October 1.
+
+https://play.hrytsko.com/?utm_source=linkedin&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=linkedin&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why,,warmup-why day-5 warm
+2026-09-26,19:00,Telegram,ru,warmup,— why,"Тридцать дней. Тридцать игровых прототипов. По одному в день, каждый играбельный и выложенный в тот же вечер.
+
+Зачем: обычно идею проверяют через полгода разработки. Я хочу проверить тридцать идей за месяц и на цифрах, а не на ощущениях.
+
+Все метрики публичные — сколько людей дошло до пятого уровня, сколько вернулось назавтра. В том числе там, где цифры будут стыдные.
+
+Главное правило: не чинить. Провалился — хороним и идём дальше.
+
+Старт 1 октября.
+
+https://play.hrytsko.com/?utm_source=telegram&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=telegram&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-why,,warmup-why day-5 warm
+2026-09-28,19:00,X,en,warmup,— scoring,"Setting the scoring before I start: did a player grasp the rule, reach level five, come back the next day. ""I liked it"" does not count.
+
+October 1.
+
+https://play.hrytsko.com/?utm_source=x&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=x&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring,,warmup-scoring day-3 warm
+2026-09-28,19:00,Bluesky,en,warmup,— scoring,"Setting the scoring before I start: did a player grasp the rule, reach level five, come back the next day. ""I liked it"" does not count.
+
+October 1.
+
+https://play.hrytsko.com/?utm_source=bluesky&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=bluesky&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring,,warmup-scoring day-3 warm
+2026-09-28,19:00,Threads,en,warmup,— scoring,"Setting the scoring before I start: did a player grasp the rule, reach level five, come back the next day. ""I liked it"" does not count.
+
+October 1.
+
+https://play.hrytsko.com/?utm_source=threads&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=threads&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring,,warmup-scoring day-3 warm
+2026-09-28,19:00,LinkedIn,en,warmup,— scoring,"Deciding how I score this before I start, so I cannot move the goalposts later.
+
+Three gates:
+Readability — a player understands the rule with no explanation and makes a real first move.
+Reach — how many get to level five.
+Return — do they come back the next day.
+
+Each game also gets a kill criterion written before it is built. If a greedy bot solves it, there is no decision in the game, and it gets buried.
+
+What does not count: I liked it.
+
+October 1.
+
+https://play.hrytsko.com/?utm_source=linkedin&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=linkedin&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring,,warmup-scoring day-3 warm
+2026-09-28,19:00,Telegram,ru,warmup,— scoring,"Договариваюсь сам с собой заранее, по каким цифрам буду судить, — чтобы потом не подгонять.
+
+Трое ворот:
+Читаемость — человек понимает правило без объяснений и делает первое осмысленное действие.
+Доходимость — доля тех, кто добрался до пятого уровня.
+Возврат — вернулись ли на следующий день.
+
+Плюс у каждой игры свой kill-критерий, записанный до того, как я её собрал. Если жадный бот проходит её насквозь — решения в игре нет, хороним.
+
+Что не считается: «мне понравилось».
+
+1 октября.
+
+https://play.hrytsko.com/?utm_source=telegram&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=telegram&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-scoring,,warmup-scoring day-3 warm
+2026-09-30,19:00,TikTok,en,warmup,— announce,"Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com. Plays in your phone browser, nothing to install.
+
+First one October 1.
+
+https://play.hrytsko.com/?utm_source=tiktok&utm_medium=cold&utm_campaign=proofofplay&utm_content=warmup-announce
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=tiktok&utm_medium=cold&utm_campaign=proofofplay&utm_content=warmup-announce,clips/teaser.mp4,warmup-announce day-1 cold
+2026-09-30,19:00,YouTube Shorts,en,warmup,— announce,"Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com. Plays in your phone browser, nothing to install.
+
+First one October 1.
+
+https://play.hrytsko.com/?utm_source=youtube&utm_medium=cold&utm_campaign=proofofplay&utm_content=warmup-announce
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=youtube&utm_medium=cold&utm_campaign=proofofplay&utm_content=warmup-announce,clips/teaser.mp4,warmup-announce day-1 cold
+2026-09-30,19:00,Instagram,en,warmup,— announce,"Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com. Plays in your phone browser, nothing to install.
+
+First one October 1.
+
+https://play.hrytsko.com/?utm_source=instagram&utm_medium=cold&utm_campaign=proofofplay&utm_content=warmup-announce
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=instagram&utm_medium=cold&utm_campaign=proofofplay&utm_content=warmup-announce,clips/teaser.mp4,warmup-announce day-1 cold
+2026-09-30,19:00,X,en,warmup,— announce,"Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com. Plays in your phone browser, nothing to install.
+
+First one October 1.
+
+https://play.hrytsko.com/?utm_source=x&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=x&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce,,warmup-announce day-1 warm
+2026-09-30,19:00,Bluesky,en,warmup,— announce,"Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com. Plays in your phone browser, nothing to install.
+
+First one October 1.
+
+https://play.hrytsko.com/?utm_source=bluesky&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=bluesky&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce,,warmup-announce day-1 warm
+2026-09-30,19:00,Threads,en,warmup,— announce,"Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com. Plays in your phone browser, nothing to install.
+
+First one October 1.
+
+https://play.hrytsko.com/?utm_source=threads&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=threads&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce,,warmup-announce day-1 warm
+2026-09-30,19:00,LinkedIn,en,warmup,— announce,"Tomorrow.
+
+What: 30 game prototypes in 30 days, one a day.
+Why: test thirty mechanics on real players and public numbers, instead of six months on one.
+Where: play.hrytsko.com — a new game every day, plays in a phone browser, nothing to install.
+How to follow: here, or the channel — every evening, the day's game and the previous day's numbers.
+
+First one October 1.
+
+https://play.hrytsko.com/?utm_source=linkedin&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=linkedin&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce,,warmup-announce day-1 warm
+2026-09-30,19:00,Telegram,ru,warmup,— announce,"Завтра начинается.
+
+Что: 30 игровых прототипов за 30 дней, по одному в день.
+Зачем: проверить тридцать механик на живых людях и публичных цифрах вместо полугода разработки на одну.
+Где: play.hrytsko.com — новая игра каждый день, играется с телефона, ставить ничего не надо.
+Как следить: здесь или в канале — каждый вечер игра дня и цифры предыдущей.
+
+Первая — 1 октября.
+
+https://play.hrytsko.com/?utm_source=telegram&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce
+#ProofOfPlay",https://play.hrytsko.com/?utm_source=telegram&utm_medium=warm&utm_campaign=proofofplay&utm_content=warmup-announce,,warmup-announce day-1 warm
 2026-10-01,19:00,TikTok,en,today,01 Incoming Box,"Incoming Box — Unscrew what matches the boxes below. Every three moves a box leaves, and the pocket holds three.
 
 https://play.hrytsko.com/incoming-box/?utm_source=tiktok&utm_medium=cold&utm_campaign=proofofplay&utm_content=day-01-today

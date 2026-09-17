@@ -5,124 +5,409 @@
   "note": "today = пост в день выхода игры. tomorrow = тизер накануне, без названия игры. Тексты держатся в пределах ~150 символов, чтобы пост с ссылкой влезал в лимит X (280).",
   "posts": {
     "box-arrives": {
-      "ru": { "title": "Ящик приезжает", "today": "Откручивай винты под цвет ящика. Через три хода ящик уедет, а в кармане всего три места.", "tomorrow": "Нужного цвета сейчас нет — значит винт идёт в карман. Мест в кармане три." },
-      "en": { "title": "Incoming Box", "today": "Unscrew what matches the boxes below. Every three moves a box leaves, and the pocket holds three.", "tomorrow": "The colour you need isn't there yet. The pocket holds three screws." }
+      "ru": {
+        "title": "Ящик приезжает",
+        "today": "Откручивай винты под цвет ящика. Через три хода ящик уедет, а в кармане всего три места.",
+        "tomorrow": "Нужного цвета сейчас нет — значит винт идёт в карман. Мест в кармане три."
+      },
+      "en": {
+        "title": "Incoming Box",
+        "today": "Unscrew what matches the boxes below. Every three moves a box leaves, and the pocket holds three.",
+        "tomorrow": "The colour you need isn't there yet. The pocket holds three screws."
+      }
     },
     "two-moves-later": {
-      "ru": { "title": "Через два хода", "today": "Вызывай машины заранее: они въедут через два хода, и место к тому моменту должно быть свободно.", "tomorrow": "Ты вызываешь машину сейчас, а приедет она через два хода. Место освобождать тебе." },
-      "en": { "title": "Two Moves Out", "today": "Call the cars early—they arrive two moves later, and the space had better be clear by then.", "tomorrow": "You call it now. It arrives two moves later. Clearing the space is your problem." }
+      "ru": {
+        "title": "Через два хода",
+        "today": "Вызывай машины заранее: они въедут через два хода, и место к тому моменту должно быть свободно.",
+        "tomorrow": "Ты вызываешь машину сейчас, а приедет она через два хода. Место освобождать тебе."
+      },
+      "en": {
+        "title": "Two Moves Out",
+        "today": "Call the cars early—they arrive two moves later, and the space had better be clear by then.",
+        "tomorrow": "You call it now. It arrives two moves later. Clearing the space is your problem."
+      }
     },
     "basement": {
-      "ru": { "title": "Подвал", "today": "Бери верхнюю фигуру из одной из трёх стопок и укладывай на поле. Что под ней — увидишь потом.", "tomorrow": "Три стопки, брать можно только сверху. Нужная фигура всегда где-то ниже." },
-      "en": { "title": "The Basement", "today": "Take the top piece from one of three stacks and place it. What's underneath is the next problem.", "tomorrow": "Three stacks, top piece only. The one you need is always further down." }
+      "ru": {
+        "title": "Подвал",
+        "today": "Бери верхнюю фигуру из одной из трёх стопок и укладывай на поле. Что под ней — увидишь потом.",
+        "tomorrow": "Три стопки, брать можно только сверху. Нужная фигура всегда где-то ниже."
+      },
+      "en": {
+        "title": "The Basement",
+        "today": "Take the top piece from one of three stacks and place it. What's underneath is the next problem.",
+        "tomorrow": "Three stacks, top piece only. The one you need is always further down."
+      }
     },
     "triple": {
-      "ru": { "title": "Тройка", "today": "Откручивай винты в поддон: три одинаковых исчезают, переполненный поддон — проигрыш.", "tomorrow": "Три одинаковых винта исчезают. Проблема в том, что поддон заполняется быстрее." },
-      "en": { "title": "Triple", "today": "Drop screws into the tray: three of a kind clear, an overflowing tray ends the run.", "tomorrow": "Three matching screws clear the tray. The tray fills up faster than that." }
+      "ru": {
+        "title": "Тройка",
+        "today": "Откручивай винты в поддон: три одинаковых исчезают, переполненный поддон — проигрыш.",
+        "tomorrow": "Три одинаковых винта исчезают. Проблема в том, что поддон заполняется быстрее."
+      },
+      "en": {
+        "title": "Triple",
+        "today": "Drop screws into the tray: three of a kind clear, an overflowing tray ends the run.",
+        "tomorrow": "Three matching screws clear the tray. The tray fills up faster than that."
+      }
     },
     "only-green": {
-      "ru": { "title": "Только зелёный", "today": "Смешивай жидкости в равных долях и собери нужный объём зелёного, не получив бурый.", "tomorrow": "Смешал не то — получил бурый. Бурый не отменяется." },
-      "en": { "title": "Only Green", "today": "Mix liquids in equal parts and collect enough green without ever making brown.", "tomorrow": "Mix the wrong two and you get brown. Brown doesn't wash out." }
+      "ru": {
+        "title": "Только зелёный",
+        "today": "Смешивай жидкости в равных долях и собери нужный объём зелёного, не получив бурый.",
+        "tomorrow": "Смешал не то — получил бурый. Бурый не отменяется."
+      },
+      "en": {
+        "title": "Only Green",
+        "today": "Mix liquids in equal parts and collect enough green without ever making brown.",
+        "tomorrow": "Mix the wrong two and you get brown. Brown doesn't wash out."
+      }
     },
     "tight-shelf": {
-      "ru": { "title": "Тесная полка", "today": "Расставляй товар по полкам: три одинаковых исчезают, а забитые полки — проигрыш.", "tomorrow": "Полок мало, товар не кончается. Место — единственный ресурс." },
-      "en": { "title": "Tight Shelf", "today": "Shelve the goods: three of a kind clear, and full shelves end the run.", "tomorrow": "Few shelves, endless goods. Space is the only resource." }
+      "ru": {
+        "title": "Тесная полка",
+        "today": "Расставляй товар по полкам: три одинаковых исчезают, а забитые полки — проигрыш.",
+        "tomorrow": "Полок мало, товар не кончается. Место — единственный ресурс."
+      },
+      "en": {
+        "title": "Tight Shelf",
+        "today": "Shelve the goods: three of a kind clear, and full shelves end the run.",
+        "tomorrow": "Few shelves, endless goods. Space is the only resource."
+      }
     },
     "stalled": {
-      "ru": { "title": "Заглохла", "today": "Двигай машины к выезду. У каждой ограничено число сдвигов — потратила все, заглохла навсегда.", "tomorrow": "У каждой машины конечное число сдвигов. Потратишь зря — она встанет посреди дороги." },
-      "en": { "title": "Stalled", "today": "Move the cars to the exit. Each has a limited number of moves—spend them and it stalls for good.", "tomorrow": "Every car has a fixed number of moves. Waste them and it dies in the middle of the road." }
+      "ru": {
+        "title": "Заглохла",
+        "today": "Двигай машины к выезду. У каждой ограничено число сдвигов — потратила все, заглохла навсегда.",
+        "tomorrow": "У каждой машины конечное число сдвигов. Потратишь зря — она встанет посреди дороги."
+      },
+      "en": {
+        "title": "Stalled",
+        "today": "Move the cars to the exit. Each has a limited number of moves—spend them and it stalls for good.",
+        "tomorrow": "Every car has a fixed number of moves. Waste them and it dies in the middle of the road."
+      }
     },
     "turnaround": {
-      "ru": { "title": "Разворот", "today": "Двигай блок по его стрелке. После каждого хода стрелка поворачивается на четверть вправо.", "tomorrow": "Стрелка показывает, куда пойдёт блок. После хода она повернётся, и это уже другой блок." },
-      "en": { "title": "Turnaround", "today": "Push a block the way its arrow points. After every move, that arrow turns a quarter to the right.", "tomorrow": "The arrow says where the block goes. Then it turns, and it's a different block now." }
+      "ru": {
+        "title": "Разворот",
+        "today": "Двигай блок по его стрелке. После каждого хода стрелка поворачивается на четверть вправо.",
+        "tomorrow": "Стрелка показывает, куда пойдёт блок. После хода она повернётся, и это уже другой блок."
+      },
+      "en": {
+        "title": "Turnaround",
+        "today": "Push a block the way its arrow points. After every move, that arrow turns a quarter to the right.",
+        "tomorrow": "The arrow says where the block goes. Then it turns, and it's a different block now."
+      }
     },
     "sprout": {
-      "ru": { "title": "Отросток", "today": "Веди ветку к воде и собирай очки. Кончатся шаги — незакреплённая ветка осыплется вместе с очками.", "tomorrow": "Очки на ветке не твои, пока она не дошла до воды." },
-      "en": { "title": "Sprout", "today": "Grow a branch toward water, scoring as you go. Run out of steps and the unrooted part crumbles.", "tomorrow": "Points on the branch aren't yours until it reaches water." }
+      "ru": {
+        "title": "Отросток",
+        "today": "Веди ветку к воде и собирай очки. Кончатся шаги — незакреплённая ветка осыплется вместе с очками.",
+        "tomorrow": "Очки на ветке не твои, пока она не дошла до воды."
+      },
+      "en": {
+        "title": "Sprout",
+        "today": "Grow a branch toward water, scoring as you go. Run out of steps and the unrooted part crumbles.",
+        "tomorrow": "Points on the branch aren't yours until it reaches water."
+      }
     },
     "flows": {
-      "ru": { "title": "Течёт", "today": "Поворачивай трубы, пока идёт вода. Каждый твой ход — ещё одна клетка, которую она прошла.", "tomorrow": "Вода не ждёт. Каждый твой поворот продвигает её на клетку вперёд." },
-      "en": { "title": "Leak", "today": "Turn the pipes while the water runs. Every move you make pushes it one tile further.", "tomorrow": "The water doesn't wait. Every turn you take moves it one tile closer." }
+      "ru": {
+        "title": "Течёт",
+        "today": "Поворачивай трубы, пока идёт вода. Каждый твой ход — ещё одна клетка, которую она прошла.",
+        "tomorrow": "Вода не ждёт. Каждый твой поворот продвигает её на клетку вперёд."
+      },
+      "en": {
+        "title": "Leak",
+        "today": "Turn the pipes while the water runs. Every move you make pushes it one tile further.",
+        "tomorrow": "The water doesn't wait. Every turn you take moves it one tile closer."
+      }
     },
     "burning-land": {
-      "ru": { "title": "Burning Land", "today": "Каждый ход ставь одну стену, потом огонь расширяется. Спасти всё нельзя — выбирай, что защищаешь.", "tomorrow": "Одна стена за ход, огонь растёт быстрее. Спасти всё не выйдет." },
-      "en": { "title": "Burning Land", "today": "One wall per move, then the fire spreads. You can't save everything—pick what you're defending.", "tomorrow": "One wall per move. The fire grows faster than that." }
+      "ru": {
+        "title": "Burning Land",
+        "today": "Каждый ход ставь одну стену, потом огонь расширяется. Спасти всё нельзя — выбирай, что защищаешь.",
+        "tomorrow": "Одна стена за ход, огонь растёт быстрее. Спасти всё не выйдет."
+      },
+      "en": {
+        "title": "Burning Land",
+        "today": "One wall per move, then the fire spreads. You can't save everything—pick what you're defending.",
+        "tomorrow": "One wall per move. The fire grows faster than that."
+      }
     },
     "coin-turn": {
-      "ru": { "title": "Монета за поворот", "today": "Клади фигуры на поле. Каждый поворот стоит монету, а монет на весь уровень десять.", "tomorrow": "Повернуть фигуру можно всегда. Вопрос в том, что монет только десять." },
-      "en": { "title": "Coin per Turn", "today": "Place the pieces. Every rotation costs a coin, and the whole level gives you ten.", "tomorrow": "You can always rotate the piece. You just have ten coins for the entire level." }
+      "ru": {
+        "title": "Монета за поворот",
+        "today": "Клади фигуры на поле. Каждый поворот стоит монету, а монет на весь уровень десять.",
+        "tomorrow": "Повернуть фигуру можно всегда. Вопрос в том, что монет только десять."
+      },
+      "en": {
+        "title": "Coin per Turn",
+        "today": "Place the pieces. Every rotation costs a coin, and the whole level gives you ten.",
+        "tomorrow": "You can always rotate the piece. You just have ten coins for the entire level."
+      }
     },
     "top-layer": {
-      "ru": { "title": "Верхний слой", "today": "Нажимай две одинаковые открытые плитки: они сливаются и открывают то, что лежало под ними.", "tomorrow": "Каждая убранная пара открывает новый слой. Что там — узнаешь, только убрав." },
-      "en": { "title": "Top Layer", "today": "Tap two matching uncovered tiles: they merge and reveal whatever was underneath.", "tomorrow": "Every pair you clear opens the layer below. You find out what's there by clearing it." }
+      "ru": {
+        "title": "Верхний слой",
+        "today": "Нажимай две одинаковые открытые плитки: они сливаются и открывают то, что лежало под ними.",
+        "tomorrow": "Каждая убранная пара открывает новый слой. Что там — узнаешь, только убрав."
+      },
+      "en": {
+        "title": "Top Layer",
+        "today": "Tap two matching uncovered tiles: they merge and reveal whatever was underneath.",
+        "tomorrow": "Every pair you clear opens the layer below. You find out what's there by clearing it."
+      }
     },
     "ribbon": {
-      "ru": { "title": "Лента", "today": "Режь цветные полоски на нужные доли и закрывай заказы, пока лента не кончилась.", "tomorrow": "Заказ просит 40% красного. Отрезать надо на глаз, а лента конечна." },
-      "en": { "title": "Ribbon", "today": "Cut the coloured strips into the right fractions and fill the orders before the ribbon runs out.", "tomorrow": "The order wants 40% red. You cut by eye, and the ribbon is finite." }
+      "ru": {
+        "title": "Лента",
+        "today": "Режь цветные полоски на нужные доли и закрывай заказы, пока лента не кончилась.",
+        "tomorrow": "Заказ просит 40% красного. Отрезать надо на глаз, а лента конечна."
+      },
+      "en": {
+        "title": "Ribbon",
+        "today": "Cut the coloured strips into the right fractions and fill the orders before the ribbon runs out.",
+        "tomorrow": "The order wants 40% red. You cut by eye, and the ribbon is finite."
+      }
     },
     "stuck": {
-      "ru": { "title": "Присох", "today": "Собирай тройки, меняя соседние плитки местами. Каждый обмен тратит по ходу у обеих плиток.", "tomorrow": "У каждой плитки свой запас обменов. Потратишь — она присохнет к полю навсегда." },
-      "en": { "title": "Stuck Fast", "today": "Match triples by swapping neighbours. Each swap spends a move from both tiles involved.", "tomorrow": "Every tile has its own swap budget. Spend it and the tile is stuck there for good." }
+      "ru": {
+        "title": "Присох",
+        "today": "Собирай тройки, меняя соседние плитки местами. Каждый обмен тратит по ходу у обеих плиток.",
+        "tomorrow": "У каждой плитки свой запас обменов. Потратишь — она присохнет к полю навсегда."
+      },
+      "en": {
+        "title": "Stuck Fast",
+        "today": "Match triples by swapping neighbours. Each swap spends a move from both tiles involved.",
+        "tomorrow": "Every tile has its own swap budget. Spend it and the tile is stuck there for good."
+      }
     },
     "collapse-wire": {
-      "ru": { "title": "Схлопни провод", "today": "Соединяй одинаковые точки проводом. Пара исчезает — и всё поле сдвигается на клетку.", "tomorrow": "Соединил пару — поле перестроилось. Следующий маршрут придётся искать заново." },
-      "en": { "title": "Collapse the Wire", "today": "Wire up matching dots. The pair vanishes—and every other dot shifts one tile.", "tomorrow": "Connect a pair and the board rearranges itself. Your next route is gone." }
+      "ru": {
+        "title": "Схлопни провод",
+        "today": "Соединяй одинаковые точки проводом. Пара исчезает — и всё поле сдвигается на клетку.",
+        "tomorrow": "Соединил пару — поле перестроилось. Следующий маршрут придётся искать заново."
+      },
+      "en": {
+        "title": "Collapse the Wire",
+        "today": "Wire up matching dots. The pair vanishes—and every other dot shifts one tile.",
+        "tomorrow": "Connect a pair and the board rearranges itself. Your next route is gone."
+      }
     },
     "collapsed": {
-      "ru": { "title": "Схлопнулись", "today": "Режь большие фигуры на два куска и своди одинаковые пары, пока экран не опустеет.", "tomorrow": "Правильный разрез один. Неправильный оставит кусок, к которому уже нет пары." },
-      "en": { "title": "Collapsed", "today": "Cut the big shapes in two and match the identical halves until the screen is clear.", "tomorrow": "There's one right cut. A wrong one leaves a piece with nothing left to match." }
+      "ru": {
+        "title": "Схлопнулись",
+        "today": "Режь большие фигуры на два куска и своди одинаковые пары, пока экран не опустеет.",
+        "tomorrow": "Правильный разрез один. Неправильный оставит кусок, к которому уже нет пары."
+      },
+      "en": {
+        "title": "Collapsed",
+        "today": "Cut the big shapes in two and match the identical halves until the screen is clear.",
+        "tomorrow": "There's one right cut. A wrong one leaves a piece with nothing left to match."
+      }
     },
     "double": {
-      "ru": { "title": "Вдвое", "today": "Сгибай фигуру по линиям, чтобы накрыть все целевые клетки. Сложенное место больше не гнётся.", "tomorrow": "Каждый сгиб делает бумагу толще. Толстое место уже не согнуть." },
-      "en": { "title": "Fold", "today": "Fold the shape along its creases to cover every target cell. A folded part turns thick and won't bend again.", "tomorrow": "Every fold makes the paper thicker. Thick paper doesn't fold." }
+      "ru": {
+        "title": "Вдвое",
+        "today": "Сгибай фигуру по линиям, чтобы накрыть все целевые клетки. Сложенное место больше не гнётся.",
+        "tomorrow": "Каждый сгиб делает бумагу толще. Толстое место уже не согнуть."
+      },
+      "en": {
+        "title": "Fold",
+        "today": "Fold the shape along its creases to cover every target cell. A folded part turns thick and won't bend again.",
+        "tomorrow": "Every fold makes the paper thicker. Thick paper doesn't fold."
+      }
     },
     "excavation": {
-      "ru": { "title": "Раскоп", "today": "Вскрывай плиты по числам о соседних ловушках. Пять золота — зачёт, девять — идеально и куда рискованнее.", "tomorrow": "Пяти золота хватит, чтобы пройти. Девять лежат вплотную к ловушкам." },
-      "en": { "title": "The Dig", "today": "Open slabs using the trap counts around them. Five gold clears it, nine is perfect—and much closer to a trap.", "tomorrow": "Five gold is enough to pass. Nine are sitting right next to the traps." }
+      "ru": {
+        "title": "Раскоп",
+        "today": "Вскрывай плиты по числам о соседних ловушках. Пять золота — зачёт, девять — идеально и куда рискованнее.",
+        "tomorrow": "Пяти золота хватит, чтобы пройти. Девять лежат вплотную к ловушкам."
+      },
+      "en": {
+        "title": "The Dig",
+        "today": "Open slabs using the trap counts around them. Five gold clears it, nine is perfect—and much closer to a trap.",
+        "tomorrow": "Five gold is enough to pass. Nine are sitting right next to the traps."
+      }
     },
     "jammed": {
-      "ru": { "title": "Заклинило", "today": "Тащи плитку на такую же: они сливаются в следующий номинал ровно в той клетке, куда ты тянул.", "tomorrow": "Ты сам выбираешь, где окажется слияние. Отменить его нельзя." },
-      "en": { "title": "Jammed", "today": "Drag a tile onto its twin: they merge one rank up, exactly in the cell you dragged to.", "tomorrow": "You choose where the merge lands. You don't get to undo it." }
+      "ru": {
+        "title": "Заклинило",
+        "today": "Тащи плитку на такую же: они сливаются в следующий номинал ровно в той клетке, куда ты тянул.",
+        "tomorrow": "Ты сам выбираешь, где окажется слияние. Отменить его нельзя."
+      },
+      "en": {
+        "title": "Jammed",
+        "today": "Drag a tile onto its twin: they merge one rank up, exactly in the cell you dragged to.",
+        "tomorrow": "You choose where the merge lands. You don't get to undo it."
+      }
     },
     "cable-bet": {
-      "ru": { "title": "Кабель на ставку", "today": "Соединяй узлы одного цвета, сам выбирая пары и маршруты, и уложись в общий запас кабеля.", "tomorrow": "Кабель один на все соединения. Короткий путь для одной пары перекрывает дорогу другой." },
-      "en": { "title": "Cable Bet", "today": "Connect same-coloured nodes, choosing the pairs and the routes, inside one shared cable budget.", "tomorrow": "One cable for every connection. The short route for one pair blocks the road for another." }
+      "ru": {
+        "title": "Кабель на ставку",
+        "today": "Соединяй узлы одного цвета, сам выбирая пары и маршруты, и уложись в общий запас кабеля.",
+        "tomorrow": "Кабель один на все соединения. Короткий путь для одной пары перекрывает дорогу другой."
+      },
+      "en": {
+        "title": "Cable Bet",
+        "today": "Connect same-coloured nodes, choosing the pairs and the routes, inside one shared cable budget.",
+        "tomorrow": "One cable for every connection. The short route for one pair blocks the road for another."
+      }
     },
     "screw-budget": {
-      "ru": { "title": "Запас крутей", "today": "Откручивай винты из общего запаса крутей. Чтобы снять деталь, не обязательно трогать все её винты.", "tomorrow": "Крутей мало. Хорошая новость: половину винтов можно вообще не откручивать." },
-      "en": { "title": "Screw Budget", "today": "Spend from one shared budget of turns. Freeing a part doesn't mean removing every screw holding it.", "tomorrow": "Turns are scarce. The good news: half those screws don't need to come out at all." }
+      "ru": {
+        "title": "Запас крутей",
+        "today": "Откручивай винты из общего запаса крутей. Чтобы снять деталь, не обязательно трогать все её винты.",
+        "tomorrow": "Крутей мало. Хорошая новость: половину винтов можно вообще не откручивать."
+      },
+      "en": {
+        "title": "Screw Budget",
+        "today": "Spend from one shared budget of turns. Freeing a part doesn't mean removing every screw holding it.",
+        "tomorrow": "Turns are scarce. The good news: half those screws don't need to come out at all."
+      }
     },
     "skip": {
-      "ru": { "title": "Пропусти", "today": "Раскладывай предметы из очереди по ящикам. Один неудобный можно отправить в конец — но только один.", "tomorrow": "Один раз за уровень можно сказать «не сейчас». Предмет вернётся, и разместить его придётся." },
-      "en": { "title": "Skip", "today": "Sort the queue into a handful of boxes. One awkward item can go to the back—once.", "tomorrow": "Once per level you get to say 'not now'. It comes back, and then you have to place it." }
+      "ru": {
+        "title": "Пропусти",
+        "today": "Раскладывай предметы из очереди по ящикам. Один неудобный можно отправить в конец — но только один.",
+        "tomorrow": "Один раз за уровень можно сказать «не сейчас». Предмет вернётся, и разместить его придётся."
+      },
+      "en": {
+        "title": "Skip",
+        "today": "Sort the queue into a handful of boxes. One awkward item can go to the back—once.",
+        "tomorrow": "Once per level you get to say 'not now'. It comes back, and then you have to place it."
+      }
     },
     "by-touch": {
-      "ru": { "title": "Наощупь", "today": "По числам на краях вычисли, где ценное, ставь фигуры раунда и забери очки, пока они не сгорели.", "tomorrow": "Числа по краям говорят, сколько ценного в строке. Где именно — выясняешь фигурами." },
-      "en": { "title": "By Touch", "today": "Read the edge numbers to work out where the treasure is, place the round's pieces, bank before it burns.", "tomorrow": "The edge numbers say how much is hidden in each row. Where exactly is yours to find out." }
+      "ru": {
+        "title": "Наощупь",
+        "today": "По числам на краях вычисли, где ценное, ставь фигуры раунда и забери очки, пока они не сгорели.",
+        "tomorrow": "Числа по краям говорят, сколько ценного в строке. Где именно — выясняешь фигурами."
+      },
+      "en": {
+        "title": "By Touch",
+        "today": "Read the edge numbers to work out where the treasure is, place the round's pieces, bank before it burns.",
+        "tomorrow": "The edge numbers say how much is hidden in each row. Where exactly is yours to find out."
+      }
     },
     "order": {
-      "ru": { "title": "Заказ", "today": "Выбирай одну из трёх фигур — ставит её игра сама, максимально вниз и влево. Куда ляжет, видно заранее.", "tomorrow": "Ты выбираешь фигуру. Место выбирает игра. И показывает его до того, как ты выбрал." },
-      "en": { "title": "The Order", "today": "Pick one of three pieces—the game places it for you, as low and as far left as it fits. You see where first.", "tomorrow": "You pick the piece. The game picks the spot—and shows you the spot before you pick." }
+      "ru": {
+        "title": "Заказ",
+        "today": "Выбирай одну из трёх фигур — ставит её игра сама, максимально вниз и влево. Куда ляжет, видно заранее.",
+        "tomorrow": "Ты выбираешь фигуру. Место выбирает игра. И показывает его до того, как ты выбрал."
+      },
+      "en": {
+        "title": "The Order",
+        "today": "Pick one of three pieces—the game places it for you, as low and as far left as it fits. You see where first.",
+        "tomorrow": "You pick the piece. The game picks the spot—and shows you the spot before you pick."
+      }
     },
     "shift": {
-      "ru": { "title": "Сдвиг", "today": "Сдвигай целую строку или колонку на клетку, собирая одинаковые подряд. С дальнего края блок вылетает навсегда.", "tomorrow": "Каждый сдвиг выталкивает блок за край. Иногда именно тот, который был нужен." },
-      "en": { "title": "Shift", "today": "Shift a whole row or column one cell to line up matches. Whatever falls off the far edge is gone for good.", "tomorrow": "Every shift pushes a block off the edge. Sometimes the one you needed." }
+      "ru": {
+        "title": "Сдвиг",
+        "today": "Сдвигай целую строку или колонку на клетку, собирая одинаковые подряд. С дальнего края блок вылетает навсегда.",
+        "tomorrow": "Каждый сдвиг выталкивает блок за край. Иногда именно тот, который был нужен."
+      },
+      "en": {
+        "title": "Shift",
+        "today": "Shift a whole row or column one cell to line up matches. Whatever falls off the far edge is gone for good.",
+        "tomorrow": "Every shift pushes a block off the edge. Sometimes the one you needed."
+      }
     },
     "trail": {
-      "ru": { "title": "След", "today": "Иди по клеткам и собери всё нужное. Каждая покинутая клетка исчезает на три хода и может отрезать путь.", "tomorrow": "Клетка, с которой ты ушёл, исчезает на три хода. Маршрут должен пережить твой собственный след." },
-      "en": { "title": "Trail", "today": "Walk the grid and collect what you need. Every cell you leave vanishes for three moves and can cut you off.", "tomorrow": "The cell you step off vanishes for three moves. Your route has to survive your own trail." }
+      "ru": {
+        "title": "След",
+        "today": "Иди по клеткам и собери всё нужное. Каждая покинутая клетка исчезает на три хода и может отрезать путь.",
+        "tomorrow": "Клетка, с которой ты ушёл, исчезает на три хода. Маршрут должен пережить твой собственный след."
+      },
+      "en": {
+        "title": "Trail",
+        "today": "Walk the grid and collect what you need. Every cell you leave vanishes for three moves and can cut you off.",
+        "tomorrow": "The cell you step off vanishes for three moves. Your route has to survive your own trail."
+      }
     },
     "ripeness": {
-      "ru": { "title": "Спелость", "today": "Ходи к плодам: каждый шаг старит весь сад разом. Точно в срок — 3 очка, рано — 2, поздно — 1.", "tomorrow": "Каждый твой шаг — это ход часов для всего сада. Маршрут и есть таймер." },
-      "en": { "title": "Ripeness", "today": "Walk to the fruit—every step ages all of it at once. Right on time is 3 points, early 2, late 1.", "tomorrow": "Every step you take is a tick of the clock for the whole garden. The route is the timer." }
+      "ru": {
+        "title": "Спелость",
+        "today": "Ходи к плодам: каждый шаг старит весь сад разом. Точно в срок — 3 очка, рано — 2, поздно — 1.",
+        "tomorrow": "Каждый твой шаг — это ход часов для всего сада. Маршрут и есть таймер."
+      },
+      "en": {
+        "title": "Ripeness",
+        "today": "Walk to the fruit—every step ages all of it at once. Right on time is 3 points, early 2, late 1.",
+        "tomorrow": "Every step you take is a tick of the clock for the whole garden. The route is the timer."
+      }
     },
     "arrow": {
-      "ru": { "title": "Стрелка", "today": "Ставь стрелку на любой блок — и все блоки со стрелками двигаются разом. Одинаковые цвета схлопываются.", "tomorrow": "Одна стрелка за ход. Но двигаются все блоки, которым ты её когда-то поставил." },
-      "en": { "title": "Arrow", "today": "Put an arrow on any block—then every arrowed block moves at once. Same colours touching disappear.", "tomorrow": "One arrow per move. But every block you ever pointed moves at the same time." }
+      "ru": {
+        "title": "Стрелка",
+        "today": "Ставь стрелку на любой блок — и все блоки со стрелками двигаются разом. Одинаковые цвета схлопываются.",
+        "tomorrow": "Одна стрелка за ход. Но двигаются все блоки, которым ты её когда-то поставил."
+      },
+      "en": {
+        "title": "Arrow",
+        "today": "Put an arrow on any block—then every arrowed block moves at once. Same colours touching disappear.",
+        "tomorrow": "One arrow per move. But every block you ever pointed moves at the same time."
+      }
     },
     "overload": {
-      "ru": { "title": "Перегруз", "today": "Вешай ящики на крюк и поднимай партиями. Сколько выдержит трос — неизвестно, а поездок мало.", "tomorrow": "Зелёная зона держит всегда. В красной трос рвётся — но где именно, тебе не скажут." },
-      "en": { "title": "Overload", "today": "Load boxes onto the hook and lift them in batches. Nobody says what the cable holds, and trips are scarce.", "tomorrow": "The green zone always holds. Somewhere in the red it snaps. Nobody tells you where." }
+      "ru": {
+        "title": "Перегруз",
+        "today": "Вешай ящики на крюк и поднимай партиями. Сколько выдержит трос — неизвестно, а поездок мало.",
+        "tomorrow": "Зелёная зона держит всегда. В красной трос рвётся — но где именно, тебе не скажут."
+      },
+      "en": {
+        "title": "Overload",
+        "today": "Load boxes onto the hook and lift them in batches. Nobody says what the cable holds, and trips are scarce.",
+        "tomorrow": "The green zone always holds. Somewhere in the red it snaps. Nobody tells you where."
+      }
     }
-  }
+  },
+  "warmupNote": "Прогрев, строка 14 конвейера. offset — сдвиг в днях от дня 1. channels: text = только текстовые каналы; all = включая видео-каналы (нужен ролик). short идёт в X/Bluesky/Threads/TikTok/Shorts/Instagram, long — в LinkedIn/Telegram.",
+  "warmup": [
+    {
+      "id": "why",
+      "offset": -5,
+      "time": "19:00",
+      "channels": "text",
+      "ru": {
+        "short": "30 дней, 30 игровых прототипов, по одному в день. Все метрики публичные — включая стыдные. Правило одно: провалился — хороним, не чиним.\n\nСтарт 1 октября.",
+        "long": "Тридцать дней. Тридцать игровых прототипов. По одному в день, каждый играбельный и выложенный в тот же вечер.\n\nЗачем: обычно идею проверяют через полгода разработки. Я хочу проверить тридцать идей за месяц и на цифрах, а не на ощущениях.\n\nВсе метрики публичные — сколько людей дошло до пятого уровня, сколько вернулось назавтра. В том числе там, где цифры будут стыдные.\n\nГлавное правило: не чинить. Провалился — хороним и идём дальше.\n\nСтарт 1 октября."
+      },
+      "en": {
+        "short": "30 days, 30 playable prototypes, one a day. Every metric public, including the embarrassing ones. One rule: if it fails, it gets buried, not fixed.\n\nStarts October 1.",
+        "long": "Thirty days. Thirty playable prototypes. One a day, shipped the same evening.\n\nWhy: most ideas get tested six months into development. I want to test thirty of them in a month, on numbers instead of feelings.\n\nEvery metric public — how many reach level five, how many come back the next day. Including the embarrassing ones.\n\nOne rule: no fixing. If it fails, it gets buried and I move on.\n\nStarts October 1."
+      }
+    },
+    {
+      "id": "scoring",
+      "offset": -3,
+      "time": "19:00",
+      "channels": "text",
+      "ru": {
+        "short": "Договариваюсь заранее, по каким цифрам сужу: понял ли человек правило, дошёл ли до 5 уровня, вернулся ли назавтра. «Мне понравилось» не считается.\n\n1 октября.",
+        "long": "Договариваюсь сам с собой заранее, по каким цифрам буду судить, — чтобы потом не подгонять.\n\nТрое ворот:\nЧитаемость — человек понимает правило без объяснений и делает первое осмысленное действие.\nДоходимость — доля тех, кто добрался до пятого уровня.\nВозврат — вернулись ли на следующий день.\n\nПлюс у каждой игры свой kill-критерий, записанный до того, как я её собрал. Если жадный бот проходит её насквозь — решения в игре нет, хороним.\n\nЧто не считается: «мне понравилось».\n\n1 октября."
+      },
+      "en": {
+        "short": "Setting the scoring before I start: did a player grasp the rule, reach level five, come back the next day. \"I liked it\" does not count.\n\nOctober 1.",
+        "long": "Deciding how I score this before I start, so I cannot move the goalposts later.\n\nThree gates:\nReadability — a player understands the rule with no explanation and makes a real first move.\nReach — how many get to level five.\nReturn — do they come back the next day.\n\nEach game also gets a kill criterion written before it is built. If a greedy bot solves it, there is no decision in the game, and it gets buried.\n\nWhat does not count: I liked it.\n\nOctober 1."
+      }
+    },
+    {
+      "id": "announce",
+      "offset": -1,
+      "time": "19:00",
+      "channels": "all",
+      "ru": {
+        "short": "Завтра. 30 прототипов за 30 дней, новая игра каждый вечер на play.hrytsko.com. С телефона, ставить ничего не надо.\n\nПервая — 1 октября.",
+        "long": "Завтра начинается.\n\nЧто: 30 игровых прототипов за 30 дней, по одному в день.\nЗачем: проверить тридцать механик на живых людях и публичных цифрах вместо полугода разработки на одну.\nГде: play.hrytsko.com — новая игра каждый день, играется с телефона, ставить ничего не надо.\nКак следить: здесь или в канале — каждый вечер игра дня и цифры предыдущей.\n\nПервая — 1 октября."
+      },
+      "en": {
+        "short": "Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com. Plays in your phone browser, nothing to install.\n\nFirst one October 1.",
+        "long": "Tomorrow.\n\nWhat: 30 game prototypes in 30 days, one a day.\nWhy: test thirty mechanics on real players and public numbers, instead of six months on one.\nWhere: play.hrytsko.com — a new game every day, plays in a phone browser, nothing to install.\nHow to follow: here, or the channel — every evening, the day's game and the previous day's numbers.\n\nFirst one October 1."
+      }
+    }
+  ]
 }

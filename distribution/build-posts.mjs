@@ -24,15 +24,18 @@ const COLUMNS = ['Date', 'Time', 'Accounts', 'Language', 'Type', 'Game', 'Text',
 
 // utm_source попадает в аналитику как есть: hub.js возвращает его из
 // trafficSource() без преобразований. utm_medium несёт тёплый/холодный трафик.
+// needsMedia: канал не принимает пост без видео, поэтому текстовые посты
+// прогрева туда не уходят. length: какой вариант текста прогрева брать —
+// короткий под лимит X или длинный для ленты, где длинный текст читают.
 const CHANNELS = [
-  { name: 'TikTok', utm: 'tiktok', medium: 'cold', lang: 'en' },
-  { name: 'YouTube Shorts', utm: 'youtube', medium: 'cold', lang: 'en' },
-  { name: 'Instagram', utm: 'instagram', medium: 'cold', lang: 'en' },
-  { name: 'X', utm: 'x', medium: 'warm', lang: 'en' },
-  { name: 'Bluesky', utm: 'bluesky', medium: 'warm', lang: 'en' },
-  { name: 'Threads', utm: 'threads', medium: 'warm', lang: 'en' },
-  { name: 'LinkedIn', utm: 'linkedin', medium: 'warm', lang: 'en' },
-  { name: 'Telegram', utm: 'telegram', medium: 'warm', lang: 'ru' }
+  { name: 'TikTok', utm: 'tiktok', medium: 'cold', lang: 'en', needsMedia: true, length: 'short' },
+  { name: 'YouTube Shorts', utm: 'youtube', medium: 'cold', lang: 'en', needsMedia: true, length: 'short' },
+  { name: 'Instagram', utm: 'instagram', medium: 'cold', lang: 'en', needsMedia: true, length: 'short' },
+  { name: 'X', utm: 'x', medium: 'warm', lang: 'en', needsMedia: false, length: 'short' },
+  { name: 'Bluesky', utm: 'bluesky', medium: 'warm', lang: 'en', needsMedia: false, length: 'short' },
+  { name: 'Threads', utm: 'threads', medium: 'warm', lang: 'en', needsMedia: false, length: 'short' },
+  { name: 'LinkedIn', utm: 'linkedin', medium: 'warm', lang: 'en', needsMedia: false, length: 'long' },
+  { name: 'Telegram', utm: 'telegram', medium: 'warm', lang: 'ru', needsMedia: false, length: 'long' }
 ];
 
 const HUB = 'https://play.hrytsko.com';
@@ -62,7 +65,7 @@ function csvCell(value) {
 
 const games = readJson(join(root, 'games.json'));
 const { schedule } = readJson(join(here, 'schedule.json'));
-const { posts, campaign, hashtagEn, hashtagRu } = readJson(join(here, 'posts.json'));
+const { posts, warmup, campaign, hashtagEn, hashtagRu } = readJson(join(here, 'posts.json'));
 
 const startDate = arg('--start', games.project.startDate);
 const outPath = arg('--out', join(here, 'publer-posts.csv'));
@@ -76,6 +79,34 @@ const hubSlugByDay = new Map(
 
 const rows = [];
 const warnings = [];
+
+// Прогрев: посты до дня 1. Идут первыми, чтобы в CSV сохранялся ход времени.
+for (const post of warmup || []) {
+  const date = addDays(startDate, post.offset);
+  for (const channel of CHANNELS) {
+    if (post.channels === 'text' && channel.needsMedia) continue;
+
+    const utm =
+      `utm_source=${channel.utm}&utm_medium=${channel.medium}` +
+      `&utm_campaign=${campaign}&utm_content=warmup-${post.id}`;
+    const link = `${HUB}/?${utm}`;
+    const hashtag = channel.lang === 'ru' ? hashtagRu : hashtagEn;
+    const body = post[channel.lang][channel.length];
+
+    rows.push({
+      Date: date,
+      Time: post.time,
+      Accounts: channel.name,
+      Language: channel.lang,
+      Type: 'warmup',
+      Game: `— ${post.id}`,
+      Text: `${body}\n\n${link}\n${hashtag}`,
+      Link: link,
+      Media: channel.needsMedia ? 'clips/teaser.mp4' : '',
+      Labels: [`warmup-${post.id}`, `day${post.offset}`, channel.medium].join(' ')
+    });
+  }
+}
 
 for (let day = 1; day <= 30; day += 1) {
   const specSlug = schedule[day];
@@ -138,7 +169,11 @@ for (let day = 1; day <= 30; day += 1) {
   }
 }
 
-const tooLongForX = rows.filter((r) => r.Accounts === 'X' && r.Text.length > X_LIMIT);
+// X считает любую ссылку за 23 символа независимо от её реальной длины
+// (t.co), поэтому мерить текст как есть — значит поднимать ложную тревогу на
+// каждом посте: одни только utm-хвосты у нас длиннее сотни символов.
+const xLength = (text) => text.replace(/https?:\/\/\S+/g, 'x'.repeat(23)).length;
+const tooLongForX = rows.filter((r) => r.Accounts === 'X' && xLength(r.Text) > X_LIMIT);
 if (tooLongForX.length) {
   warnings.push(
     `${tooLongForX.length} постов для X длиннее ${X_LIMIT} символов: ` +
@@ -152,10 +187,10 @@ const csv = [COLUMNS.join(',')]
 
 writeFileSync(outPath, `${csv}\n`);
 
-const slots = rows.length / CHANNELS.length;
+const warmupRows = rows.filter((r) => r.Type === 'warmup').length;
 console.log(`Старт: ${startDate} (${games.project.timeZone})`);
-console.log(`Постов-слотов: ${slots} (30 «сегодня» + 30 «завтра»)`);
-console.log(`Строк в CSV: ${rows.length} — по одной на канал, ${CHANNELS.length} каналов`);
+console.log(`Постов-слотов: ${3 + 60} (3 прогрев + 30 «сегодня» + 30 «завтра»)`);
+console.log(`Строк в CSV: ${rows.length} — по одной на канал (${warmupRows} из них прогрев)`);
 console.log(`Записано: ${outPath}`);
 const provisionalDays = 30 - hubSlugByDay.size;
 if (provisionalDays > 0) {
