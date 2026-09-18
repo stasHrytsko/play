@@ -327,3 +327,33 @@ are orthogonal) — only `ui-kit` gained a new consumer, not a new dependency.
 
 **Verified:** typecheck, lint, test (67/67, same data-testid values
 throughout so nothing needed to change on the test side), build — all pass.
+
+
+---
+
+## D-013 — first action, failure and retry cross the Shell ↔ Mechanic boundary, 2026-09-19
+
+**Decision:** widen `CreateLevelParams` with exactly two callbacks:
+`onFirstAction()` and `onFail(reason)`.
+
+- `onFirstAction()` is called by the mechanic on the first meaningful valid
+  gameplay input. The shell de-duplicates it defensively and emits
+  `first_action`.
+- `onFail(reason)` is called when the attempt reaches the deterministic loss
+  condition defined by that game's rules. `reason` is a stable
+  machine-readable mechanic-owned code (for example `pocket_overflow`).
+  The shell emits `level_fail` and shows the shared fail popup.
+- `retry` is deliberately **not** a mechanic callback. Retrying is shell
+  navigation: the retry button emits `retry` and remounts the same level.
+- Stale callbacks from a destroyed level session are ignored, same as stale
+  completion callbacks.
+
+**Why:** the original D-011 fork could observe only completion and exit. That
+made `first_action`, `level_fail` and `retry` impossible to measure
+without breaking the architecture by calling analytics from individual games.
+The first scheduled concept already has a real loss state, so leaving the gap
+open would make its rules and experiment metrics disagree with the runtime.
+
+**Boundary cost:** every game host now receives the two callbacks, but games
+without a loss condition simply never call `onFail`. Analytics remains owned
+by the shell; the pure engine remains unaware of UI and PostHog.
