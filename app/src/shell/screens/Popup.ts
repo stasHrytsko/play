@@ -13,9 +13,8 @@ export interface PopupOptions {
 /**
  * The one popup shape in the shell.
  *
- * Today it backs the win popup. A loss popup — which the current
- * Shell/Mechanic contract has no way to trigger, see docs/decisions.md
- * D-007 — would be built from exactly this function and nothing else.
+ * Shared popup shape for win and loss states. Keeping both flows on the same
+ * primitive prevents individual mechanics from inventing their own shell UI.
  */
 export function Popup(options: PopupOptions): HTMLElement {
   return uiEl('div', { className: 'popup-overlay', testId: options.testId }, [
