@@ -36,9 +36,10 @@ Shared DOM shell + Phaser mechanic. One game per `games/<slug>/`; only
   `MechanicHost` from `src/shell-contract.ts`, and build its DOM/render
   through `ui-kit`/`render-kit` rather than reinventing either.
 - Do not change `src/shell-contract.ts` without approval — every field added
-  there is a field every future game has to care about. This includes adding
-  `onFail`/a first-action hook for the `level_fail` / `retry` / `first_action`
-  PostHog events that `SignalSink.ts` currently cannot fire — see D-011.
+  there is a field every future game has to care about. The deliberate D-013
+  extension is now part of the contract: mechanics call `onFirstAction()` on
+  the first meaningful input and `onFail(reason)` on a failed attempt. The
+  shell owns analytics and retry UI; mechanics never call PostHog directly.
 - Read `games/<slug>/rules.md` before writing mechanic code for that game. If
   a rule is missing or ambiguous, stop and ask — do not invent it.
 
@@ -118,6 +119,10 @@ of it, `npm run check` is green, levels included. There is no separate
    linter enforces this, see Boundaries). This is where the rules document
    becomes code; if a rule can't be written as a test per the rules-template
    standard, that's the ambiguity to raise in step 1, not to guess past here.
+   The render/host layer must report the first meaningful valid input through
+   `onFirstAction()` and every deterministic loss through
+   `onFail('<stable_reason_code>')`. The shell de-duplicates first action,
+   emits analytics, shows the loss popup and owns retry.
 5. `mechanic/levels/`: `levels.json` with real content for all 5 levels
    (Способ А or Б from `docs/rules-template.md` §8 — whichever the rules
    used), plus a `loadLevels.ts` that validates the pack's length against
