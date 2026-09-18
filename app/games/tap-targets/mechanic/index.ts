@@ -78,6 +78,7 @@ export function createMechanicHost(): MechanicHost {
       const scene = new LevelScene({
         level,
         theme,
+        onFirstAction: params.onFirstAction,
         onComplete: params.onComplete,
         onStateChange,
       });
