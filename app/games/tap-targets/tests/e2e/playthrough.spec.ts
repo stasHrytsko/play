@@ -104,6 +104,10 @@ test.describe('playthrough', () => {
     await expect(testId(page, 'level-select')).toBeVisible();
 
     expect(signals.posthog).toContainEqual({
+      event: 'first_action',
+      properties: expect.objectContaining({ game_id: GAME.id, level: 0 }),
+    });
+    expect(signals.posthog).toContainEqual({
       event: 'level_5_complete',
       properties: expect.objectContaining({ game_id: GAME.id }),
     });
