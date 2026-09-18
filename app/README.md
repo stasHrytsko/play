@@ -40,9 +40,9 @@ Main menu, versioned onboarding, a single vertical level list (always 5
 levels, no difficulty bands), game screen, win popup, and a rating popup
 (1–5 stars + optional comment) after the last level. Progress via
 `@capacitor/preferences` (falls back to localStorage on web). Analytics via
-`PostHogSignalSink` (EU cloud) — see `SignalSink.ts` for exactly which
-events the shell can fire today, and which three (`level_fail`, `retry`,
-`first_action`) need a `shell-contract.ts` change first. Comments via
+`PostHogSignalSink` (EU cloud) — the mechanic reports `first_action` and
+failures through `shell-contract.ts`; the shell emits `first_action`,
+`level_fail` and `retry` alongside the existing lifecycle events. Comments via
 `Web3FormsFeedbackSink` (placeholder access key — see `docs/decisions.md`).
 Capacitor/Android is opt-in, not part of the daily build (`npm run check`
 never touches it).
