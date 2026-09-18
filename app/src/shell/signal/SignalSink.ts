@@ -9,11 +9,6 @@
  *
  *  - hub_impression, hub_click, teaser_click — fired by the hub site itself
  *    (stasHrytsko/play, analytics-config.js), not by an individual game.
- *  - level_fail, retry, first_action — MechanicHost (src/shell-contract.ts)
- *    has no way to report a failed attempt or a first meaningful input today;
- *    only onComplete/onExit exist. Adding these needs a deliberate contract
- *    change (see CLAUDE.md "Boundaries"), not a silent addition here. See
- *    docs/decisions.md, 2026-09-16 fork entry.
  *  - session_2, return_d1, return_d7 — not fired as custom events at all.
  *    PostHog assigns a persistent distinct_id per browser and computes
  *    retention (D1/D7, N-session) from that plus `game_open` natively, via
@@ -24,8 +19,11 @@
 export type GameEventName =
   | 'game_open'
   | 'help_open'
+  | 'first_action'
   | 'level_start'
   | 'level_win'
+  | 'level_fail'
+  | 'retry'
   | 'level_5_complete'
   | 'rating_submit'
   | 'comment_submit';
@@ -34,8 +32,10 @@ export interface GameSignal {
   /** GameDefinition.id — never anything derived from the player. */
   readonly gameId: string;
   readonly event: GameEventName;
-  /** 0-based level index. Present for level_start / level_win. */
+  /** 0-based level index. Present for level lifecycle/action events. */
   readonly level?: number;
+  /** Stable mechanic-owned failure code. Present only for level_fail. */
+  readonly reason?: string;
   /** 1-5. Present only for rating_submit. */
   readonly rating?: number;
   /** GameDefinition.version, so a metric can be split by content revision. */
