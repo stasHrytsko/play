@@ -120,15 +120,33 @@ export class ShellApp {
     screen.setStats(`Уровень ${String(levelIndex + 1)} из ${String(this.#deps.game.levelCount)}`);
     this.#show(screen);
 
-    // A session that has already been torn down must not be able to complete.
+    // A session that has already been torn down must not be able to report
+    // lifecycle events. first_action is de-duplicated here as a second line of
+    // defence even though a mechanic should report it once.
     let live = true;
+    let firstActionReported = false;
     const session = this.#deps.mechanic.createLevel({
       container: screen.surface,
       levelIndex,
+      onFirstAction: () => {
+        if (!live || firstActionReported) return;
+        firstActionReported = true;
+        void this.#deps.signal.send({
+          event: 'first_action',
+          gameId: this.#deps.game.id,
+          level: levelIndex,
+          version: this.#deps.game.version,
+        });
+      },
       onComplete: () => {
         if (!live) return;
         live = false;
         void this.#levelCompleted(levelIndex, screen);
+      },
+      onFail: (reason) => {
+        if (!live) return;
+        live = false;
+        this.#levelFailed(levelIndex, reason, screen);
       },
       onExit: () => {
         if (!live) return;
@@ -183,6 +201,51 @@ export class ShellApp {
 
     if (this.#rulesReturn === 'menu') this.goMenu();
     else this.goLevelSelect();
+  }
+
+  #levelFailed(levelIndex: number, reason: string, screen: ReturnType<typeof GameScreen>): void {
+    const { game } = this.#deps;
+
+    void this.#deps.signal.send({
+      event: 'level_fail',
+      gameId: game.id,
+      level: levelIndex,
+      reason,
+      version: game.version,
+    });
+
+    screen.showOverlay(
+      Popup({
+        testId: 'fail-popup',
+        emoji: '↻',
+        title: 'Не получилось',
+        body: 'Попробуй ещё раз или вернись к уровням.',
+        actions: [
+          {
+            label: 'Ещё раз',
+            variant: 'primary',
+            testId: 'retry-level',
+            onClick: (): void => {
+              void this.#deps.signal.send({
+                event: 'retry',
+                gameId: game.id,
+                level: levelIndex,
+                version: game.version,
+              });
+              this.goLevel(levelIndex);
+            },
+          },
+          {
+            label: 'К уровням',
+            variant: 'ghost',
+            testId: 'fail-to-levels',
+            onClick: (): void => {
+              this.goLevelSelect();
+            },
+          },
+        ],
+      }),
+    );
   }
 
   async #levelCompleted(levelIndex: number, screen: ReturnType<typeof GameScreen>): Promise<void> {
