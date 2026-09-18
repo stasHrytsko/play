@@ -21,8 +21,12 @@ export interface CreateLevelParams {
   container: HTMLElement;
   /** 0-based. Always < GameDefinition.levelCount. */
   levelIndex: number;
+  /** The player made the first meaningful game action. The shell de-duplicates defensively. */
+  onFirstAction: () => void;
   /** The level was solved. Called at most once per session. */
   onComplete: () => void;
+  /** The attempt failed. reason is a stable machine-readable code owned by the mechanic. */
+  onFail: (reason: string) => void;
   /** The player asked to leave from inside the game surface. */
   onExit: () => void;
 }
