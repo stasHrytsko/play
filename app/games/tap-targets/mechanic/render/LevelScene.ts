@@ -11,6 +11,7 @@ const MIN_TARGET_RADIUS = 22;
 export interface LevelSceneOptions {
   level: Level;
   theme: SceneTheme;
+  onFirstAction: () => void;
   onComplete: () => void;
   onStateChange: (state: LevelState) => void;
 }
@@ -37,6 +38,7 @@ export class LevelScene extends Phaser.Scene {
 
   #state: LevelState;
   #completed = false;
+  #firstActionReported = false;
 
   #handleResize = (gameSize: Phaser.Structs.Size): void => {
     this.cameras.resize(gameSize.width, gameSize.height);
@@ -141,6 +143,11 @@ export class LevelScene extends Phaser.Scene {
 
   #tap(targetId: string): void {
     if (this.#completed) return;
+
+    if (!this.#firstActionReported) {
+      this.#firstActionReported = true;
+      this.#options.onFirstAction();
+    }
 
     this.#state = tapEngine.apply(this.#state, { type: 'tap', targetId });
 
