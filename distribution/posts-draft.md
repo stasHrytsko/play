@@ -6,91 +6,285 @@ Publer и CSV этот файл не читают — он только для �
 
 ---
 
-## Прогрев (до старта)
+## Прогрев (10 постов, 21–30 сентября)
 
-### why — день -5 от старта, 19:00
+### hook — день -10 от старта, 19:00
 
 **RU, короткий (для X/Bluesky/Threads):**
 
-30 дней, 30 игровых прототипов, по одному в день. Все метрики публичные — включая стыдные. Правило одно: провалился — хороним, не чиним.
+Через 10 дней я начинаю то, чего раньше не делал. Каждый вечер — новая игра. Тридцать раз подряд.
 
-Старт 1 октября.
+**RU, длинный (для LinkedIn/Telegram):**
 
-**RU, длинный (для Telegram):**
+Через 10 дней я начинаю то, чего раньше не делал.
 
-Тридцать дней. Тридцать игровых прототипов. По одному в день, каждый играбельный и выложенный в тот же вечер.
+Каждый вечер — новая игра, с нуля до играбельной версии.
 
-Зачем: обычно идею проверяют через полгода разработки. Я хочу проверить тридцать идей за месяц и на цифрах, а не на ощущениях.
+Тридцать раз подряд, без исключений и переносов.
 
-Все метрики публичные — сколько людей дошло до пятого уровня, сколько вернулось назавтра. В том числе там, где цифры будут стыдные.
-
-Главное правило: не чинить. Провалился — хороним и идём дальше.
-
-Старт 1 октября.
+Что именно и зачем — расскажу в ближайшие дни. Пока просто предупреждение: скоро здесь станет интересно.
 
 **EN, короткий (для X/Bluesky/Threads):**
 
-30 days, 30 playable prototypes, one a day. Every metric public, including the embarrassing ones. One rule: if it fails, it gets buried, not fixed.
+In 10 days I start something I have never done before. A new game every evening. Thirty times in a row.
 
-Starts October 1.
+**EN, длинный (для LinkedIn/Telegram):**
 
-**EN, длинный (для LinkedIn):**
+In 10 days I start something I have never done before.
 
-Thirty days. Thirty playable prototypes. One a day, shipped the same evening.
+A new game every evening, built from scratch to playable.
 
-Why: most ideas get tested six months into development. I want to test thirty of them in a month, on numbers instead of feelings.
+Thirty times in a row, no exceptions, no slipping the date.
 
-Every metric public — how many reach level five, how many come back the next day. Including the embarrassing ones.
-
-One rule: no fixing. If it fails, it gets buried and I move on.
-
-Starts October 1.
+What exactly and why — more in the next few days. For now, just a heads-up: this is about to get interesting.
 
 ---
 
-### scoring — день -3 от старта, 19:00
+### what — день -9 от старта, 19:00
 
 **RU, короткий (для X/Bluesky/Threads):**
 
-Договариваюсь заранее, по каким цифрам сужу: понял ли человек правило, дошёл ли до 5 уровня, вернулся ли назавтра. «Мне понравилось» не считается.
+30 игровых прототипов. 30 дней. По одной новой игре каждый вечер — играется прямо в браузере телефона.
 
-1 октября.
+**RU, длинный (для LinkedIn/Telegram):**
 
-**RU, длинный (для Telegram):**
+30 игровых прототипов. 30 дней.
 
-Договариваюсь сам с собой заранее, по каким цифрам буду судить, — чтобы потом не подгонять.
+По одной новой игре каждый вечер: правила пишутся утром, вечером игра уже играбельна и выложена.
 
-Трое ворот:
-Читаемость — человек понимает правило без объяснений и делает первое осмысленное действие.
-Доходимость — доля тех, кто добрался до пятого уровня.
-Возврат — вернулись ли на следующий день.
+Всё бесплатно, всё в браузере телефона, ставить ничего не надо.
 
-Плюс у каждой игры свой kill-критерий, записанный до того, как я её собрал. Если жадный бот проходит её насквозь — решения в игре нет, хороним.
-
-Что не считается: «мне понравилось».
-
-1 октября.
+Первая — 1 октября.
 
 **EN, короткий (для X/Bluesky/Threads):**
 
-Setting the scoring before I start: did a player grasp the rule, reach level five, come back the next day. "I liked it" does not count.
+30 game prototypes. 30 days. A new one every evening, playable right in your phone browser.
 
-October 1.
+**EN, длинный (для LinkedIn/Telegram):**
 
-**EN, длинный (для LinkedIn):**
+30 game prototypes. 30 days.
 
-Deciding how I score this before I start, so I cannot move the goalposts later.
+A new game every evening: the rules get written in the morning, the game is playable and live by night.
 
-Three gates:
-Readability — a player understands the rule with no explanation and makes a real first move.
-Reach — how many get to level five.
-Return — do they come back the next day.
+Free, browser-based, nothing to install.
 
-Each game also gets a kill criterion written before it is built. If a greedy bot solves it, there is no decision in the game, and it gets buried.
+First one October 1.
 
-What does not count: I liked it.
+---
 
-October 1.
+### why — день -8 от старта, 19:00
+
+**RU, короткий (для X/Bluesky/Threads):**
+
+Обычно на проверку одной игровой идеи уходит полгода. Я устал ждать полгода, чтобы узнать, что идея была так себе.
+
+**RU, длинный (для LinkedIn/Telegram):**
+
+Обычно на проверку одной игровой идеи уходит полгода разработки.
+
+Я устал ждать полгода, чтобы узнать, что идея была так себе.
+
+Поэтому проверю не одну идею, а тридцать — за месяц, на живых людях, по цифрам, а не по ощущениям.
+
+Это и есть весь эксперимент.
+
+**EN, короткий (для X/Bluesky/Threads):**
+
+Testing one game idea usually takes six months. I got tired of waiting six months to learn an idea was mediocre.
+
+**EN, длинный (для LinkedIn/Telegram):**
+
+Testing one game idea usually takes six months of development.
+
+I got tired of waiting six months just to learn the idea was mediocre.
+
+So instead of testing one idea, I am testing thirty — in a month, on real players, on numbers instead of feelings.
+
+That is the whole experiment.
+
+---
+
+### rule — день -7 от старта, 19:00
+
+**RU, короткий (для X/Bluesky/Threads):**
+
+Главное правило: если игра проваливается — её хоронят, а не чинят. Никаких «доделаю потом».
+
+**RU, длинный (для LinkedIn/Telegram):**
+
+Главное правило эксперимента: если игра проваливается по цифрам — её хоронят, а не чинят.
+
+Никаких «доделаю потом» и «просто добавлю ещё одну фичу, и заработает».
+
+Эта дисциплина — единственная причина, по которой тридцать игр за тридцать дней вообще возможны. Без неё я бы застрял на игре три.
+
+**EN, короткий (для X/Bluesky/Threads):**
+
+The one rule: if a game fails the numbers, it gets buried, not fixed. No "I will patch it later".
+
+**EN, длинный (для LinkedIn/Telegram):**
+
+The core rule of this experiment: if a game fails on the numbers, it gets buried. Not fixed.
+
+No "I will patch it later", no "just one more feature and it will click".
+
+This discipline is the only reason thirty games in thirty days is even possible. Without it I would still be stuck fixing game three.
+
+---
+
+### dayflow — день -6 от старта, 19:00
+
+**RU, короткий (для X/Bluesky/Threads):**
+
+Как проходит один день: утром — правила игры на бумаге, вечером — готовый прототип в браузере. Без переносов.
+
+**RU, длинный (для LinkedIn/Telegram):**
+
+Как устроен один день эксперимента:
+
+Утром — правила будущей игры записаны и зафиксированы, без права переписывать их на ходу.
+Днём — она собирается и наполняется контентом.
+Вечером — уже стоит в браузере, и по ней идёт живая статистика.
+
+Завтра всё повторяется с нуля, для другой игры. Без переносов — это тоже часть правил.
+
+**EN, короткий (для X/Bluesky/Threads):**
+
+How one day works: the rules get written in the morning, a working prototype ships by evening. No slipping the date.
+
+**EN, длинный (для LinkedIn/Telegram):**
+
+How one day of the experiment works:
+
+Morning — the rules of the next game are written down and locked, no rewriting mid-build.
+Midday — it gets built and filled with real content.
+Evening — it is live in the browser, and real numbers start coming in.
+
+Tomorrow it repeats from zero, for a different game. No slipping the date — that is part of the rule too.
+
+---
+
+### no-extras — день -5 от старта, 19:00
+
+**RU, короткий (для X/Bluesky/Threads):**
+
+Чего не будет ни в одной из тридцати игр: рекламы, доната, мета-прогресса, ежедневных бонусов. Только механика.
+
+**RU, длинный (для LinkedIn/Telegram):**
+
+Чего не будет ни в одной из тридцати игр:
+
+Рекламы, доната, мета-прогресса, коллекций, ежедневных бонусов — ничего, что удерживает человека само по себе.
+
+Это намеренно: если игра нравится, должно быть видно, что нравится именно механика, а не система, которая заставляет вернуться.
+
+Честная проверка идеи, а не проверка того, насколько хорошо работает крючок.
+
+**EN, короткий (для X/Bluesky/Threads):**
+
+What none of the thirty games will have: ads, IAP, meta-progression, daily bonuses. Just the mechanic, nothing else.
+
+**EN, длинный (для LinkedIn/Telegram):**
+
+What none of the thirty games will have:
+
+Ads, IAP, meta-progression, collections, daily bonuses — nothing that hooks a player by itself.
+
+This is deliberate: if a game works, it has to be the mechanic doing the work, not a system designed to bring you back.
+
+An honest test of the idea, not a test of how good the hook is.
+
+---
+
+### metrics — день -4 от старта, 19:00
+
+**RU, короткий (для X/Bluesky/Threads):**
+
+Как я буду судить результат: дошёл ли человек до пятого уровня и вернулся ли назавтра. «Мне понравилось» не считается.
+
+**RU, длинный (для LinkedIn/Telegram):**
+
+Как я буду судить результат каждой игры, решено заранее:
+
+Понял ли человек правило без объяснений и сделал первое осмысленное действие.
+Дошёл ли до пятого, последнего уровня.
+Вернулся ли на следующий день.
+
+Всё остальное — вторично. «Мне понравилось» тоже не считается: считаются только действия, а не мнения.
+
+**EN, короткий (для X/Bluesky/Threads):**
+
+How I will judge each game: did a player reach level five, did they come back the next day. "I liked it" does not count.
+
+**EN, длинный (для LinkedIn/Telegram):**
+
+How I will judge each game is decided in advance:
+
+Did a player understand the rule with no explanation and make a real first move.
+Did they reach the fifth and final level.
+Did they come back the next day.
+
+Everything else is secondary. "I liked it" does not count either — only actions count, not opinions.
+
+---
+
+### stakes — день -3 от старта, 19:00
+
+**RU, короткий (для X/Bluesky/Threads):**
+
+Если игра не проходит порог — её судьба решена в тот же вечер. Без права на апелляцию, без второго шанса.
+
+**RU, длинный (для LinkedIn/Telegram):**
+
+Если игра не проходит установленный заранее порог — её судьба решена в тот же вечер.
+
+Без права на апелляцию, без «дам ей ещё неделю», без второго шанса.
+
+Цифры каждой игры видны всем, включая провальные. Спрятать неудачный день негде — в этом и есть смысл делать эксперимент публично.
+
+**EN, короткий (для X/Bluesky/Threads):**
+
+If a game misses the bar, its fate is decided that same evening. No appeal, no second chance.
+
+**EN, длинный (для LinkedIn/Telegram):**
+
+If a game misses the bar set in advance, its fate is decided that same evening.
+
+No appeal, no "I will give it another week", no second chance.
+
+Every game’s numbers are public, including the failures. There is nowhere to hide a bad day — that is the point of running this in public.
+
+---
+
+### follow — день -2 от старта, 19:00
+
+**RU, короткий (для X/Bluesky/Threads):**
+
+Через 2 дня — старт. Новая игра каждый вечер, играется прямо в браузере телефона. Подпишись, чтобы не пропустить первую.
+
+**RU, длинный (для LinkedIn/Telegram):**
+
+Через 2 дня начинается.
+
+Новая игра каждый вечер, тридцать раз подряд, играется прямо в браузере телефона.
+
+Здесь и в канале — каждый день игра и цифры вчерашней.
+
+Подпишись сейчас, чтобы не пропустить первую — я не буду повторять анонс дважды.
+
+**EN, короткий (для X/Bluesky/Threads):**
+
+Starts in 2 days. A new game every evening, right in your phone browser. Follow now so you catch the first one.
+
+**EN, длинный (для LinkedIn/Telegram):**
+
+Starts in 2 days.
+
+A new game every evening, thirty times in a row, playable right in your phone browser.
+
+Here and on the channel — every day, the game and yesterday’s numbers.
+
+Follow now so you do not miss the first one — I will not repeat the announcement twice.
 
 ---
 
@@ -102,7 +296,7 @@ October 1.
 
 Первая — 1 октября.
 
-**RU, длинный (для Telegram):**
+**RU, длинный (для LinkedIn/Telegram):**
 
 Завтра начинается.
 
@@ -119,14 +313,14 @@ Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com
 
 First one October 1.
 
-**EN, длинный (для LinkedIn):**
+**EN, длинный (для LinkedIn/Telegram):**
 
 Tomorrow.
 
 What: 30 game prototypes in 30 days, one a day.
 Why: test thirty mechanics on real players and public numbers, instead of six months on one.
 Where: play.hrytsko.com — a new game every day, plays in a phone browser, nothing to install.
-How to follow: here, or the channel — every evening, the day's game and the previous day's numbers.
+How to follow: here, or the channel — every evening, the day’s game and the previous day’s numbers.
 
 First one October 1.
 

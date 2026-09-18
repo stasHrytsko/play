@@ -365,34 +365,132 @@
       }
     }
   },
-  "warmupNote": "Прогрев, строка 14 конвейера. offset — сдвиг в днях от дня 1. channels: text = только текстовые каналы; all = включая видео-каналы (нужен ролик). short идёт в X/Bluesky/Threads/TikTok/Shorts/Instagram, long — в LinkedIn/Telegram.",
+  "warmupNote": "Прогрев, строка 14 конвейера, 10 постов. offset — сдвиг в днях от дня 1 (2026-10-01). channels: text = только текстовые каналы; all = включая видео-каналы (нужен clips/teaser.mp4). short идёт в X/Bluesky/Threads/TikTok/Shorts/Instagram, long — в LinkedIn/Telegram. Десять постов идут одной дугой: крючок → что это → почему я → правило → как проходит день → чего не будет → как сужу результат → цена провала → как следить → анонс со ссылкой.",
   "warmup": [
     {
+      "id": "hook",
+      "offset": -10,
+      "time": "19:00",
+      "channels": "text",
+      "ru": {
+        "short": "Через 10 дней я начинаю то, чего раньше не делал. Каждый вечер — новая игра. Тридцать раз подряд.",
+        "long": "Через 10 дней я начинаю то, чего раньше не делал.\n\nКаждый вечер — новая игра, с нуля до играбельной версии.\n\nТридцать раз подряд, без исключений и переносов.\n\nЧто именно и зачем — расскажу в ближайшие дни. Пока просто предупреждение: скоро здесь станет интересно."
+      },
+      "en": {
+        "short": "In 10 days I start something I have never done before. A new game every evening. Thirty times in a row.",
+        "long": "In 10 days I start something I have never done before.\n\nA new game every evening, built from scratch to playable.\n\nThirty times in a row, no exceptions, no slipping the date.\n\nWhat exactly and why — more in the next few days. For now, just a heads-up: this is about to get interesting."
+      }
+    },
+    {
+      "id": "what",
+      "offset": -9,
+      "time": "19:00",
+      "channels": "text",
+      "ru": {
+        "short": "30 игровых прототипов. 30 дней. По одной новой игре каждый вечер — играется прямо в браузере телефона.",
+        "long": "30 игровых прототипов. 30 дней.\n\nПо одной новой игре каждый вечер: правила пишутся утром, вечером игра уже играбельна и выложена.\n\nВсё бесплатно, всё в браузере телефона, ставить ничего не надо.\n\nПервая — 1 октября."
+      },
+      "en": {
+        "short": "30 game prototypes. 30 days. A new one every evening, playable right in your phone browser.",
+        "long": "30 game prototypes. 30 days.\n\nA new game every evening: the rules get written in the morning, the game is playable and live by night.\n\nFree, browser-based, nothing to install.\n\nFirst one October 1."
+      }
+    },
+    {
       "id": "why",
+      "offset": -8,
+      "time": "19:00",
+      "channels": "text",
+      "ru": {
+        "short": "Обычно на проверку одной игровой идеи уходит полгода. Я устал ждать полгода, чтобы узнать, что идея была так себе.",
+        "long": "Обычно на проверку одной игровой идеи уходит полгода разработки.\n\nЯ устал ждать полгода, чтобы узнать, что идея была так себе.\n\nПоэтому проверю не одну идею, а тридцать — за месяц, на живых людях, по цифрам, а не по ощущениям.\n\nЭто и есть весь эксперимент."
+      },
+      "en": {
+        "short": "Testing one game idea usually takes six months. I got tired of waiting six months to learn an idea was mediocre.",
+        "long": "Testing one game idea usually takes six months of development.\n\nI got tired of waiting six months just to learn the idea was mediocre.\n\nSo instead of testing one idea, I am testing thirty — in a month, on real players, on numbers instead of feelings.\n\nThat is the whole experiment."
+      }
+    },
+    {
+      "id": "rule",
+      "offset": -7,
+      "time": "19:00",
+      "channels": "text",
+      "ru": {
+        "short": "Главное правило: если игра проваливается — её хоронят, а не чинят. Никаких «доделаю потом».",
+        "long": "Главное правило эксперимента: если игра проваливается по цифрам — её хоронят, а не чинят.\n\nНикаких «доделаю потом» и «просто добавлю ещё одну фичу, и заработает».\n\nЭта дисциплина — единственная причина, по которой тридцать игр за тридцать дней вообще возможны. Без неё я бы застрял на игре три."
+      },
+      "en": {
+        "short": "The one rule: if a game fails the numbers, it gets buried, not fixed. No \"I will patch it later\".",
+        "long": "The core rule of this experiment: if a game fails on the numbers, it gets buried. Not fixed.\n\nNo \"I will patch it later\", no \"just one more feature and it will click\".\n\nThis discipline is the only reason thirty games in thirty days is even possible. Without it I would still be stuck fixing game three."
+      }
+    },
+    {
+      "id": "dayflow",
+      "offset": -6,
+      "time": "19:00",
+      "channels": "text",
+      "ru": {
+        "short": "Как проходит один день: утром — правила игры на бумаге, вечером — готовый прототип в браузере. Без переносов.",
+        "long": "Как устроен один день эксперимента:\n\nУтром — правила будущей игры записаны и зафиксированы, без права переписывать их на ходу.\nДнём — она собирается и наполняется контентом.\nВечером — уже стоит в браузере, и по ней идёт живая статистика.\n\nЗавтра всё повторяется с нуля, для другой игры. Без переносов — это тоже часть правил."
+      },
+      "en": {
+        "short": "How one day works: the rules get written in the morning, a working prototype ships by evening. No slipping the date.",
+        "long": "How one day of the experiment works:\n\nMorning — the rules of the next game are written down and locked, no rewriting mid-build.\nMidday — it gets built and filled with real content.\nEvening — it is live in the browser, and real numbers start coming in.\n\nTomorrow it repeats from zero, for a different game. No slipping the date — that is part of the rule too."
+      }
+    },
+    {
+      "id": "no-extras",
       "offset": -5,
       "time": "19:00",
       "channels": "text",
       "ru": {
-        "short": "30 дней, 30 игровых прототипов, по одному в день. Все метрики публичные — включая стыдные. Правило одно: провалился — хороним, не чиним.\n\nСтарт 1 октября.",
-        "long": "Тридцать дней. Тридцать игровых прототипов. По одному в день, каждый играбельный и выложенный в тот же вечер.\n\nЗачем: обычно идею проверяют через полгода разработки. Я хочу проверить тридцать идей за месяц и на цифрах, а не на ощущениях.\n\nВсе метрики публичные — сколько людей дошло до пятого уровня, сколько вернулось назавтра. В том числе там, где цифры будут стыдные.\n\nГлавное правило: не чинить. Провалился — хороним и идём дальше.\n\nСтарт 1 октября."
+        "short": "Чего не будет ни в одной из тридцати игр: рекламы, доната, мета-прогресса, ежедневных бонусов. Только механика.",
+        "long": "Чего не будет ни в одной из тридцати игр:\n\nРекламы, доната, мета-прогресса, коллекций, ежедневных бонусов — ничего, что удерживает человека само по себе.\n\nЭто намеренно: если игра нравится, должно быть видно, что нравится именно механика, а не система, которая заставляет вернуться.\n\nЧестная проверка идеи, а не проверка того, насколько хорошо работает крючок."
       },
       "en": {
-        "short": "30 days, 30 playable prototypes, one a day. Every metric public, including the embarrassing ones. One rule: if it fails, it gets buried, not fixed.\n\nStarts October 1.",
-        "long": "Thirty days. Thirty playable prototypes. One a day, shipped the same evening.\n\nWhy: most ideas get tested six months into development. I want to test thirty of them in a month, on numbers instead of feelings.\n\nEvery metric public — how many reach level five, how many come back the next day. Including the embarrassing ones.\n\nOne rule: no fixing. If it fails, it gets buried and I move on.\n\nStarts October 1."
+        "short": "What none of the thirty games will have: ads, IAP, meta-progression, daily bonuses. Just the mechanic, nothing else.",
+        "long": "What none of the thirty games will have:\n\nAds, IAP, meta-progression, collections, daily bonuses — nothing that hooks a player by itself.\n\nThis is deliberate: if a game works, it has to be the mechanic doing the work, not a system designed to bring you back.\n\nAn honest test of the idea, not a test of how good the hook is."
       }
     },
     {
-      "id": "scoring",
+      "id": "metrics",
+      "offset": -4,
+      "time": "19:00",
+      "channels": "text",
+      "ru": {
+        "short": "Как я буду судить результат: дошёл ли человек до пятого уровня и вернулся ли назавтра. «Мне понравилось» не считается.",
+        "long": "Как я буду судить результат каждой игры, решено заранее:\n\nПонял ли человек правило без объяснений и сделал первое осмысленное действие.\nДошёл ли до пятого, последнего уровня.\nВернулся ли на следующий день.\n\nВсё остальное — вторично. «Мне понравилось» тоже не считается: считаются только действия, а не мнения."
+      },
+      "en": {
+        "short": "How I will judge each game: did a player reach level five, did they come back the next day. \"I liked it\" does not count.",
+        "long": "How I will judge each game is decided in advance:\n\nDid a player understand the rule with no explanation and make a real first move.\nDid they reach the fifth and final level.\nDid they come back the next day.\n\nEverything else is secondary. \"I liked it\" does not count either — only actions count, not opinions."
+      }
+    },
+    {
+      "id": "stakes",
       "offset": -3,
       "time": "19:00",
       "channels": "text",
       "ru": {
-        "short": "Договариваюсь заранее, по каким цифрам сужу: понял ли человек правило, дошёл ли до 5 уровня, вернулся ли назавтра. «Мне понравилось» не считается.\n\n1 октября.",
-        "long": "Договариваюсь сам с собой заранее, по каким цифрам буду судить, — чтобы потом не подгонять.\n\nТрое ворот:\nЧитаемость — человек понимает правило без объяснений и делает первое осмысленное действие.\nДоходимость — доля тех, кто добрался до пятого уровня.\nВозврат — вернулись ли на следующий день.\n\nПлюс у каждой игры свой kill-критерий, записанный до того, как я её собрал. Если жадный бот проходит её насквозь — решения в игре нет, хороним.\n\nЧто не считается: «мне понравилось».\n\n1 октября."
+        "short": "Если игра не проходит порог — её судьба решена в тот же вечер. Без права на апелляцию, без второго шанса.",
+        "long": "Если игра не проходит установленный заранее порог — её судьба решена в тот же вечер.\n\nБез права на апелляцию, без «дам ей ещё неделю», без второго шанса.\n\nЦифры каждой игры видны всем, включая провальные. Спрятать неудачный день негде — в этом и есть смысл делать эксперимент публично."
       },
       "en": {
-        "short": "Setting the scoring before I start: did a player grasp the rule, reach level five, come back the next day. \"I liked it\" does not count.\n\nOctober 1.",
-        "long": "Deciding how I score this before I start, so I cannot move the goalposts later.\n\nThree gates:\nReadability — a player understands the rule with no explanation and makes a real first move.\nReach — how many get to level five.\nReturn — do they come back the next day.\n\nEach game also gets a kill criterion written before it is built. If a greedy bot solves it, there is no decision in the game, and it gets buried.\n\nWhat does not count: I liked it.\n\nOctober 1."
+        "short": "If a game misses the bar, its fate is decided that same evening. No appeal, no second chance.",
+        "long": "If a game misses the bar set in advance, its fate is decided that same evening.\n\nNo appeal, no \"I will give it another week\", no second chance.\n\nEvery game’s numbers are public, including the failures. There is nowhere to hide a bad day — that is the point of running this in public."
+      }
+    },
+    {
+      "id": "follow",
+      "offset": -2,
+      "time": "19:00",
+      "channels": "text",
+      "ru": {
+        "short": "Через 2 дня — старт. Новая игра каждый вечер, играется прямо в браузере телефона. Подпишись, чтобы не пропустить первую.",
+        "long": "Через 2 дня начинается.\n\nНовая игра каждый вечер, тридцать раз подряд, играется прямо в браузере телефона.\n\nЗдесь и в канале — каждый день игра и цифры вчерашней.\n\nПодпишись сейчас, чтобы не пропустить первую — я не буду повторять анонс дважды."
+      },
+      "en": {
+        "short": "Starts in 2 days. A new game every evening, right in your phone browser. Follow now so you catch the first one.",
+        "long": "Starts in 2 days.\n\nA new game every evening, thirty times in a row, playable right in your phone browser.\n\nHere and on the channel — every day, the game and yesterday’s numbers.\n\nFollow now so you do not miss the first one — I will not repeat the announcement twice."
       }
     },
     {
@@ -406,7 +504,7 @@
       },
       "en": {
         "short": "Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com. Plays in your phone browser, nothing to install.\n\nFirst one October 1.",
-        "long": "Tomorrow.\n\nWhat: 30 game prototypes in 30 days, one a day.\nWhy: test thirty mechanics on real players and public numbers, instead of six months on one.\nWhere: play.hrytsko.com — a new game every day, plays in a phone browser, nothing to install.\nHow to follow: here, or the channel — every evening, the day's game and the previous day's numbers.\n\nFirst one October 1."
+        "long": "Tomorrow.\n\nWhat: 30 game prototypes in 30 days, one a day.\nWhy: test thirty mechanics on real players and public numbers, instead of six months on one.\nWhere: play.hrytsko.com — a new game every day, plays in a phone browser, nothing to install.\nHow to follow: here, or the channel — every evening, the day’s game and the previous day’s numbers.\n\nFirst one October 1."
       }
     }
   ]

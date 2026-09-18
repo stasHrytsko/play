@@ -188,8 +188,9 @@ const csv = [COLUMNS.join(',')]
 writeFileSync(outPath, `${csv}\n`);
 
 const warmupRows = rows.filter((r) => r.Type === 'warmup').length;
+const warmupPosts = (warmup || []).length;
 console.log(`Старт: ${startDate} (${games.project.timeZone})`);
-console.log(`Постов-слотов: ${3 + 60} (3 прогрев + 30 «сегодня» + 30 «завтра»)`);
+console.log(`Постов-слотов: ${warmupPosts + 60} (${warmupPosts} прогрев + 30 «сегодня» + 30 «завтра»)`);
 console.log(`Строк в CSV: ${rows.length} — по одной на канал (${warmupRows} из них прогрев)`);
 console.log(`Записано: ${outPath}`);
 const provisionalDays = 30 - hubSlugByDay.size;
