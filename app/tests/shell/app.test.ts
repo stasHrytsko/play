@@ -39,8 +39,16 @@ class FakeMechanic implements MechanicHost {
     };
   }
 
+  firstAction(): void {
+    this.mounted?.onFirstAction();
+  }
+
   finishLevel(): void {
     this.mounted?.onComplete();
+  }
+
+  failLevel(reason = 'blocked'): void {
+    this.mounted?.onFail(reason);
   }
 
   exitLevel(): void {
@@ -180,6 +188,58 @@ describe('playing a level', () => {
     expect(signal.sent).toContainEqual({ event: 'level_start', gameId: 'test-game', level: 0 });
   });
 
+  it('fires first_action once for the first meaningful mechanic action', async () => {
+    await startLevelOne();
+    mechanic.firstAction();
+    mechanic.firstAction();
+
+    expect(signal.sent.filter((s) => s.event === 'first_action')).toEqual([
+      {
+        event: 'first_action',
+        gameId: 'test-game',
+        level: 0,
+        version: 1,
+      },
+    ]);
+  });
+
+  it('shows a fail popup and fires level_fail with the mechanic reason', async () => {
+    await startLevelOne();
+    mechanic.failLevel('pocket_overflow');
+
+    expect(find('fail-popup')).not.toBeNull();
+    expect(signal.sent).toContainEqual({
+      event: 'level_fail',
+      gameId: 'test-game',
+      level: 0,
+      reason: 'pocket_overflow',
+      version: 1,
+    });
+    expect((await progress.load()).completedLevels).toEqual([]);
+  });
+
+  it('fires retry and remounts the same level from the fail popup', async () => {
+    await startLevelOne();
+    mechanic.failLevel('pocket_overflow');
+    click('retry-level');
+
+    expect(signal.sent).toContainEqual({
+      event: 'retry',
+      gameId: 'test-game',
+      level: 0,
+      version: 1,
+    });
+    expect(mechanic.mounted?.levelIndex).toBe(0);
+  });
+
+  it('returns to level select from the fail popup', async () => {
+    await startLevelOne();
+    mechanic.failLevel();
+    click('fail-to-levels');
+
+    expect(find('level-select')).not.toBeNull();
+  });
+
   it('shows the win popup, saves progress and fires level_win on completion', async () => {
     await startLevelOne();
     mechanic.finishLevel();
@@ -227,14 +287,20 @@ describe('playing a level', () => {
     expect(find('level-select')).not.toBeNull();
   });
 
-  it('ignores a completion that arrives after the session was torn down', async () => {
+  it('ignores mechanic events that arrive after the session was torn down', async () => {
     await startLevelOne();
     const stale = mechanic.mounted;
     click('game-back');
 
+    stale?.onFirstAction();
+    stale?.onFail('late_failure');
     stale?.onComplete();
     await flush();
+
     expect(find('win-popup')).toBeNull();
+    expect(find('fail-popup')).toBeNull();
+    expect(signal.sent.some((s) => s.event === 'first_action')).toBe(false);
+    expect(signal.sent.some((s) => s.event === 'level_fail')).toBe(false);
     expect((await progress.load()).completedLevels).toEqual([]);
   });
 });
