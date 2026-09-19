@@ -30,7 +30,12 @@ export default defineConfig({
   webServer: {
     // Run E2E against the production bundle, not the dev server.
     command: 'npm run build && npm run preview',
-    url: `http://127.0.0.1:${PORT}`,
+    // Wait for the port to accept connections, not for an HTTP status on `/`.
+    // The multi-page build has no dist/index.html — every entry lives at
+    // games/<slug>/index.html — so the root serves 404, and Playwright's
+    // url-based probe rejects 404 and waits until it times out. Each spec
+    // navigates to its own game path, so readiness is a TCP question here.
+    port: PORT,
     reuseExistingServer: !process.env['CI'],
     timeout: 180_000,
   },
