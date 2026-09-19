@@ -3,8 +3,9 @@
 //
 //   node ideas/validate.mjs
 //
-// Ворота этапа IDEA: шапка на месте, восемь разделов непусты, слаг свободен.
-// Пустая папка — не ошибка: этап начинается с концепта 36, см. ideas/README.md.
+// Файл идеи необязателен — см. docs/PLAY.md, шаг IDEA. Это проверка формы для
+// тех идей, которые записаны: шапка на месте, восемь разделов непусты, слаг
+// совпадает с именем файла. Пустая папка ошибкой не считается.
 
 import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -25,7 +26,7 @@ const errors = [];
 const files = readdirSync(here).filter((f) => /^\d+-.*\.md$/.test(f)).sort();
 
 if (files.length === 0) {
-  console.log('идей: 0 — этап начинается с концепта 36, см. ideas/README.md');
+  console.log('идей: 0 — файл идеи необязателен, см. ideas/README.md');
   process.exit(0);
 }
 
