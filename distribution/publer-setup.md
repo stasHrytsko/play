@@ -62,9 +62,9 @@
 node distribution/build-posts.mjs
 ```
 
-Читает `games.json` (расписание и слаги), `distribution/schedule.json`
-(порядок для ещё не назначенных дней) и `distribution/posts.json` (тексты).
-Пишет `distribution/publer-posts.csv`.
+Читает `games.json` (расписание день → слаг), шапки `specs/NN-<slug>.md`
+(названия и правило одной фразой) и `distribution/posts.json` (тизеры и
+прогрев). Пишет `distribution/publer-posts.csv`.
 
 Полезные флаги:
 

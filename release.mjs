@@ -52,13 +52,13 @@ const games = JSON.parse(readFileSync(gamesPath, 'utf8'));
 const entry = games.games.find((g) => g.slug === slug);
 
 if (!entry) {
-  // Слаг спеки и слаг хаба обязаны совпадать — см. docs/pipeline.md. Молча
-  // публиковать под другим именем значит развести их ещё на одну игру.
-  const known = games.games.filter((g) => g.slug).map((g) => `${String(g.day)}:${g.slug}`);
+  // Слаг один на всю игру: имя файла спеки, папка в app/games/, ключ в
+  // posts.json и адрес на хабе — см. docs/pipeline.md. Молча опубликовать под
+  // другим именем значит развести их снова.
   fail(
-    `в games.json нет игры со слагом «${slug}».\n` +
-      `  Заполненные дни: ${known.join(', ') || '—'}\n` +
-      '  Пропиши слаг в games.json тому дню, на который выходит игра.',
+    `в games.json нет дня со слагом «${slug}».\n` +
+      '  Расписание день → слаг живёт в games.json и должно совпадать с именами\n' +
+      '  файлов в specs/. Поставь слаг на нужный день или проверь опечатку.',
   );
 }
 

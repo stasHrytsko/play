@@ -27,9 +27,14 @@ jobs:
         run: node test-hub.mjs
 
       # Ошибка — спека непригодна для сборки (нет шапки, требует несуществующих
-      # событий). Недозаполненное печатается предупреждением и сборку не роняет.
+      # событий) или расписание в games.json ссылается на слаг, которого нет в
+      # specs/. Недозаполненное печатается предупреждением и сборку не роняет.
       - name: Specs conform to the template
         run: node specs/validate.mjs
+
+      # Пустая папка ideas/ — не ошибка: этап начинается с концепта 36.
+      - name: Ideas conform to the template
+        run: node ideas/validate.mjs
 
       # games.json is the source of truth; index.html and the per-game pages
       # are generated from it. If a games.json edit lands without rerunning

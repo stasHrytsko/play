@@ -41,9 +41,11 @@ creating a second identity for the same game.
 
 ## The schedule
 
-`games.json` is the single source of truth for the launch schedule, concepts,
-links, metrics and feedback summaries. After editing it by hand, regenerate
-the log grid and per-prototype pages:
+`games.json` maps day → slug and holds the links, dates, metrics and feedback.
+Titles and pitches are not in it: those live in each spec's YAML front matter
+(`specs/NN-<slug>.md`) and are read from there, so there is exactly one place
+to change a name. After editing either, regenerate the log grid and
+per-prototype pages:
 
 ```sh
 node build-games.mjs
@@ -76,7 +78,9 @@ recording are disabled; the hub emits explicit project events only.
 
 - `index.html` — the hub: hero, upcoming release, prototype log grid.
 - `app/` — the game factory: shared shell, per-game mechanics, tests (Vite + Phaser).
-- `specs/` — the thirty concept specifications and the normative template.
+- `ideas/` — the pipeline's input: one hand-written idea per concept.
+- `specs/` — the concept specifications, the normative template and the validator.
+- `docs/templates/` — the idea template.
 - `docs/` — pipeline architecture and the log of decisions.
 - `games.json` — source of truth for the schedule, concepts, links, metrics and feedback.
 - `analytics-config.js` — launch date, timezone and PostHog client configuration.

@@ -8,8 +8,25 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { loadSpecs } from './specs/front-matter.mjs';
+
 const root = dirname(fileURLToPath(import.meta.url));
 const data = JSON.parse(readFileSync(join(root, 'games.json'), 'utf8'));
+
+// Название и питч живут в шапке спеки и больше нигде. games.json держит
+// расписание, ссылки и цифры — то, чего в спеке нет и быть не должно.
+// Раньше они лежали в обоих файлах, расходились молча, и на сайт попадала та
+// версия, которую последней правили руками.
+const specs = loadSpecs(join(root, 'specs'));
+
+for (const game of data.games) {
+  const spec = game.slug ? specs.get(game.slug) : undefined;
+  if (game.slug && !spec) {
+    throw new Error(`games.json день ${game.day}: нет specs/*-${game.slug}.md`);
+  }
+  game.title = spec ? spec.meta.title_en : null;
+  game.pitch = spec ? spec.meta.pitch_en : null;
+}
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const PLATFORMS = { itch: 'itch.io', youtube: 'YouTube', x: 'X', threads: 'Threads' };

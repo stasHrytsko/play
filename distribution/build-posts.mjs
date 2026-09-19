@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 // Собирает CSV расписания постов для Publer из трёх источников:
-//   games.json            — расписание и слаги хаба (истина, когда день заполнен)
-//   distribution/schedule.json — провизорный порядок для ещё не назначенных дней
-//   distribution/posts.json    — тексты RU/EN
+//   games.json              — расписание: день → слаг
+//   specs/NN-<slug>.md      — название и правило одной фразой (шапка спеки)
+//   distribution/posts.json — тизеры «завтра» и посты прогрева, RU/EN
+//
+// Название и правило не дублируются здесь намеренно: они живут в шапке спеки,
+// оттуда же их берёт хаб. В posts.json остаётся только то, что действительно
+// пишется отдельно — интрига на вечер накануне.
 //
 // Без зависимостей, как build-games.mjs.
 //
@@ -12,6 +16,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { loadSpecs } from '../specs/front-matter.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -64,18 +70,16 @@ function csvCell(value) {
 }
 
 const games = readJson(join(root, 'games.json'));
-const { schedule } = readJson(join(here, 'schedule.json'));
-const { posts, warmup, campaign, hashtagEn, hashtagRu } = readJson(join(here, 'posts.json'));
+const specs = loadSpecs(join(root, 'specs'));
+const { teasers, warmup, campaign, hashtagEn, hashtagRu } = readJson(join(here, 'posts.json'));
 
 const startDate = arg('--start', games.project.startDate);
 const outPath = arg('--out', join(here, 'publer-posts.csv'));
 
-// Слаг хаба и слаг спеки — разные пространства имён (спека box-arrives выходит
-// на хабе как incoming-box). Тексты лежат под слагом спеки, ссылка строится по
-// слагу хаба, если день уже заполнен в games.json.
-const hubSlugByDay = new Map(
-  games.games.filter((g) => g.slug).map((g) => [g.day, g.slug])
-);
+// Один слаг на игру: имя файла спеки, ключ в posts.json и адрес на хабе — это
+// одна и та же строка. Раньше их было две, и день 1 успел разойтись; теперь за
+// совпадением следит specs/validate.mjs в CI.
+const byDay = new Map(games.games.filter((g) => g.slug).map((g) => [g.day, g]));
 
 const rows = [];
 const warnings = [];
@@ -109,23 +113,33 @@ for (const post of warmup || []) {
 }
 
 for (let day = 1; day <= 30; day += 1) {
-  const specSlug = schedule[day];
-  if (!specSlug) {
-    warnings.push(`день ${day}: нет игры в schedule.json`);
+  const game = byDay.get(day);
+  if (!game) {
+    warnings.push(`день ${day}: нет слага в games.json`);
     continue;
   }
-  const text = posts[specSlug];
-  if (!text) {
-    warnings.push(`день ${day}: нет текстов для «${specSlug}» в posts.json`);
+  const slug = game.slug;
+  const spec = specs.get(slug);
+  if (!spec) {
+    warnings.push(`день ${day}: нет спеки specs/*-${slug}.md`);
+    continue;
+  }
+  const teaser = teasers[slug];
+  if (!teaser) {
+    warnings.push(`день ${day}: нет тизера для «${slug}» в posts.json`);
     continue;
   }
 
-  const hubSlug = hubSlugByDay.get(day) || specSlug;
-  const provisional = hubSlugByDay.has(day) ? '' : 'provisional';
+  // Порядок дней считается решённым, как только день перестаёт быть planned.
+  const provisional = game.status === 'planned' ? 'provisional' : '';
   const dayDate = addDays(startDate, day - 1);
 
   for (const channel of CHANNELS) {
-    const t = text[channel.lang];
+    const t = {
+      title: spec.meta[`title_${channel.lang}`],
+      today: spec.meta[`pitch_${channel.lang}`],
+      tomorrow: teaser[channel.lang],
+    };
     const hashtag = channel.lang === 'ru' ? hashtagRu : hashtagEn;
 
     const utm = (content) =>
@@ -135,7 +149,7 @@ for (let day = 1; day <= 30; day += 1) {
     const dayNum = String(day).padStart(2, '0');
 
     // «Сегодня»: {название} — {правило}. {ссылка}
-    const todayLink = `${HUB}/${hubSlug}/?${utm(`day-${dayNum}-today`)}`;
+    const todayLink = `${HUB}/${slug}/?${utm(`day-${dayNum}-today`)}`;
     rows.push({
       Date: dayDate,
       Time: TIME_TODAY,
@@ -193,11 +207,11 @@ console.log(`Старт: ${startDate} (${games.project.timeZone})`);
 console.log(`Постов-слотов: ${warmupPosts + 60} (${warmupPosts} прогрев + 30 «сегодня» + 30 «завтра»)`);
 console.log(`Строк в CSV: ${rows.length} — по одной на канал (${warmupRows} из них прогрев)`);
 console.log(`Записано: ${outPath}`);
-const provisionalDays = 30 - hubSlugByDay.size;
+const provisionalDays = games.games.filter((g) => g.status === 'planned').length;
 if (provisionalDays > 0) {
   console.log(
-    `Провизорных дней: ${provisionalDays} — порядок взят из schedule.json, ` +
-      'в games.json у них ещё нет слага. Строки помечены меткой provisional.'
+    `Провизорных дней: ${provisionalDays} — они ещё planned в games.json, ` +
+      'порядок может поменяться. Строки помечены меткой provisional.'
   );
 }
 if (warnings.length) {
