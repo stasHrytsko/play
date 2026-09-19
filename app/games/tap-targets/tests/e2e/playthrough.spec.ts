@@ -65,35 +65,18 @@ async function captureSignals(page: Page): Promise<{ posthog: CapturedEvent[]; f
   const posthog: CapturedEvent[] = [];
   const feedback: unknown[] = [];
 
-  // TEMPORARY DIAGNOSTIC — remove once the two signal assertions pass.
-  // Passive listeners only: they observe, they do not route, so CI keeps
-  // reproducing exactly the run being diagnosed. The question they answer is
-  // whether posthog-js issues any capture request at all, or whether it stops
-  // at the /flags/ handshake. eu-assets is included because that host is not
-  // routed and is where remote config comes from.
-  /* eslint-disable no-console */
-  page.on('request', (request) => {
-    const url = request.url();
-    if (!url.includes('posthog')) return;
-    const body = request.postData() ?? '';
-    console.log(`[DIAG req] ${request.method()} ${url.slice(0, 110)} body=${body.slice(0, 70)}`);
+  // posthog-js drops every capture when it decides the viewer is a bot, and
+  // its check ends on `!!navigator.webdriver` (posthog-js/dist), which
+  // Playwright sets on every page. The events were therefore never sent —
+  // not mis-encoded, not slow, simply discarded before the network.
+  //
+  // The override belongs here and not in PostHogSignalSink: turning
+  // `opt_out_useragent_filter` on in the shell would disable bot filtering in
+  // production too, and an experiment judged on real player numbers cannot
+  // afford crawler traffic in its funnel.
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => false });
   });
-  page.on('requestfailed', (request) => {
-    if (!request.url().includes('posthog')) return;
-    console.log(`[DIAG failed] ${request.url().slice(0, 110)} ${request.failure()?.errorText ?? ''}`);
-  });
-  page.on('response', (response) => {
-    const url = response.url();
-    if (!url.includes('posthog')) return;
-    console.log(`[DIAG res] ${String(response.status())} ${url.slice(0, 110)}`);
-  });
-  page.on('console', (message) => {
-    const text = message.text();
-    if (message.type() === 'error' || text.includes('signal') || text.includes('osthog')) {
-      console.log(`[DIAG console] ${message.type()} ${text.slice(0, 200)}`);
-    }
-  });
-  /* eslint-enable no-console */
 
   await page.route('https://eu.i.posthog.com/**', async (route) => {
     const request = route.request();
@@ -168,6 +151,15 @@ test.describe('playthrough', () => {
 
     await expect(testId(page, 'level-select')).toBeVisible();
 
+    // posthog-js batches: a capture is queued when the popup closes and only
+    // leaves the browser a moment later. Reading the array once races the
+    // flush, so the wait is part of the assertion.
+    await expect
+      .poll(() => signals.posthog.map((signal) => signal.event), { timeout: 15_000 })
+      .toEqual(
+        expect.arrayContaining(['first_action', 'level_5_complete', 'rating_submit', 'comment_submit']),
+      );
+
     expect(signals.posthog).toContainEqual({
       event: 'first_action',
       properties: expect.objectContaining({ game_id: GAME.id, level: 0 }),
@@ -215,6 +207,10 @@ test.describe('playthrough', () => {
     await testId(page, 'rating-star-2').click();
     await testId(page, 'rating-submit').click();
     await expect(testId(page, 'level-select')).toBeVisible();
+
+    await expect
+      .poll(() => signals.posthog.map((signal) => signal.event), { timeout: 15_000 })
+      .toContain('rating_submit');
 
     expect(signals.posthog).toContainEqual({
       event: 'rating_submit',
