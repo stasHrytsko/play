@@ -1,3 +1,4 @@
+import { gunzipSync } from 'node:zlib';
 import { expect, test, type Page } from '@playwright/test';
 import { GAME } from '../../game.config.ts';
 import { clearCurrentLevel, GAME_PATH, openLevelSelect, testId } from './helpers.ts';
@@ -12,13 +13,53 @@ interface CapturedEvent {
 }
 
 /**
+ * posthog-js never puts raw JSON on the wire. Depending on the compression it
+ * negotiates, the body is either `data=<url-encoded base64 of the JSON>` with
+ * an x-www-form-urlencoded content type, or a gzip blob (posthog-js/dist:
+ * `"data="+encodeURIComponent(...)` for Base64, `gzip-js` otherwise).
+ *
+ * Reading it as JSON therefore always threw, the throw was swallowed, and
+ * every assertion below saw an empty array — which is exactly how these two
+ * tests failed for as long as they existed.
+ */
+function decodeEvents(body: Buffer | null): Record<string, unknown>[] {
+  if (body === null || body.length === 0) return [];
+
+  let text: string;
+  if (body[0] === 0x1f && body[1] === 0x8b) {
+    try {
+      text = gunzipSync(body).toString('utf8');
+    } catch {
+      return [];
+    }
+  } else {
+    const raw = body.toString('utf8');
+    if (raw.startsWith('data=')) {
+      const payload = decodeURIComponent(raw.slice('data='.length));
+      const decoded = Buffer.from(payload, 'base64').toString('utf8');
+      // `data=` carries base64 in the Base64 mode and plain JSON in others.
+      text = decoded.trimStart().startsWith('{') || decoded.trimStart().startsWith('[') ? decoded : payload;
+    } else {
+      text = raw;
+    }
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(text);
+    if (Array.isArray(parsed)) return parsed as Record<string, unknown>[];
+    const object = parsed as Record<string, unknown>;
+    const batch = object['batch'];
+    return Array.isArray(batch) ? (batch as Record<string, unknown>[]) : [object];
+  } catch {
+    // Not an event payload (e.g. the /flags/ handshake) — nothing to collect.
+    return [];
+  }
+}
+
+/**
  * Intercepts the real network calls the real PostHogSignalSink and
  * Web3FormsFeedbackSink make. Nothing in src/ knows it is under test — no
  * test-only sink, no injected hook.
- *
- * posthog-js batches or sends single events depending on internals this test
- * should not have to track, so the body is parsed leniently: a bare `event`
- * field, or a `batch` array of `{event, properties}` entries.
  */
 async function captureSignals(page: Page): Promise<{ posthog: CapturedEvent[]; feedback: unknown[] }> {
   const posthog: CapturedEvent[] = [];
@@ -27,17 +68,11 @@ async function captureSignals(page: Page): Promise<{ posthog: CapturedEvent[]; f
   await page.route('https://eu.i.posthog.com/**', async (route) => {
     const request = route.request();
     if (request.method() === 'POST') {
-      try {
-        const body = JSON.parse(request.postData() ?? '{}') as Record<string, unknown>;
-        const batch = Array.isArray(body['batch']) ? (body['batch'] as Record<string, unknown>[]) : [body];
-        for (const entry of batch) {
-          const event = entry['event'];
-          if (typeof event === 'string') {
-            posthog.push({ event, properties: (entry['properties'] as Record<string, unknown>) ?? {} });
-          }
+      for (const entry of decodeEvents(request.postDataBuffer())) {
+        const event = entry['event'];
+        if (typeof event === 'string') {
+          posthog.push({ event, properties: (entry['properties'] as Record<string, unknown>) ?? {} });
         }
-      } catch {
-        // Not JSON (e.g. a beacon ping) — nothing this test cares about.
       }
     }
     await route.fulfill({ status: 200, body: '{"status":1}' });
