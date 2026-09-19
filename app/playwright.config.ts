@@ -24,7 +24,14 @@ export default defineConfig({
       name: 'mobile-web',
       // Web-first for the 30/30 experiment; a phone viewport is still the
       // right default since every game is played on a phone browser.
-      use: { ...devices['Pixel 7'] },
+      //
+      // channel: 'chromium' runs the full Chromium build instead of the
+      // headless shell Playwright picks by default. The shell reports
+      // "HeadlessChrome" in navigator.userAgentData.brands, and posthog-js
+      // treats that as a bot and silently discards every capture — so the
+      // analytics assertions can only pass in a browser that looks like the
+      // one players actually use.
+      use: { ...devices['Pixel 7'], channel: 'chromium' },
     },
   ],
   webServer: {
