@@ -1,10 +1,16 @@
 # PLAY
 
-The live hub for the Prototype Validation Project — Stas Hrytsko's 30-prototype
-game-design experiment. Deployed at play.hrytsko.com. The write-up, career
-page and the rest of the personal site live in a separate repository
-(`stasHrytsko/hrytsko`, hrytsko.com); this repo holds the hub and the
-games that run on it.
+The live hub and prototype factory for Stas Hrytsko's 30-prototype
+game-design project. PLAY is a repeatable production pipeline that turns a
+game idea into a standardized spec, a playable prototype, a checked build and
+a published game. Deployed at play.hrytsko.com.
+
+The canonical high-level definition of PLAY, its framework, responsibilities
+and production flow lives in [docs/PLAY.md](docs/PLAY.md).
+
+The write-up, career page and the rest of the personal site live in a separate
+repository (`stasHrytsko/hrytsko`, hrytsko.com); this repo holds the hub and
+the games that run on it.
 
 ## Run locally
 
@@ -80,8 +86,10 @@ recording are disabled; the hub emits explicit project events only.
 - `app/` — the game factory: shared shell, per-game mechanics, tests (Vite + Phaser).
 - `ideas/` — the pipeline's input: one hand-written idea per concept.
 - `specs/` — the concept specifications, the normative template and the validator.
+- `docs/PLAY.md` — canonical high-level definition of PLAY and the prototype production flow.
+- `docs/pipeline.md` — the same flow in detail: artifacts, gates, migration state.
 - `docs/templates/` — the idea template.
-- `docs/` — pipeline architecture and the log of decisions.
+- `docs/decisions.md` — the log of decisions.
 - `games.json` — source of truth for the schedule, concepts, links, metrics and feedback.
 - `analytics-config.js` — launch date, timezone and PostHog client configuration.
 - `hub.js` — upcoming-date logic, UTM attribution, analytics controls and event capture.
