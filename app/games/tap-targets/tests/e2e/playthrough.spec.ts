@@ -65,6 +65,36 @@ async function captureSignals(page: Page): Promise<{ posthog: CapturedEvent[]; f
   const posthog: CapturedEvent[] = [];
   const feedback: unknown[] = [];
 
+  // TEMPORARY DIAGNOSTIC — remove once the two signal assertions pass.
+  // Passive listeners only: they observe, they do not route, so CI keeps
+  // reproducing exactly the run being diagnosed. The question they answer is
+  // whether posthog-js issues any capture request at all, or whether it stops
+  // at the /flags/ handshake. eu-assets is included because that host is not
+  // routed and is where remote config comes from.
+  /* eslint-disable no-console */
+  page.on('request', (request) => {
+    const url = request.url();
+    if (!url.includes('posthog')) return;
+    const body = request.postData() ?? '';
+    console.log(`[DIAG req] ${request.method()} ${url.slice(0, 110)} body=${body.slice(0, 70)}`);
+  });
+  page.on('requestfailed', (request) => {
+    if (!request.url().includes('posthog')) return;
+    console.log(`[DIAG failed] ${request.url().slice(0, 110)} ${request.failure()?.errorText ?? ''}`);
+  });
+  page.on('response', (response) => {
+    const url = response.url();
+    if (!url.includes('posthog')) return;
+    console.log(`[DIAG res] ${String(response.status())} ${url.slice(0, 110)}`);
+  });
+  page.on('console', (message) => {
+    const text = message.text();
+    if (message.type() === 'error' || text.includes('signal') || text.includes('osthog')) {
+      console.log(`[DIAG console] ${message.type()} ${text.slice(0, 200)}`);
+    }
+  });
+  /* eslint-enable no-console */
+
   await page.route('https://eu.i.posthog.com/**', async (route) => {
     const request = route.request();
     if (request.method() === 'POST') {
