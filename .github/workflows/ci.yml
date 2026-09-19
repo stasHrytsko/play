@@ -26,6 +26,11 @@ jobs:
       - name: Hub behaviour checks
         run: node test-hub.mjs
 
+      # Ошибка — спека непригодна для сборки (нет шапки, требует несуществующих
+      # событий). Недозаполненное печатается предупреждением и сборку не роняет.
+      - name: Specs conform to the template
+        run: node specs/validate.mjs
+
       # games.json is the source of truth; index.html and the per-game pages
       # are generated from it. If a games.json edit lands without rerunning
       # the generator, the published site silently disagrees with the data.
