@@ -7,8 +7,16 @@ between games — `src/shell/**` is written and tested once. Forked from
 (see `docs/decisions.md` for what changed and why).
 
 **Read in this order:** [`CLAUDE.md`](./CLAUDE.md) →
-[`docs/architecture.md`](./docs/architecture.md) →
-[`docs/decisions.md`](./docs/decisions.md).
+[`docs/decisions.md`](./docs/decisions.md) →
+[`docs/architecture.md`](./docs/architecture.md).
+
+`architecture.md` comes last on purpose: it describes the original
+Android-first template and every concrete number and path in it is
+historical. Read it for *why* the shell is shaped this way, never for what
+is true today — `decisions.md` is what is true today.
+
+Spec format lives outside `app/`: `specs/_TEMPLATE.md` is normative,
+`specs/HOWTO.md` is the authoring guide.
 
 ## New game
 

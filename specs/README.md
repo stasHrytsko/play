@@ -1,27 +1,33 @@
 # specs/
 
-Staging area for the 30/30 canonical shelf — one spec per concept, written
-before its own day comes up, in the `docs/rules-template.md` format (inside
-`app/`).
+Полка концептов 30/30: одна спека на концепт, написанная заранее, до того
+как наступит её день.
 
-## Naming
+## Какой документ когда
 
-`specs/<slug>.md` — the same `<slug>` the concept will get as
-`app/games/<slug>/` on its day. Decide the slug when the spec is written,
-not later; renaming a spec after code exists means renaming the game folder
-too.
+| Документ | Что это | Когда открывать |
+|---|---|---|
+| `_TEMPLATE.md` | **Нормативный шаблон.** Структура, обязательность, требования | Когда пишешь спеку и когда проверяешь готовую |
+| `HOWTO.md` | **Руководство автора.** Приёмы, типичные ошибки, чеклист | Когда не знаешь, как сформулировать |
+| `NN-slug.md` | Сама спека одного концепта | Перед сборкой игры |
 
-## Where it goes from here
+Разница простая: `_TEMPLATE.md` отвечает на вопрос «что должно быть в
+документе», `HOWTO.md` — на вопрос «как это написать, чтобы агент не
+додумывал». Нумерация разделов есть только у шаблона. Если где-то встретилась
+ссылка вида «§4» — она всегда про `_TEMPLATE.md`.
 
-On a concept's day, `app/CLAUDE.md`'s "New game" step 1 pulls the spec from
-here into `app/games/<slug>/rules.md` instead of writing it from scratch —
-this folder is the source, `app/games/<slug>/rules.md` is the copy that
-actually ships with the game.
+## Именование
 
-## Buffer games
+`specs/NN-slug.md`, где `NN` — номер концепта, а не день выхода. Концепт 23
+может выйти в день 5; связь «день → слаг» живёт только в `games.json`.
 
-Two specs — drawn from the "ЗАПАС" pool, not the 29 dated days — get built
-all the way through ahead of schedule: a full run of the New game pipeline
-(app/CLAUDE.md steps 1-9), timed step by step, logged in
-`app/docs/decisions.md`. That's the schedule check for whether a day
-actually fits in the 2-hour budget, not a separate tool.
+Слаг решается один раз, при написании спеки, и дальше не меняется: он же
+станет папкой игры и её адресом на хабе.
+
+## Что происходит со спекой дальше
+
+На день концепта `app/CLAUDE.md`, шаг «New game», копирует спеку в
+`app/games/<slug>/rules.md`. Эта папка остаётся источником, копия внутри игры
+— производная.
+
+Полный путь концепта от идеи до вердикта описан в `docs/pipeline.md`.

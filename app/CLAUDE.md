@@ -95,12 +95,14 @@ Making `games/<slug>/` a real, buildable game is one pass, not several — end
 of it, `npm run check` is green, levels included. There is no separate
 "levels" step to leave for later.
 
-1. The spec is `../specs/<slug>.md` (one level up from `app/` — see
+1. The spec is `../specs/NN-<slug>.md` (one level up from `app/` — see
    `specs/README.md`) if it's on the 30/30 shelf, or given directly in the
-   task otherwise. Read it carefully. If anything a rule in §4 (decision
-   table), §5 (win), §6 (loss) of the rules-template format would need is
-   missing or ambiguous, stop and ask — do not invent it (same rule as
-   editing an existing game's mechanic).
+   task otherwise. Read it carefully. Section numbers below refer to
+   `specs/_TEMPLATE.md`, the one normative format. If anything §2 (win and
+   loss), §3 (rules) or §5 (input) would need is missing or ambiguous, stop
+   and ask — do not invent it (same rule as editing an existing game's
+   mechanic). A section marked "не применимо" is an answer; a silently
+   missing one is not.
 2. Copy `games/tap-targets/` as the starting skeleton — folder structure,
    not content: `game.config.ts`, `main.ts`, `index.html`, `rules.md` (copy
    the spec from `specs/<slug>.md` into this file — `specs/` stays the source,
@@ -117,20 +119,22 @@ of it, `npm run check` is green, levels included. There is no separate
 4. `mechanic/engine/`: pure functions implementing the rules' decision table
    exactly — no DOM, no Phaser, no `fetch`, no `ui-kit`, no `render-kit` (the
    linter enforces this, see Boundaries). This is where the rules document
-   becomes code; if a rule can't be written as a test per the rules-template
-   standard, that's the ambiguity to raise in step 1, not to guess past here.
+   becomes code; if a rule can't be written as a test — the bar set by
+   `specs/_TEMPLATE.md` — that's the ambiguity to raise in step 1, not to
+   guess past here.
    The render/host layer must report the first meaningful valid input through
    `onFirstAction()` and every deterministic loss through
    `onFail('<stable_reason_code>')`. The shell de-duplicates first action,
    emits analytics, shows the loss popup and owns retry.
 5. `mechanic/levels/`: `levels.json` with real content for all 5 levels
-   (Способ А or Б from `docs/rules-template.md` §8 — whichever the rules
-   used), plus a `loadLevels.ts` that validates the pack's length against
+   (Способ А or Б from `specs/_TEMPLATE.md` §6 — whichever the spec used),
+   plus a `loadLevels.ts` that validates the pack's length against
    `GAME.levelCount` on import, same pattern as `games/tap-targets`'s. A
    build that doesn't typecheck/build because `levels.json` is still a stub
    is the expected state mid-step-5, not a bug — but the game is not done
-   until it's real content matching the difficulty curve the rules describe
-   (`docs/rules-template.md` §9), not a placeholder. Standard genre
+   until it's real content matching the difficulty curve the spec describes
+   (`specs/_TEMPLATE.md` §6, which requires the difference between every
+   adjacent pair of levels to be named), not a placeholder. Standard genre
    convention applies unless the rules say otherwise: level 1 close to a
    tutorial (a player should clear it without failing), difficulty rises
    step to step without a spike, level 5 is the hardest and meant to take
