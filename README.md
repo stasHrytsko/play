@@ -3,11 +3,12 @@
 The live hub for the Prototype Validation Project — Stas Hrytsko's 30-prototype
 game-design experiment. Deployed at play.hrytsko.com. The write-up, career
 page and the rest of the personal site live in a separate repository
-(`stasHrytsko/hrytsko`, hrytsko.com); this repo is only the playable hub.
+(`stasHrytsko/hrytsko`, hrytsko.com); this repo holds the hub and the
+games that run on it.
 
 ## Run locally
 
-No installation or build step needed. From the repository root:
+The hub needs no installation or build step. From the repository root:
 
 ```sh
 python3 -m http.server 8000
@@ -17,9 +18,32 @@ Open http://localhost:8000.
 
 ## Publishing a prototype
 
+The playable build lives in `app/` (Vite + Phaser) and is published to the
+hub by one command from the repository root:
+
+```sh
+node release.mjs <slug>          # publish
+node release.mjs <slug> --dry    # show what would happen, write nothing
+```
+
+It typechecks and builds `app/`, copies the build to `g/<slug>/`, fills in
+`links.play` and the release date in `games.json`, and reruns the generator.
+Then commit and push — the host serves the repository root as-is.
+
+Two URLs on purpose:
+
+- `/g/<slug>/` — the playable build.
+- `/<slug>/` — the page with the description, metrics and feedback.
+
+The slug in `games.json` must match the folder name in `app/games/`; the
+script refuses to publish under a different name rather than quietly
+creating a second identity for the same game.
+
+## The schedule
+
 `games.json` is the single source of truth for the launch schedule, concepts,
-links, metrics and feedback summaries. After editing it, regenerate the log
-grid and per-prototype pages:
+links, metrics and feedback summaries. After editing it by hand, regenerate
+the log grid and per-prototype pages:
 
 ```sh
 node build-games.mjs
@@ -29,11 +53,8 @@ The script has no dependencies. It rewrites the upcoming card and prototype
 grid in `index.html`, then writes one static page per prototype with
 `"status": "published"`. A `"scheduled"` entry powers the hidden upcoming
 card; `"planned"` entries remain empty slots. The launch schedule begins on
-1 October 2026 and runs for 30 consecutive days.
-
-To release a prototype: add its playable URL under `links.play`, change its
-status from `scheduled` to `published`, mark the next concept as
-`scheduled`, and run the generator.
+1 October 2026 and runs for 30 consecutive days. Releasing a prototype also
+means marking the next concept as `scheduled`.
 
 Run `node test-hub.mjs` to check the client-side hub behavior (UTM
 persistence, the "Tomorrow" label, the tracking adapter)
@@ -54,10 +75,15 @@ recording are disabled; the hub emits explicit project events only.
 ## Structure
 
 - `index.html` — the hub: hero, upcoming release, prototype log grid.
+- `app/` — the game factory: shared shell, per-game mechanics, tests (Vite + Phaser).
+- `specs/` — the thirty concept specifications and the normative template.
+- `docs/` — pipeline architecture and the log of decisions.
 - `games.json` — source of truth for the schedule, concepts, links, metrics and feedback.
 - `analytics-config.js` — launch date, timezone and PostHog client configuration.
 - `hub.js` — upcoming-date logic, UTM attribution, analytics controls and event capture.
 - `build-games.mjs` — dependency-free generator for the log grid and per-prototype pages.
+- `release.mjs` — builds `app/` and publishes one game to `g/<slug>/`.
+- `g/` — published playable builds; `g/assets/` holds their shared hashed bundles.
 - `test-hub.mjs` — headless behavior check for `hub.js`.
 - `styles.css` — shared visual design, carried over from hrytsko.com for a consistent brand.
 - `favicon.svg`, `404.html` — shared site chrome.
