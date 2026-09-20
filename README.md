@@ -84,11 +84,13 @@ recording are disabled; the hub emits explicit project events only.
 
 - `index.html` — the hub: hero, upcoming release, prototype log grid.
 - `app/` — the game factory: shared shell, per-game mechanics, tests (Vite + Phaser).
-- `ideas/` — optional written ideas; the pipeline's input needs no file (see `docs/PLAY.md`).
+- `trends/` — dated market observations; the raw material ideas are scored against.
+- `ideas/` — the pipeline's input: `active/` and `rejected/`, one file per concept.
 - `specs/` — the concept specifications, the normative template and the validator.
 - `docs/PLAY.md` — canonical high-level definition of PLAY and the prototype production flow.
 - `docs/pipeline.md` — the same flow in detail: artifacts, gates, migration state.
-- `docs/templates/` — the shape of a normalized idea brief.
+- `docs/templates/` — templates for the idea, the manual review and a game's media.
+- `data/`, `results/` — the funnel pulled from PostHog and the verdict per concept.
 - `docs/decisions.md` — the log of decisions.
 - `games.json` — source of truth for the schedule, concepts, links, metrics and feedback.
 - `analytics-config.js` — launch date, timezone and PostHog client configuration.

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // Собирает CSV расписания постов для Publer из трёх источников:
-//   games.json              — расписание: день → слаг
-//   specs/NN-<slug>.md      — название и правило одной фразой (шапка спеки)
-//   distribution/posts.json — тизеры «завтра» и посты прогрева, RU/EN
+//   games.json                       — расписание: день → слаг
+//   specs/NN-<slug>.md               — название и правило одной фразой
+//   app/games/<slug>/media/copy.md   — тизер «завтра» этой игры
+//   distribution/posts.json          — прогрев; и тизеры игр, ещё не собранных
 //
 // Название и правило не дублируются здесь намеренно: они живут в шапке спеки,
 // оттуда же их берёт хаб. В posts.json остаётся только то, что действительно
@@ -13,11 +14,11 @@
 //   node distribution/build-posts.mjs
 //   node distribution/build-posts.mjs --start 2026-10-01 --out distribution/publer-posts.csv
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { loadSpecs } from '../specs/front-matter.mjs';
+import { loadSpecs, parseFrontMatter } from '../specs/front-matter.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -58,6 +59,24 @@ function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'));
 }
 
+/**
+ * Тизер игры. Живёт в папке игры — там же, где её картинки и ролик. Пока
+ * папки нет, берётся из posts.json: тизеры тридцати концептов написаны
+ * раньше, чем появились их папки. По мере сборки они переезжают, и в
+ * posts.json остаётся только прогрев. См. docs/templates/media.md.
+ */
+function teaserFor(slug) {
+  const copy = join(root, 'app', 'games', slug, 'media', 'copy.md');
+  if (existsSync(copy)) {
+    const meta = parseFrontMatter(readFileSync(copy, 'utf8')) ?? {};
+    if (meta['teaser_ru'] && meta['teaser_en']) {
+      return { ru: meta['teaser_ru'], en: meta['teaser_en'], from: 'game' };
+    }
+  }
+  const fallback = teasers[slug];
+  return fallback ? { ...fallback, from: 'posts.json' } : null;
+}
+
 function addDays(iso, days) {
   const d = new Date(`${iso}T00:00:00Z`);
   d.setUTCDate(d.getUTCDate() + days);
@@ -83,6 +102,7 @@ const byDay = new Map(games.games.filter((g) => g.slug).map((g) => [g.day, g]));
 
 const rows = [];
 const warnings = [];
+const pendingMove = new Set();
 
 // Прогрев: посты до дня 1. Идут первыми, чтобы в CSV сохранялся ход времени.
 for (const post of warmup || []) {
@@ -124,11 +144,14 @@ for (let day = 1; day <= 30; day += 1) {
     warnings.push(`день ${day}: нет спеки specs/*-${slug}.md`);
     continue;
   }
-  const teaser = teasers[slug];
+  const teaser = teaserFor(slug);
   if (!teaser) {
-    warnings.push(`день ${day}: нет тизера для «${slug}» в posts.json`);
+    warnings.push(
+      `день ${day}: нет тизера для «${slug}» — ни в app/games/${slug}/media/copy.md, ни в posts.json`,
+    );
     continue;
   }
+  if (teaser.from === 'posts.json') pendingMove.add(slug);
 
   // Порядок дней считается решённым, как только день перестаёт быть planned.
   const provisional = game.status === 'planned' ? 'provisional' : '';
@@ -212,6 +235,12 @@ if (provisionalDays > 0) {
   console.log(
     `Провизорных дней: ${provisionalDays} — они ещё planned в games.json, ` +
       'порядок может поменяться. Строки помечены меткой provisional.'
+  );
+}
+if (pendingMove.size > 0) {
+  console.log(
+    `Тизеров ещё в posts.json: ${pendingMove.size} — у этих игр нет папки ` +
+      'media/. Переедут туда по мере сборки.'
   );
 }
 if (warnings.length) {

@@ -7,16 +7,23 @@
 // Недозаполненное сообщается предупреждением и сборку не роняет: пробел
 // должен быть виден, но не блокировать работу над другими играми.
 
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 
-import { loadSpecs } from './front-matter.mjs';
+import { loadSpecs, parseFrontMatter } from './front-matter.mjs';
 
 // Поля шапки, без которых спеку нельзя ни собрать, ни судить.
 const REQUIRED = [
   'slug', 'number', 'title_ru', 'title_en', 'pitch_ru', 'pitch_en',
   'verb', 'pressure', 'emotion', 'levels', 'solver', 'kill_criterion',
 ];
-const ENUMS = { levels: ['generated', 'authored'], solver: ['required', 'none'] };
+const ENUMS = {
+  levels: ['generated', 'authored'],
+  solver: ['required', 'none'],
+  review: ['pending', 'rework', 'approved'],
+};
+// Наследуется из шапки идеи без изменений. pitch_* и review появляются здесь.
+const INHERITED = ['number', 'title_ru', 'title_en', 'verb', 'pressure', 'twist',
+  'emotion', 'family', 'levels', 'solver', 'score', 'kill_criterion'];
 // События, которых шелл не шлёт: см. src/shell/signal/SignalSink.ts.
 const RETIRED = ['more_yes', 'session_2', 'return_d1', 'return_d7'];
 const SECTIONS = 12; // §1..§12 заголовками; §0 — это сама YAML-шапка
@@ -25,6 +32,22 @@ const errors = [];
 const warnings = [];
 
 const specs = loadSpecs();
+
+/** Идеи из обеих папок: слаг → { folder, file, meta }. */
+const ideas = new Map();
+for (const folder of ['active', 'rejected']) {
+  const dir = new URL(`../ideas/${folder}/`, import.meta.url);
+  let entries = [];
+  try {
+    entries = readdirSync(dir).filter((f) => /^\d+-.*\.md$/.test(f));
+  } catch {
+    continue; // папки может не быть — это не дело валидатора спек
+  }
+  for (const file of entries) {
+    const meta = parseFrontMatter(readFileSync(new URL(file, dir), 'utf8'));
+    if (meta) ideas.set(file.replace(/^\d+-/, '').replace(/\.md$/, ''), { folder, file, meta });
+  }
+}
 
 for (const [slugFromName, { file, text, meta }] of specs) {
   const where = `specs/${file}`;
@@ -65,6 +88,30 @@ for (const [slugFromName, { file, text, meta }] of specs) {
   }
   if (meta['family'] === undefined) warnings.push(`${where}: нет family`);
   if (text.includes('TODO:')) warnings.push(`${where}: остался TODO`);
+
+  // Шапка идеи — источник, спека наследник. Расхождение значит, что одну из
+  // двух правили руками, и дальше по конвейеру поедет неизвестно какая версия.
+  const idea = ideas.get(slugFromName);
+
+  // Gate 2 спрашивается только со спек, у которых есть идея: 1–35 писались до
+  // того, как этап появился, и требовать с них поле значит держать тридцать
+  // вечных предупреждений, которые перестанут читать.
+  if (idea && meta['review'] === undefined) warnings.push(`${where}: нет review (Gate 2)`);
+  if (meta['review'] !== undefined && meta['review'] !== 'pending' && !meta['reviewed']) {
+    errors.push(`${where}: review=${String(meta['review'])} без даты`);
+  }
+
+  if (idea) {
+    for (const key of INHERITED) {
+      if (idea.meta[key] === undefined) continue;
+      if (JSON.stringify(idea.meta[key]) !== JSON.stringify(meta[key])) {
+        errors.push(`${where}: ${key} разошлось с ideas/${idea.folder}/${idea.file}`);
+      }
+    }
+    if (idea.meta['gate1'] !== 'approved') {
+      errors.push(`${where}: спека есть, но идея не прошла Gate 1 (${String(idea.meta['gate1'])})`);
+    }
+  }
 }
 
 // Реестр: games.json задаёт день → слаг. Слаг там обязан быть слагом спеки —

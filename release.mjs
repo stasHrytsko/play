@@ -13,12 +13,15 @@
 //   /<slug>/     страница с описанием и цифрами
 //
 // Полные ворота качества — это CI (`npm run check`), а не этот скрипт. Здесь
-// только быстрая проверка, что код вообще собирается.
+// только быстрая проверка, что код собирается, и отказ публиковать игру,
+// которую человек ещё не принял (Gate 4).
 
 import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { parseFrontMatter } from './specs/front-matter.mjs';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const app = join(root, 'app');
@@ -62,7 +65,28 @@ if (!entry) {
   );
 }
 
-// --- 3. Сборка --------------------------------------------------------------
+// --- 3. Gate 4: человек принял игру -----------------------------------------
+
+// Зелёный CI говорит, что игра не падает. Он не говорит, понятна ли она и не
+// стыдно ли её показывать. Это решает человек, и решение записано файлом —
+// иначе однажды вечером в спешке шаг просто пропустится.
+const reviewPath = join(gameDir, 'review.md');
+if (!existsSync(reviewPath)) {
+  fail(
+    `нет app/games/${slug}/review.md — игра не прошла ручную проверку.\n` +
+      '  Шаблон: docs/templates/review.md. Сыграй сам, потом публикуй.',
+  );
+}
+
+const review = parseFrontMatter(readFileSync(reviewPath, 'utf8')) ?? {};
+if (review['review'] !== 'approved') {
+  fail(
+    `app/games/${slug}/review.md: review=${String(review['review'] ?? '—')}, нужно approved.\n` +
+      '  Gate 4 не пройден — публиковать нечего.',
+  );
+}
+
+// --- 4. Сборка --------------------------------------------------------------
 
 const run = (cmd, cwd) => execFileSync(cmd, { cwd, shell: true, stdio: 'inherit' });
 
@@ -76,7 +100,7 @@ if (dry) {
 const distGame = join(app, 'dist', 'games', slug, 'index.html');
 if (!dry && !existsSync(distGame)) fail(`сборка не дала ${distGame}`);
 
-// --- 4. Ассеты --------------------------------------------------------------
+// --- 5. Ассеты --------------------------------------------------------------
 
 // Копируются дополнительно и никогда не удаляются. Имена файлов хешированные:
 // у уже опубликованной игры HTML ссылается на свой хеш, и он обязан остаться
@@ -97,7 +121,7 @@ if (!dry) {
   }
 }
 
-// --- 5. Страница игры -------------------------------------------------------
+// --- 6. Страница игры -------------------------------------------------------
 
 // В сборке игра лежит на два уровня ниже ассетов (games/<slug>/), на хабе —
 // на один (g/<slug>/). Глубина меняется, значит меняется и путь.
@@ -108,7 +132,23 @@ if (!dry) {
   writeFileSync(join(siteGame, 'index.html'), html);
 }
 
-// --- 6. games.json ----------------------------------------------------------
+// Медиа игры живут в её папке и едут на сайт вместе со сборкой. Ролик
+// намеренно не копируется и не коммитится: тридцать видео превратили бы
+// репозиторий, который хостится как есть, в сотни мегабайт. Его загружает
+// планировщик с диска, сайту он не нужен.
+const gameMedia = join(gameDir, 'media');
+let mediaCopied = 0;
+if (!dry && existsSync(gameMedia)) {
+  const target = join(siteGame, 'media');
+  mkdirSync(target, { recursive: true });
+  for (const file of readdirSync(gameMedia)) {
+    if (file.endsWith('.mp4') || file.endsWith('.mov') || file.endsWith('.md')) continue;
+    cpSync(join(gameMedia, file), join(target, file));
+    mediaCopied += 1;
+  }
+}
+
+// --- 7. games.json ----------------------------------------------------------
 
 const today = new Date().toISOString().slice(0, 10);
 const playUrl = `/g/${slug}/`;
@@ -128,6 +168,7 @@ if (!dry) {
 console.log(`\n${dry ? '[dry] ' : ''}день ${String(entry.day)} · ${slug}`);
 console.log(`  играбельная сборка : g/${slug}/index.html`);
 console.log(`  общие ассеты       : +${String(copied)} новых файлов в g/assets/`);
+console.log(`  медиа игры         : ${String(mediaCopied)} файлов в g/${slug}/media/ (ролик не копируется)`);
 console.log(`  страница-описание  : ${slug}/index.html (перерисована build-games.mjs)`);
 console.log(`  games.json         : ${before} → status=published, play=${playUrl}`);
 console.log(dry ? '\nНичего не записано.' : '\nОстаётся закоммитить и запушить.');
