@@ -64,6 +64,18 @@ for (const folder of ['active', 'rejected']) {
 
 const dayBySlug = new Map(games.games.filter((g) => g.slug).map((g) => [g.slug, g]));
 
+// Наблюдения по рынку — не стадия конвейера, но это то, что в проекте
+// меняется чаще всего. Доска обязана показывать и их, иначе неделя работы с
+// трендами выглядит на ней как неделя простоя.
+const trendsDir = join(root, 'trends');
+const trendFiles = existsSync(trendsDir)
+  ? readdirSync(trendsDir).filter((f) => /^\d{4}-\d{2}-\d{2}-.*\.md$/.test(f)).sort()
+  : [];
+const trends = {
+  count: trendFiles.length,
+  latest: trendFiles.length > 0 ? trendFiles[trendFiles.length - 1].slice(0, 10) : null,
+};
+
 /**
  * Стадия и то, что её держит. Порядок проверок — обратный ходу конвейера:
  * самый поздний существующий артефакт и есть текущая стадия.
@@ -207,6 +219,7 @@ const payload = {
     published: ranked.filter((r) => RANK[r.stage] >= 3).length,
     judged: rows.filter((r) => r.stage === 'вердикт').length,
   },
+  trends,
   funnel,
   waiting: rows.filter((r) => r.waiting).map((r) => ({
     slug: r.slug, number: r.number, day: r.day, stage: r.stage, waiting: r.waiting,
@@ -280,9 +293,12 @@ if (waiting.length === 0) {
 
 if (!onlyWaiting) {
   const count = (fn) => rows.filter(fn).length;
+  const daysSinceTrend = trends.latest ? daysBetween(trends.latest, today) : null;
   console.log(
     dim(
-      `  идей ${count((r) => ideas.has(r.slug))} · ` +
+      `  наблюдений ${trends.count}` +
+        (daysSinceTrend === null ? '' : ` (последнее ${daysSinceTrend} дн. назад)`) + ' · ' +
+        `идей ${count((r) => ideas.has(r.slug))} · ` +
         `спек ${count((r) => specs.has(r.slug))} · ` +
         `собрано ${count((r) => ['собрана', 'принята', 'опубликована', 'цифры', 'вердикт'].includes(r.stage))} · ` +
         `опубликовано ${count((r) => ['опубликована', 'цифры', 'вердикт'].includes(r.stage))} · ` +

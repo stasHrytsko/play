@@ -57,6 +57,18 @@ node pipeline.mjs --check    # fail if that file has fallen behind the repo
 `dashboard/` is the same board as a page, deployed separately on Vercel from
 that folder. See `dashboard/README.md`.
 
+**Rule: the board never lags the repository.** Anything that moves a concept
+along the pipeline ships with a refreshed `dashboard/status.json` in the same
+commit. A board showing yesterday's state while looking current is the worst
+way for it to break, because it gets believed. Enable the hook once per
+machine and it happens by itself:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+CI runs `node pipeline.mjs --check` either way. See `CLAUDE.md`.
+
 Nothing stores a stage. It is computed from which files exist — an idea, a
 spec with its review field, a game folder, a review.md, a play link in
 games.json, a data pull, a verdict. So the board cannot go stale the way a
@@ -113,6 +125,7 @@ recording are disabled; the hub emits explicit project events only.
 - `analytics-config.js` — launch date, timezone and PostHog client configuration.
 - `hub.js` — upcoming-date logic, UTM attribution, analytics controls and event capture.
 - `build-games.mjs` — dependency-free generator for the log grid and per-prototype pages.
+- `CLAUDE.md` — the rules that hold in this repository.
 - `pipeline.mjs` — the status board: what stage each concept is at and what is waiting on you.
 - `dashboard/` — the same board as a page, for a screen; deployed separately.
 - `release.mjs` — builds `app/` and publishes one game to `g/<slug>/`.

@@ -205,7 +205,12 @@ function hero(data) {
 
 function tiles(data) {
   const c = data.counts;
+  const t = data.trends ?? { count: 0, latest: null };
+  const age = t.latest
+    ? Math.round((Date.parse(data.today + 'T00:00:00Z') - Date.parse(t.latest + 'T00:00:00Z')) / 86400000)
+    : null;
   const cells = [
+    ['наблюдений' + (age === null ? '' : ` · ${age} дн. назад`), t.count],
     ['идей', c.ideas],
     ['спек', c.specs],
     ['собрано', c.built],

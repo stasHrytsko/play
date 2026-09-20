@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T19:07:50.486Z",
+  "generatedAt": "2026-09-20T19:16:33.922Z",
   "today": "2026-09-20",
   "startDate": "2026-10-01",
   "daysToStart": 11,
@@ -11,6 +11,10 @@
     "built": 0,
     "published": 0,
     "judged": 0
+  },
+  "trends": {
+    "count": 0,
+    "latest": null
   },
   "funnel": [
     {
