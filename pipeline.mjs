@@ -15,6 +15,7 @@
 // которое надо не забыть поменять: артефакт либо есть, либо нет. Поэтому
 // доска не может устареть, в отличие от таблицы со статусами.
 
+import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -37,6 +38,7 @@ const stripAnsi = (s) => String(s ?? '').replace(/\u001b\[[0-9;]*m/g, '');
 
 const MONTH_DAYS = 30; // окно измерения одного прототипа
 const MIN_COMPLETIONS = 30;
+const MIN_TOTAL = 24;  // порог Gate 1, см. ideas/validate.mjs
 
 const today = new Date().toISOString().slice(0, 10);
 const daysBetween = (from, to) =>
@@ -44,6 +46,23 @@ const daysBetween = (from, to) =>
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'));
+}
+
+/**
+ * Адрес репозитория на GitHub — чтобы «ждёт тебя» вёл в файл, а не называл
+ * путь. Берётся из remote, а не вписывается: переедет репозиторий — переедут
+ * и ссылки. Нет git — просто не будет ссылок, доска от этого не ломается.
+ */
+function repoUrl() {
+  try {
+    const raw = execFileSync('git', ['remote', 'get-url', 'origin'], {
+      cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    const m = /github\.com[/:]([^/]+)\/(.+?)(?:\.git)?$/.exec(raw);
+    return m ? `https://github.com/${m[1]}/${m[2]}/blob/main` : null;
+  } catch {
+    return null;
+  }
 }
 
 function readMeta(path) {
@@ -103,6 +122,21 @@ function statusOf(slug) {
   const out = {
     slug, number, day: game?.day ?? null, stage: '—', waiting: null, note: '',
     releasedAt: published ? (game.date ?? null) : null,
+    // Что открыть, что прочитать, куда записать решение. Без этого «ждёт
+    // решения» — не задача, а напоминание: непонятно, с чего начать.
+    action: null,
+  };
+
+  const ideaPath = idea ? `ideas/${idea.folder}/${idea.file}` : null;
+  const specPath = spec ? `specs/${spec.file}` : null;
+  const reviewPath = `app/games/${slug}/review.md`;
+  const dataPath = `data/${slug}.json`;
+  const resultPath = resultFile ? `results/${resultFile}` : null;
+
+  /** Ставит и короткую подпись для таблицы, и развёрнутое действие. */
+  const wait = (label, action) => {
+    out.waiting = label;
+    out.action = { actor: 'человек', ...action };
   };
 
   if (result?.['verdict']) {
@@ -115,10 +149,17 @@ function statusOf(slug) {
     out.stage = 'цифры';
     const rate = data.opened > 0 ? Math.round((data.completed / data.opened) * 100) : 0;
     out.note = `${data.completed}/${data.opened} (${rate}%)`;
-    out.waiting =
-      data.completed >= MIN_COMPLETIONS
-        ? 'вердикт'
-        : `вердикт — прохождений ${data.completed} из ${MIN_COMPLETIONS}`;
+    const enough = data.completed >= MIN_COMPLETIONS;
+    wait(enough ? 'вердикт' : `вердикт — прохождений ${data.completed} из ${MIN_COMPLETIONS}`, {
+      actor: 'AI предлагает, решаешь ты',
+      open: dataPath,
+      read: ideaPath
+        ? `цифры и kill-критерий в шапке ${ideaPath}`
+        : `цифры и kill-критерий в шапке ${String(specPath)}`,
+      write: enough
+        ? `${resultPath ?? 'results/NN-slug.md'} — карточка и verdict: PROMOTE | KILL | INCONCLUSIVE`
+        : `${resultPath ?? 'results/NN-slug.md'} — verdict: INCONCLUSIVE, выборка мала для вывода`,
+    });
     return out;
   }
 
@@ -127,7 +168,13 @@ function statusOf(slug) {
     if (game.date) {
       const passed = daysBetween(game.date, today);
       out.note = passed >= MONTH_DAYS ? 'месяц вышел' : `идёт ${passed}/${MONTH_DAYS} дн.`;
-      if (passed >= MONTH_DAYS) out.waiting = 'снять цифры';
+      if (passed >= MONTH_DAYS) {
+        wait('снять цифры', {
+          actor: 'скрипт',
+          read: `месяц с ${game.date} вышел`,
+          write: dataPath,
+        });
+      }
     }
     return out;
   }
@@ -136,13 +183,29 @@ function statusOf(slug) {
     const verdict = review?.['review'];
     if (verdict === 'approved') {
       out.stage = 'принята';
-      out.waiting = 'релиз';
+      wait('релиз', {
+        actor: 'ты запускаешь',
+        run: `node release.mjs ${slug}`,
+        read: `${reviewPath} — подписано`,
+        write: 'скрипт сам проставит links.play и дату в games.json',
+      });
     } else if (verdict === 'rework') {
       out.stage = 'сборка';
       out.note = 'на доработке';
+      out.action = {
+        actor: 'AI',
+        open: reviewPath,
+        read: 'замечания последнего захода',
+        write: `правки в app/games/${slug}/`,
+      };
     } else {
+      wait(review === null ? 'gate 4 — сыграть' : 'gate 4 — решение', {
+        open: review === null ? null : reviewPath,
+        run: 'cd app && npm run dev',
+        read: ideaPath ? `раздел 4 в ${ideaPath} — ради какого момента играют` : 'спеку',
+        write: `${reviewPath} — review: approved | rework, reviewed: дата, ниже журнал`,
+      });
       out.stage = 'собрана';
-      out.waiting = review === null ? 'gate 4 — сыграть' : 'gate 4 — решение';
     }
     return out;
   }
@@ -150,12 +213,25 @@ function statusOf(slug) {
   if (spec) {
     const verdict = spec.meta['review'];
     out.stage = 'спека';
-    if (verdict === 'approved') out.waiting = 'сборку';
-    else if (verdict === 'rework') out.note = 'на доработке';
-    else if (verdict === 'pending') out.waiting = 'gate 2 — принять спеку';
-    // У спек 1–35 поля нет: они писались до появления этапа. Ждать с них
-    // gate 2 нечего, и писать об этом тридцать раз — превратить доску в шум.
-    else if (idea) out.note = dim('без gate 2');
+    if (verdict === 'approved') {
+      wait('сборку', {
+        actor: 'AI',
+        open: specPath,
+        read: 'спеку целиком',
+        write: `app/games/${slug}/`,
+      });
+    } else if (verdict === 'rework') {
+      out.note = 'на доработке';
+      out.action = {
+        actor: 'AI', open: specPath, read: 'раздел «Замечания» внизу файла', write: specPath,
+      };
+    } else if (verdict === 'pending') {
+      wait('gate 2 — принять спеку', {
+        open: specPath,
+        read: 'спеку целиком — из каждого пункта должен писаться тест',
+        write: 'в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла',
+      });
+    }
     return out;
   }
 
@@ -173,11 +249,29 @@ function statusOf(slug) {
     } else if (gate === 'approved') {
       out.stage = 'идея';
       out.note = total ? `${total}/30` : '';
-      out.waiting = 'спеку';
+      wait('спеку', {
+        actor: 'AI',
+        open: ideaPath,
+        read: 'идею целиком',
+        write: `specs/${String(number).padStart(2, '0')}-${slug}.md по specs/_TEMPLATE.md`,
+      });
     } else {
       out.stage = 'идея';
       out.note = total ? `${total}/30` : dim('не оценена');
-      out.waiting = total === null ? 'оценку' : 'gate 1 — твоё решение';
+      if (total === null) {
+        wait('оценку', {
+          actor: 'AI',
+          open: ideaPath,
+          read: 'разделы 1–8',
+          write: `${ideaPath} — раздел «Оценка»: шесть критериев по 1–5, саммари, итог`,
+        });
+      } else {
+        wait('gate 1 — твоё решение', {
+          open: ideaPath,
+          read: `идею целиком и раздел «Оценка» в конце (${total}/30, порог ${MIN_TOTAL})`,
+          write: 'в шапке: gate1: approved | rejected и gate1_date: дата. При rejected — файл переезжает в ideas/rejected/ с одной строкой почему',
+        });
+      }
     }
     return out;
   }
@@ -232,8 +326,10 @@ const payload = {
   // данными, и всё, что зависит от даты, страница досчитывает сама.
   rules: { monthDays: MONTH_DAYS, minCompletions: MIN_COMPLETIONS },
   funnel,
+  repoUrl: repoUrl(),
   waiting: rows.filter((r) => r.waiting).map((r) => ({
-    slug: r.slug, number: r.number, day: r.day, stage: r.stage, waiting: r.waiting,
+    slug: r.slug, number: r.number, day: r.day, stage: r.stage,
+    waiting: r.waiting, action: r.action,
   })),
   rows: rows.map((r) => ({ ...r, note: stripAnsi(r.note) })),
 };
@@ -300,7 +396,13 @@ if (waiting.length === 0) {
   console.log(`\n${bold(`Ждёт тебя: ${waiting.length}`)}`);
   for (const r of waiting) {
     const label = r.day === null ? `#${r.number ?? '—'}` : `день ${r.day}`;
-    console.log(`  ${warn('•')} ${r.slug} (${label}) — ${r.waiting}`);
+    const a = r.action ?? {};
+    const who = a.actor && a.actor !== 'человек' ? dim(` [${a.actor}]`) : '';
+    console.log(`  ${warn('•')} ${bold(r.slug)} (${label}) — ${r.waiting}${who}`);
+    if (a.open) console.log(`      ${a.open}`);
+    if (a.run) console.log(`      ${dim('запустить')}  ${a.run}`);
+    if (a.read) console.log(`      ${dim('прочитать')}  ${a.read}`);
+    if (a.write) console.log(`      ${dim('записать')}   ${a.write}`);
   }
   console.log('');
 }

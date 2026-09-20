@@ -54,15 +54,32 @@ section{margin-bottom:36px}
 .hero-num.is-clear{color:var(--ok)}
 .hero-label{margin-top:6px; font-size:13px; color:var(--muted)}
 .hero-list{flex:1 1 320px; margin:0; padding:0; list-style:none; min-width:0}
-.hero-list li{
-  display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline;
-  padding:9px 0; border-top:1px solid var(--line);
-}
-.hero-list li:first-child{border-top:0; padding-top:2px}
+.hero-list li{padding:12px 0; border-top:1px solid var(--line)}
+.hero-list li:first-child{border-top:0; padding-top:0}
+.hero-list .top{display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline}
 .hero-list .slug{font-family:var(--mono); font-size:13px; font-weight:600}
 .hero-list .where{color:var(--faint); font-size:12px; font-variant-numeric:tabular-nums}
 .hero-list .what{color:var(--wait); font-size:13px; font-weight:500}
 .hero-list .what::before{content:"▸ "; }
+.hero-list .actor{
+  font-size:11px; color:var(--faint); border:1px solid var(--line);
+  border-radius:3px; padding:0 5px; white-space:nowrap;
+}
+.path{
+  display:inline-block; margin-top:6px; font-family:var(--mono); font-size:12px;
+  color:var(--accent); text-decoration:none; border-bottom:1px solid transparent;
+  overflow-wrap:anywhere;
+}
+.path:hover{border-bottom-color:var(--accent)}
+.step{
+  margin-top:4px; font-size:12.5px; color:var(--muted); line-height:1.45;
+  display:grid; grid-template-columns:78px 1fr; gap:10px;
+}
+.step b{
+  font-weight:500; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--faint); padding-top:2px;
+}
+.step code{font-family:var(--mono); font-size:12px; color:var(--ink)}
 .hero-empty{color:var(--muted); font-size:14px; align-self:center}
 
 /* --- Плитки ------------------------------------------------------------- */
@@ -116,6 +133,8 @@ footer code{font-family:var(--mono); font-size:11.5px; background:var(--soft); p
   .wrap{padding:24px 16px 48px}
   .hero{padding:18px}
   .hero-num{font-size:44px}
+  .step{grid-template-columns:1fr; gap:0}
+  .step b{display:block; padding-top:4px}
   .fn-row{grid-template-columns:88px 1fr; gap:8px}
   .fn-name{font-size:12px}
   /* Колонки «Цифры» и «Ждёт» уезжают: первая пуста почти всегда, вторая
@@ -179,16 +198,30 @@ function overlayToday(data) {
     if (r.stage !== 'опубликована' || !r.releasedAt) return r;
     const passed = daysBetween(r.releasedAt, today);
     return passed >= monthDays
-      ? { ...r, note: 'месяц вышел', waiting: 'снять цифры' }
-      : { ...r, note: `идёт ${passed}/${monthDays} дн.`, waiting: null };
+      ? {
+        ...r,
+        note: 'месяц вышел',
+        waiting: 'снять цифры',
+        // Действие собирается здесь же: строка стала ожидающей только что, в
+        // снимке его не было и быть не могло.
+        action: {
+          actor: 'скрипт',
+          read: `месяц с ${r.releasedAt} вышел`,
+          write: `data/${r.slug}.json`,
+        },
+      }
+      : { ...r, note: `идёт ${passed}/${monthDays} дн.`, waiting: null, action: null };
   });
 
   return {
     ...data,
     today,
     rows,
+    // action обязан переехать вместе со строкой: без него пункт списка
+    // превращается обратно в напоминание без адреса.
     waiting: rows.filter((r) => r.waiting).map((r) => ({
-      slug: r.slug, number: r.number, day: r.day, stage: r.stage, waiting: r.waiting,
+      slug: r.slug, number: r.number, day: r.day, stage: r.stage,
+      waiting: r.waiting, action: r.action ?? null,
     })),
   };
 }
@@ -202,7 +235,7 @@ function hero(data) {
   const list = data.waiting;
   const figure = `<div class="hero-figure">
     <div class="hero-num${list.length ? '' : ' is-clear'}">${list.length}</div>
-    <div class="hero-label">${list.length ? 'ждёт твоего решения' : 'ничего не ждёт'}</div>
+    <div class="hero-label">${list.length ? 'ждёт действия' : 'ничего не ждёт'}</div>
   </div>`;
 
   if (list.length === 0) {
@@ -211,11 +244,29 @@ function hero(data) {
     </div></section>`;
   }
 
-  const items = list.map((w) => `<li>
-    <span class="slug">${esc(w.slug)}</span>
-    <span class="where">${w.day === null ? '#' + esc(w.number ?? '—') : 'день ' + esc(w.day)}</span>
-    <span class="what">${esc(w.waiting)}</span>
-  </li>`).join('');
+  const items = list.map((w) => {
+    const a = w.action ?? {};
+    const file = a.open
+      ? (data.repoUrl
+        ? `<a class="path" href="${esc(data.repoUrl)}/${esc(a.open)}" target="_blank" rel="noopener">${esc(a.open)}</a>`
+        : `<span class="path">${esc(a.open)}</span>`)
+      : '';
+    const steps = [
+      a.run ? `<div class="step"><b>запустить</b><code>${esc(a.run)}</code></div>` : '',
+      a.read ? `<div class="step"><b>прочитать</b>${esc(a.read)}</div>` : '',
+      a.write ? `<div class="step"><b>записать</b>${esc(a.write)}</div>` : '',
+    ].join('');
+
+    return `<li>
+      <div class="top">
+        <span class="slug">${esc(w.slug)}</span>
+        <span class="where">${w.day === null ? '#' + esc(w.number ?? '—') : 'день ' + esc(w.day)}</span>
+        <span class="what">${esc(w.waiting)}</span>
+        ${a.actor && a.actor !== 'человек' ? `<span class="actor">${esc(a.actor)}</span>` : ''}
+      </div>
+      ${file}${steps}
+    </li>`;
+  }).join('');
 
   return `<section><h2>Ждёт тебя</h2><div class="hero">${figure}
     <ul class="hero-list">${items}</ul>
