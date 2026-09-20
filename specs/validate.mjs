@@ -89,6 +89,13 @@ for (const [slugFromName, { file, text, meta }] of specs) {
   if (meta['family'] === undefined) warnings.push(`${where}: нет family`);
   if (text.includes('TODO:')) warnings.push(`${where}: остался TODO`);
 
+  // Неотвеченный крайний случай — это либо вопрос от агента посреди сборки,
+  // либо молча выдуманное правило. Второе хуже: игра расходится со спекой, и
+  // измеряется не то, что описано.
+  const edge = /^# 11\.[\s\S]*?(?=^# 12\.|\Z)/m.exec(text)?.[0] ?? '';
+  const unanswered = (edge.match(/^\s*- \[ \]/gm) ?? []).length;
+  if (unanswered > 0) warnings.push(`${where}: §11 — ${unanswered} неотвеченных крайних случаев`);
+
   // Шапка идеи — источник, спека наследник. Расхождение значит, что одну из
   // двух правили руками, и дальше по конвейеру поедет неизвестно какая версия.
   const idea = ideas.get(slugFromName);
