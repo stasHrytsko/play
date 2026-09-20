@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T21:20:06.579Z",
+  "generatedAt": "2026-09-20T21:25:33.214Z",
   "today": "2026-09-20",
   "counts": {
     "ideas": 1,
@@ -46,11 +46,24 @@
       "number": 1,
       "day": 1,
       "stage": "спека",
+      "waiting": "сборку",
+      "action": {
+        "actor": "AI",
+        "open": "specs/01-box-arrives.md",
+        "read": "спеку целиком",
+        "write": "app/games/box-arrives/"
+      }
+    },
+    {
+      "slug": "two-moves-later",
+      "number": 2,
+      "day": 2,
+      "stage": "спека",
       "waiting": "gate 2 — принять спеку",
       "action": {
         "actor": "человек",
-        "open": "specs/01-box-arrives.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест. Следующая по расписанию из 30 на приёмке",
+        "open": "specs/02-two-moves-later.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест. Следующая по расписанию из 29 на приёмке",
         "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
       }
     },
@@ -74,14 +87,14 @@
       "number": 1,
       "day": 1,
       "stage": "спека",
-      "waiting": "gate 2 — принять спеку",
+      "waiting": "сборку",
       "note": "",
       "releasedAt": null,
       "action": {
-        "actor": "человек",
+        "actor": "AI",
         "open": "specs/01-box-arrives.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест. Следующая по расписанию из 30 на приёмке",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "read": "спеку целиком",
+        "write": "app/games/box-arrives/"
       }
     },
     {
@@ -89,13 +102,13 @@
       "number": 2,
       "day": 2,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт gate 2",
+      "waiting": "gate 2 — принять спеку",
+      "note": "",
       "releasedAt": null,
       "action": {
         "actor": "человек",
         "open": "specs/02-two-moves-later.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "read": "спеку целиком — из каждого пункта должен писаться тест. Следующая по расписанию из 29 на приёмке",
         "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
       }
     },
