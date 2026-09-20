@@ -27,8 +27,8 @@ score:
 kill_criterion: >-
   Если preview очереди ящиков не заставляет менять порядок откручивания
   минимум в ключевых ситуациях уровня 5, концепт хоронится.
-review: pending
-reviewed:
+review: approved
+reviewed: 
 ---
 # 1. Паспорт концепта
 
