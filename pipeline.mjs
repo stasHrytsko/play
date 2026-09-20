@@ -5,9 +5,11 @@
 //   node pipeline.mjs --waiting  только то, что ждёт тебя
 //   node pipeline.mjs --json     то же машиночитаемо
 //   node pipeline.mjs --write    записать dashboard/status.json для страницы
+//   node pipeline.mjs --check    упасть, если записанное отстало от репозитория
 //
-// status.json не коммитится: его собирает Vercel на каждом деплое. Забыть
-// пересчитать нечего — см. CLAUDE.md, правило №1.
+// status.json коммитится. Страница тогда работает на чистой статике, при любой
+// настройке хостинга, а забыть его обновить не даёт --check в CI — он гоняется
+// на каждом пуше и ничего не требует включать руками.
 //
 // Стадия нигде не хранится — она считается из файлов. Нет поля `status`,
 // которое надо не забыть поменять: артефакт либо есть, либо нет. Поэтому
@@ -24,8 +26,9 @@ const args = process.argv.slice(2);
 const onlyWaiting = args.includes('--waiting');
 const asJson = args.includes('--json');
 const write = args.includes('--write');
+const check = args.includes('--check');
 
-const tty = process.stdout.isTTY && !asJson && !write;
+const tty = process.stdout.isTTY && !asJson && !write && !check;
 const bold = (s) => (tty ? `\u001b[1m${s}\u001b[0m` : s);
 const dim = (s) => (tty ? `\u001b[2m${s}\u001b[0m` : s);
 const warn = (s) => (tty ? `\u001b[33m${s}\u001b[0m` : s);
@@ -234,6 +237,27 @@ const payload = {
   })),
   rows: rows.map((r) => ({ ...r, note: stripAnsi(r.note) })),
 };
+
+// Сравнивается только то, что зависит от файлов. Дата в снимке меняется сама,
+// а всё, что от неё зависит, страница и так пересчитывает в браузере.
+const FIXED = ({ counts, trends, funnel, rows }) => JSON.stringify({ counts, trends, funnel, rows });
+
+if (check) {
+  const out = join(root, 'dashboard', 'status.json');
+  if (!existsSync(out)) {
+    console.error('Нет dashboard/status.json. Запусти: node pipeline.mjs --write');
+    process.exit(1);
+  }
+  if (FIXED(readJson(out)) !== FIXED(payload)) {
+    console.error(
+      'dashboard/status.json отстал от репозитория.\n' +
+        "  Доска показывала бы не то, что есть. Запусти 'node pipeline.mjs --write' и закоммить.",
+    );
+    process.exit(1);
+  }
+  console.log('dashboard/status.json совпадает с состоянием репозитория');
+  process.exit(0);
+}
 
 if (write) {
   const out = join(root, 'dashboard', 'status.json');

@@ -36,11 +36,13 @@ jobs:
       - name: Ideas conform to the template
         run: node ideas/validate.mjs
 
-      # Доска собирается на Vercel этой же командой. Здесь она проверяется на
-      # то, что вообще собирается: сломанный генератор иначе обнаружился бы
-      # красным деплоем, а не красным CI.
-      - name: Dashboard data builds
-        run: node pipeline.mjs --write
+      # Снимок доски закоммичен, чтобы страница была чистой статикой. Значит,
+      # его можно забыть обновить — эта проверка не даёт. Сверяется только то,
+      # что зависит от файлов: дата меняется сама, и страница её пересчитывает
+      # в браузере. Проверка гоняется на каждом пуше и ничего не требует
+      # включать руками.
+      - name: Dashboard data matches the repository
+        run: node pipeline.mjs --check
 
       # games.json is the source of truth; index.html and the per-game pages
       # are generated from it. If a games.json edit lands without rerunning
