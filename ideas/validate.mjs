@@ -137,6 +137,10 @@ for (const { folder, file, where, text } of files) {
 
   if (gate !== 'pending' && !meta['gate1_date']) {
     errors.push(`${where}: gate1=${gate} без даты`);
+  } else if (typeof meta['gate1_date'] === 'string' && meta['gate1_date'] !== ''
+    && !/^\d{4}-\d{2}-\d{2}$/.test(meta['gate1_date'])) {
+    // «20 september 2026» не сортируется и не вычитается.
+    errors.push(`${where}: gate1_date «${String(meta['gate1_date'])}» — нужен формат YYYY-MM-DD`);
   }
 
   // Папка и решение — одно и то же состояние, записанное дважды. Расхождение

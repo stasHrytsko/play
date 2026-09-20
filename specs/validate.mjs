@@ -113,6 +113,9 @@ for (const [slugFromName, { file, text, meta }] of specs) {
   if (idea && meta['review'] === undefined) warnings.push(`${where}: нет review (Gate 2)`);
   if (meta['review'] !== undefined && meta['review'] !== 'pending' && !meta['reviewed']) {
     errors.push(`${where}: review=${String(meta['review'])} без даты`);
+  } else if (typeof meta['reviewed'] === 'string' && meta['reviewed'] !== ''
+    && !/^\d{4}-\d{2}-\d{2}$/.test(meta['reviewed'])) {
+    errors.push(`${where}: reviewed «${String(meta['reviewed'])}» — нужен формат YYYY-MM-DD`);
   }
 
   if (idea) {

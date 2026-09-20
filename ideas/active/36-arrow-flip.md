@@ -20,7 +20,7 @@ score:
   producibility: 3
   market: 5
 gate1: approved
-gate1_date: 20 september 2026
+gate1_date: 2026-09-20
 ---
 
 ## 1. Что делает игрок

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T21:02:31.859Z",
+  "generatedAt": "2026-09-20T21:13:54.362Z",
   "today": "2026-09-20",
   "counts": {
     "ideas": 1,
@@ -59,12 +59,12 @@
       "number": 36,
       "day": null,
       "stage": "идея",
-      "waiting": "gate 1 — твоё решение",
+      "waiting": "спеку",
       "action": {
-        "actor": "человек",
+        "actor": "AI",
         "open": "ideas/active/36-arrow-flip.md",
-        "read": "идею целиком и раздел «Оценка» в конце (25/30, порог 24)",
-        "write": "в шапке: gate1: approved | rejected и gate1_date: дата. При rejected — файл переезжает в ideas/rejected/ с одной строкой почему"
+        "read": "идею целиком",
+        "write": "specs/36-arrow-flip.md по specs/_TEMPLATE.md"
       }
     }
   ],
@@ -524,14 +524,14 @@
       "number": 36,
       "day": null,
       "stage": "идея",
-      "waiting": "gate 1 — твоё решение",
+      "waiting": "спеку",
       "note": "25/30",
       "releasedAt": null,
       "action": {
-        "actor": "человек",
+        "actor": "AI",
         "open": "ideas/active/36-arrow-flip.md",
-        "read": "идею целиком и раздел «Оценка» в конце (25/30, порог 24)",
-        "write": "в шапке: gate1: approved | rejected и gate1_date: дата. При rejected — файл переезжает в ideas/rejected/ с одной строкой почему"
+        "read": "идею целиком",
+        "write": "specs/36-arrow-flip.md по specs/_TEMPLATE.md"
       }
     }
   ]
