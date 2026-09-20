@@ -231,6 +231,18 @@ function statusOf(slug) {
         read: 'спеку целиком — из каждого пункта должен писаться тест',
         write: 'в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла',
       });
+    } else {
+      // Поля нет: спеки 1–35 писались до появления Gate 2. Раньше здесь не
+      // происходило ничего — ни ожидания, ни пометки, — и доска молчала о
+      // тридцати спеках, которые ворот не проходили. Молчание хуже шума:
+      // по пустой клетке не отличить «пройдено» от «не дошли руки».
+      out.note = 'без gate 2';
+      out.action = {
+        actor: 'человек',
+        open: specPath,
+        read: 'спеку целиком — из каждого пункта должен писаться тест',
+        write: 'в шапке: review: approved | rework и reviewed: дата',
+      };
     }
     return out;
   }
@@ -282,6 +294,23 @@ function statusOf(slug) {
 // Все известные слаги: из расписания, из спек, из идей.
 const slugs = [...new Set([...dayBySlug.keys(), ...specs.keys(), ...ideas.keys()])];
 const rows = slugs.map(statusOf);
+
+// Gate 2 нужен каждой из тридцати спек, но не сегодня: игры делаются по
+// одной. Поэтому в список ожидающих попадает только ближайшая по расписанию
+// — остальные видны в таблице пометкой «без gate 2» и ждут своей очереди.
+// Показывать тридцать одинаковых пунктов значит утопить в них остальные.
+const queue = rows
+  .filter((r) => r.day !== null && r.stage === 'спека' && r.note === 'без gate 2')
+  .sort((a, b) => a.day - b.day);
+
+if (queue.length > 0) {
+  const next = queue[0];
+  next.waiting = 'gate 2 — принять спеку';
+  next.action = {
+    ...next.action,
+    read: `${next.action.read}. Следующая по расписанию из ${queue.length} без gate 2`,
+  };
+}
 
 const scheduled = rows.filter((r) => r.day !== null).sort((a, b) => a.day - b.day);
 const backlog = rows

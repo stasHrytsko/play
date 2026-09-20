@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T19:48:29.160Z",
+  "generatedAt": "2026-09-20T19:53:06.284Z",
   "today": "2026-09-20",
   "startDate": "2026-10-01",
   "daysToStart": 11,
@@ -45,6 +45,19 @@
   "repoUrl": "https://github.com/stasHrytsko/play/blob/main",
   "waiting": [
     {
+      "slug": "box-arrives",
+      "number": 1,
+      "day": 1,
+      "stage": "спека",
+      "waiting": "gate 2 — принять спеку",
+      "action": {
+        "actor": "человек",
+        "open": "specs/01-box-arrives.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест. Следующая по расписанию из 30 без gate 2",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
+    },
+    {
       "slug": "arrow-flip",
       "number": 36,
       "day": null,
@@ -64,10 +77,15 @@
       "number": 1,
       "day": 1,
       "stage": "спека",
-      "waiting": null,
-      "note": "",
+      "waiting": "gate 2 — принять спеку",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/01-box-arrives.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест. Следующая по расписанию из 30 без gate 2",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "two-moves-later",
@@ -75,9 +93,14 @@
       "day": 2,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/02-two-moves-later.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "basement",
@@ -85,9 +108,14 @@
       "day": 3,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/03-basement.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "triple",
@@ -95,9 +123,14 @@
       "day": 4,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/04-triple.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "only-green",
@@ -105,9 +138,14 @@
       "day": 5,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/05-only-green.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "tight-shelf",
@@ -115,9 +153,14 @@
       "day": 6,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/06-tight-shelf.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "stalled",
@@ -125,9 +168,14 @@
       "day": 7,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/07-stalled.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "turnaround",
@@ -135,9 +183,14 @@
       "day": 8,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/08-turnaround.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "sprout",
@@ -145,9 +198,14 @@
       "day": 9,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/09-sprout.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "flows",
@@ -155,9 +213,14 @@
       "day": 10,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/10-flows.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "burning-land",
@@ -165,9 +228,14 @@
       "day": 11,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/11-burning-land.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "coin-turn",
@@ -175,9 +243,14 @@
       "day": 12,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/13-coin-turn.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "top-layer",
@@ -185,9 +258,14 @@
       "day": 13,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/14-top-layer.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "ribbon",
@@ -195,9 +273,14 @@
       "day": 14,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/15-ribbon.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "stuck",
@@ -205,9 +288,14 @@
       "day": 15,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/16-stuck.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "collapse-wire",
@@ -215,9 +303,14 @@
       "day": 16,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/20-collapse-wire.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "collapsed",
@@ -225,9 +318,14 @@
       "day": 17,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/21-collapsed.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "double",
@@ -235,9 +333,14 @@
       "day": 18,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/22-double.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "excavation",
@@ -245,9 +348,14 @@
       "day": 19,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/24-excavation.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "jammed",
@@ -255,9 +363,14 @@
       "day": 20,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/25-jammed.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "cable-bet",
@@ -265,9 +378,14 @@
       "day": 21,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/26-cable-bet.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "screw-budget",
@@ -275,9 +393,14 @@
       "day": 22,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/27-screw-budget.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "skip",
@@ -285,9 +408,14 @@
       "day": 23,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/28-skip.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "by-touch",
@@ -295,9 +423,14 @@
       "day": 24,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/29-by-touch.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "order",
@@ -305,9 +438,14 @@
       "day": 25,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/30-order.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "shift",
@@ -315,9 +453,14 @@
       "day": 26,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/31-shift.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "trail",
@@ -325,9 +468,14 @@
       "day": 27,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/32-trail.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "ripeness",
@@ -335,9 +483,14 @@
       "day": 28,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/33-ripeness.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "arrow",
@@ -345,9 +498,14 @@
       "day": 29,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/34-arrow.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "overload",
@@ -355,9 +513,14 @@
       "day": 30,
       "stage": "спека",
       "waiting": null,
-      "note": "",
+      "note": "без gate 2",
       "releasedAt": null,
-      "action": null
+      "action": {
+        "actor": "человек",
+        "open": "specs/35-overload.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата"
+      }
     },
     {
       "slug": "arrow-flip",
