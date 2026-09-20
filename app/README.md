@@ -7,23 +7,22 @@ between games — `src/shell/**` is written and tested once. Forked from
 (see `docs/decisions.md` for what changed and why).
 
 **Read in this order:** [`CLAUDE.md`](./CLAUDE.md) →
-[`docs/decisions.md`](./docs/decisions.md) →
-[`docs/architecture.md`](./docs/architecture.md).
+[`docs/decisions.md`](./docs/decisions.md).
 
-`architecture.md` comes last on purpose: it describes the original
-Android-first template and every concrete number and path in it is
-historical. Read it for *why* the shell is shaped this way, never for what
-is true today — `decisions.md` is what is true today.
+`CLAUDE.md` is what is true today; `decisions.md` is why. The original
+template's `architecture.md` was deleted on 2026-09-20 — every path in it had
+stopped existing, and both files here had to spend a paragraph telling readers
+to discount it.
 
 Spec format lives outside `app/`: `specs/_TEMPLATE.md` is normative,
 `specs/HOWTO.md` is the authoring guide.
 
 ## New game
 
-Not yet a script — `scripts/new-game.ts` from the original template assumed
-one repo per game and does not fit this layout. Scaffolding a new
-`games/<slug>/` folder from a spec is the `/new-game` skill's job (see
-`docs/decisions.md`). Until then, copy `games/tap-targets/` by hand:
+Not a script. The original template's `scripts/new-game.ts` assumed one repo
+per game and does not fit this layout, and no replacement is written yet —
+`app/CLAUDE.md`, section «New game», is the procedure. Copy
+`games/tap-targets/` by hand:
 
 ```bash
 cp -r games/tap-targets games/your-slug

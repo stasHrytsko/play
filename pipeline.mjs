@@ -336,15 +336,12 @@ const funnel = MILESTONES.map((stage, i) => ({
   count: ranked.filter((r) => RANK[r.stage] >= i).length,
 }));
 
-const start = games.project.startDate;
-const toStart = daysBetween(today, start);
-
+// Общей даты старта здесь нет намеренно: окно каждого прототипа отсчитывается
+// от его собственной публикации, и доска эту дату не показывает.
+// `project.startDate` остался в games.json — он нужен расписанию постов.
 const payload = {
   generatedAt: new Date().toISOString(),
   today,
-  startDate: start,
-  daysToStart: toStart > 0 ? toStart : null,
-  dayOfExperiment: toStart <= 0 ? Math.min(30, -toStart + 1) : null,
   counts: {
     ideas: rows.filter((r) => ideas.has(r.slug)).length,
     rejected: rows.filter((r) => r.stage === 'отклонена').length,

@@ -5,12 +5,11 @@ Shared DOM shell + Phaser mechanic. One game per `games/<slug>/`; only
 
 ## Architecture
 
-- `docs/architecture.md` — the original template's design (Android-first,
-  9 levels, ntfy). Read it for *why the shell is shaped the way it is*, but
-  treat every concrete number/path in it as historical — `docs/decisions.md`
-  D-011 is the current source of truth for what actually changed and why.
-- `docs/decisions.md` — decisions taken while building, with their trade-offs.
-  Read D-011 first; it is the fork's own entry.
+- `docs/decisions.md` — engineering decisions about this factory, with their
+  trade-offs. Read D-011 first; it is the fork's own entry. Project-level
+  decisions — pipeline, gates, thresholds — live in `../docs/decisions.md`.
+- `../docs/PLAY.md` — the pipeline this factory sits inside.
+- `../CLAUDE.md` — the three rules that hold across the repository.
 - `src/shell-contract.ts` — the Shell ↔ Mechanic boundary.
 - `src/game-definition.ts` — the shared `GameDefinition` shape.
 - `src/ui-kit/` — shared DOM interface primitives (buttons, counters, queues,
@@ -36,7 +35,7 @@ Shared DOM shell + Phaser mechanic. One game per `games/<slug>/`; only
   `MechanicHost` from `src/shell-contract.ts`, and build its DOM/render
   through `ui-kit`/`render-kit` rather than reinventing either.
 - Do not change `src/shell-contract.ts` without approval — every field added
-  there is a field every future game has to care about. The deliberate D-013
+  there is a field every future game has to care about. The deliberate D-014
   extension is now part of the contract: mechanics call `onFirstAction()` on
   the first meaningful input and `onFail(reason)` on a failed attempt. The
   shell owns analytics and retry UI; mechanics never call PostHog directly.
@@ -105,7 +104,7 @@ of it, `npm run check` is green, levels included. There is no separate
    missing one is not.
 2. Copy `games/tap-targets/` as the starting skeleton — folder structure,
    not content: `game.config.ts`, `main.ts`, `index.html`, `rules.md` (copy
-   the spec from `specs/<slug>.md` into this file — `specs/` stays the source,
+   the spec from `../specs/NN-<slug>.md` into this file — `specs/` stays the source,
    this is the copy that ships with the game), `mechanic/{index.ts, engine/,
    levels/, render/}`, `tests/{*.test.ts, e2e/}`. `games/tap-targets/mechanic/index.ts`
    shows the exact `MechanicHost` wiring; `main.ts` shows the three-line
@@ -164,8 +163,8 @@ of it, `npm run check` is green, levels included. There is no separate
 
 Only for a game whose mechanic has a solver — a definable best-play
 algorithm for the engine, not "a bot that plays okay". Most of the 30/30
-games don't have one; check the game's entry in the concept portfolio before
-assuming it needs this at all. If it doesn't, skip this section entirely —
+games don't have one; `solver: required` in the spec's front matter is what
+says it does — check that before assuming it needs this at all. If it doesn't, skip this section entirely —
 don't add a bot for a game that was never meant to have one.
 
 When it does apply: simulate on the real `mechanic/engine` — a random-play

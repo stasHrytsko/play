@@ -13,6 +13,10 @@
 //
 //   node distribution/build-posts.mjs
 //   node distribution/build-posts.mjs --start 2026-10-01 --out distribution/publer-posts.csv
+//
+// Попутно пишет posts-draft.md — тот же набор постов прозой, чтобы вычитать
+// все семьдесят перед заливкой. Это превью, а не источник: править надо
+// шапку спеки, posts.json или media/copy.md игры.
 
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -224,12 +228,63 @@ const csv = [COLUMNS.join(',')]
 
 writeFileSync(outPath, `${csv}\n`);
 
+// Читаемое превью. Раньше здесь лежал замороженный снимок, который
+// выглядел редактируемым, но генератор его не читал: правки в нём молча
+// никуда не шли. Сгенерированный файл соврать не может.
+const byGame = new Map();
+for (const row of rows) {
+  if (row.Type === 'warmup') continue;
+  const key = row.Game.slice(0, 2);
+  if (!byGame.has(key)) byGame.set(key, new Map());
+  byGame.get(key).set(`${row.Type}-${row.Language}`, row);
+}
+
+const draft = ['# Тексты постов — превью', '',
+  '**Генерируется.** `node distribution/build-posts.mjs` перезаписывает этот',
+  'файл целиком. Правки здесь никуда не поедут — источники такие:', '',
+  '- название и правило одной фразой — шапка спеки `specs/NN-<slug>.md`;',
+  '- тизер «завтра» — `app/games/<slug>/media/copy.md`, пока папки нет — `posts.json`;',
+  '- посты прогрева — `posts.json`;',
+  '- порядок дней — `games.json`.', '',
+  'Ссылки и хештеги в CSV добавляются к каждому посту отдельно по каналу и',
+  'здесь не показаны — тексты видно без utm-хвостов.', '',
+  '---', '', '## Прогрев', ''];
+
+for (const post of warmup || []) {
+  draft.push(`### ${post.id} — день ${post.offset} от старта, ${post.time}`, '');
+  for (const [lang, label] of [['ru', 'RU'], ['en', 'EN']]) {
+    for (const [len, what] of [['short', 'короткий'], ['long', 'длинный']]) {
+      const body = post[lang]?.[len];
+      if (body) draft.push(`**${label}, ${what}:**`, '', body, '');
+    }
+  }
+}
+
+draft.push('---', '', '## Тридцать дней', '');
+for (const [num, kinds] of [...byGame.entries()].sort()) {
+  const today = kinds.get('today-ru') ?? kinds.get('today-en');
+  draft.push(`### День ${num} — ${today ? today.Game.slice(3) : '—'}`, '');
+  for (const [key, label] of [
+    ['today-ru', 'Сегодня, RU'], ['today-en', 'Сегодня, EN'],
+    ['tomorrow-ru', 'Завтра, RU'], ['tomorrow-en', 'Завтра, EN'],
+  ]) {
+    const row = kinds.get(key);
+    if (!row) continue;
+    const text = row.Text.split('\n\n')[0];
+    draft.push(`**${label}:** ${text}`, '');
+  }
+}
+
+const draftPath = join(here, 'posts-draft.md');
+writeFileSync(draftPath, `${draft.join('\n')}\n`);
+
 const warmupRows = rows.filter((r) => r.Type === 'warmup').length;
 const warmupPosts = (warmup || []).length;
 console.log(`Старт: ${startDate} (${games.project.timeZone})`);
 console.log(`Постов-слотов: ${warmupPosts + 60} (${warmupPosts} прогрев + 30 «сегодня» + 30 «завтра»)`);
 console.log(`Строк в CSV: ${rows.length} — по одной на канал (${warmupRows} из них прогрев)`);
 console.log(`Записано: ${outPath}`);
+console.log(`Записано: ${draftPath} (превью прозой)`);
 const provisionalDays = games.games.filter((g) => g.status === 'planned').length;
 if (provisionalDays > 0) {
   console.log(

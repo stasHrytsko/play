@@ -1,10 +1,13 @@
-# Decisions
+# Decisions — the factory
 
-Decisions taken while building the template, and what each one costs. Recorded
-so that a future change is an informed reversal rather than a rediscovery.
+Engineering decisions about the shared shell and the build, and what each one
+costs. Recorded so that a future change is an informed reversal rather than a
+rediscovery.
 
-`docs/architecture.md` describes the design. This file describes where reality
-argued with it.
+**Two logs, two scopes.** This one is about `app/` — the factory. The project's
+own decisions — the pipeline, the gates, the thresholds, the specs — live in
+`../../docs/decisions.md`. When a decision touches both, it is recorded there
+and referenced here.
 
 ---
 
@@ -331,7 +334,7 @@ throughout so nothing needed to change on the test side), build — all pass.
 
 ---
 
-## D-013 — first action, failure and retry cross the Shell ↔ Mechanic boundary, 2026-09-19
+## D-014 — first action, failure and retry cross the Shell ↔ Mechanic boundary, 2026-09-19
 
 **Decision:** widen `CreateLevelParams` with exactly two callbacks:
 `onFirstAction()` and `onFail(reason)`.

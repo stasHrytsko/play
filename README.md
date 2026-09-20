@@ -112,10 +112,9 @@ recording are disabled; the hub emits explicit project events only.
 - `ideas/` — the pipeline's input: `active/` and `rejected/`, one file per concept.
 - `specs/` — the concept specifications, the normative template and the validator.
 - `docs/PLAY.md` — canonical high-level definition of PLAY and the prototype production flow.
-- `docs/pipeline.md` — the same flow in detail: artifacts, gates, migration state.
 - `docs/templates/` — templates for the idea, the manual review and a game's media.
 - `data/`, `results/` — the funnel pulled from PostHog and the verdict per concept.
-- `docs/decisions.md` — the log of decisions.
+- `docs/decisions.md` — the log of the project's decisions (`app/docs/decisions.md` holds the factory's).
 - `games.json` — source of truth for the schedule, concepts, links, metrics and feedback.
 - `analytics-config.js` — launch date, timezone and PostHog client configuration.
 - `hub.js` — upcoming-date logic, UTM attribution, analytics controls and event capture.

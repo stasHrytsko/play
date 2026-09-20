@@ -1,25 +1,27 @@
-# Тексты постов — черновик для ручного редактирования
+# Тексты постов — превью
 
-Снимок на момент 19 сентября. Правь прямо здесь, копируй в каналы вручную —
-Publer и CSV этот файл не читают, он только для тебя.
+**Генерируется.** `node distribution/build-posts.mjs` перезаписывает этот
+файл целиком. Правки здесь никуда не поедут — источники такие:
 
-Где живут оригиналы, если захочешь поправить то, что уходит в CSV:
-названия и правило одной фразой — в шапке спеки `specs/NN-<slug>.md`
-(`title_ru`/`title_en`, `pitch_ru`/`pitch_en`); тизеры «завтра» и посты
-прогрева — в `distribution/posts.json`; порядок игр по дням — в `games.json`,
-для дней со статусом `planned` он пока провизорный.
+- название и правило одной фразой — шапка спеки `specs/NN-<slug>.md`;
+- тизер «завтра» — `app/games/<slug>/media/copy.md`, пока папки нет — `posts.json`;
+- посты прогрева — `posts.json`;
+- порядок дней — `games.json`.
+
+Ссылки и хештеги в CSV добавляются к каждому посту отдельно по каналу и
+здесь не показаны — тексты видно без utm-хвостов.
 
 ---
 
-## Прогрев (10 постов, 21–30 сентября)
+## Прогрев
 
 ### hook — день -10 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 Через 10 дней я начинаю то, чего раньше не делал. Каждый вечер — новая игра. Тридцать раз подряд.
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 Через 10 дней я начинаю то, чего раньше не делал.
 
@@ -29,11 +31,11 @@ Publer и CSV этот файл не читают, он только для те
 
 Что именно и зачем — расскажу в ближайшие дни. Пока просто предупреждение: скоро здесь станет интересно.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 In 10 days I start something I have never done before. A new game every evening. Thirty times in a row.
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 In 10 days I start something I have never done before.
 
@@ -43,15 +45,13 @@ Thirty times in a row, no exceptions, no slipping the date.
 
 What exactly and why — more in the next few days. For now, just a heads-up: this is about to get interesting.
 
----
-
 ### what — день -9 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 30 игровых прототипов. 30 дней. По одной новой игре каждый вечер — играется прямо в браузере телефона.
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 30 игровых прототипов. 30 дней.
 
@@ -61,11 +61,11 @@ What exactly and why — more in the next few days. For now, just a heads-up: th
 
 Первая — 1 октября.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 30 game prototypes. 30 days. A new one every evening, playable right in your phone browser.
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 30 game prototypes. 30 days.
 
@@ -75,15 +75,13 @@ Free, browser-based, nothing to install.
 
 First one October 1.
 
----
-
 ### why — день -8 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 Обычно на проверку одной игровой идеи уходит полгода. Я устал ждать полгода, чтобы узнать, что идея была так себе.
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 Обычно на проверку одной игровой идеи уходит полгода разработки.
 
@@ -93,11 +91,11 @@ First one October 1.
 
 Это и есть весь эксперимент.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 Testing one game idea usually takes six months. I got tired of waiting six months to learn an idea was mediocre.
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 Testing one game idea usually takes six months of development.
 
@@ -107,15 +105,13 @@ So instead of testing one idea, I am testing thirty — in a month, on real play
 
 That is the whole experiment.
 
----
-
 ### rule — день -7 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 Главное правило: если игра проваливается — её хоронят, а не чинят. Никаких «доделаю потом».
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 Главное правило эксперимента: если игра проваливается по цифрам — её хоронят, а не чинят.
 
@@ -123,11 +119,11 @@ That is the whole experiment.
 
 Эта дисциплина — единственная причина, по которой тридцать игр за тридцать дней вообще возможны. Без неё я бы застрял на игре три.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 The one rule: if a game fails the numbers, it gets buried, not fixed. No "I will patch it later".
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 The core rule of this experiment: if a game fails on the numbers, it gets buried. Not fixed.
 
@@ -135,15 +131,13 @@ No "I will patch it later", no "just one more feature and it will click".
 
 This discipline is the only reason thirty games in thirty days is even possible. Without it I would still be stuck fixing game three.
 
----
-
 ### dayflow — день -6 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 Как проходит один день: утром — правила игры на бумаге, вечером — готовый прототип в браузере. Без переносов.
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 Как устроен один день эксперимента:
 
@@ -153,11 +147,11 @@ This discipline is the only reason thirty games in thirty days is even possible.
 
 Завтра всё повторяется с нуля, для другой игры. Без переносов — это тоже часть правил.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 How one day works: the rules get written in the morning, a working prototype ships by evening. No slipping the date.
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 How one day of the experiment works:
 
@@ -167,15 +161,13 @@ Evening — it is live in the browser, and real numbers start coming in.
 
 Tomorrow it repeats from zero, for a different game. No slipping the date — that is part of the rule too.
 
----
-
 ### no-extras — день -5 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 Чего не будет ни в одной из тридцати игр: рекламы, доната, мета-прогресса, ежедневных бонусов. Только механика.
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 Чего не будет ни в одной из тридцати игр:
 
@@ -185,11 +177,11 @@ Tomorrow it repeats from zero, for a different game. No slipping the date — th
 
 Честная проверка идеи, а не проверка того, насколько хорошо работает крючок.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 What none of the thirty games will have: ads, IAP, meta-progression, daily bonuses. Just the mechanic, nothing else.
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 What none of the thirty games will have:
 
@@ -199,15 +191,13 @@ This is deliberate: if a game works, it has to be the mechanic doing the work, n
 
 An honest test of the idea, not a test of how good the hook is.
 
----
-
 ### metrics — день -4 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 Как я буду судить результат: дошёл ли человек до пятого уровня и вернулся ли назавтра. «Мне понравилось» не считается.
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 Как я буду судить результат каждой игры, решено заранее:
 
@@ -217,11 +207,11 @@ An honest test of the idea, not a test of how good the hook is.
 
 Всё остальное — вторично. «Мне понравилось» тоже не считается: считаются только действия, а не мнения.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 How I will judge each game: did a player reach level five, did they come back the next day. "I liked it" does not count.
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 How I will judge each game is decided in advance:
 
@@ -231,15 +221,13 @@ Did they come back the next day.
 
 Everything else is secondary. "I liked it" does not count either — only actions count, not opinions.
 
----
-
 ### stakes — день -3 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 Если игра не проходит порог — её судьба решена в тот же вечер. Без права на апелляцию, без второго шанса.
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 Если игра не проходит установленный заранее порог — её судьба решена в тот же вечер.
 
@@ -247,11 +235,11 @@ Everything else is secondary. "I liked it" does not count either — only action
 
 Цифры каждой игры видны всем, включая провальные. Спрятать неудачный день негде — в этом и есть смысл делать эксперимент публично.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 If a game misses the bar, its fate is decided that same evening. No appeal, no second chance.
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 If a game misses the bar set in advance, its fate is decided that same evening.
 
@@ -259,15 +247,13 @@ No appeal, no "I will give it another week", no second chance.
 
 Every game’s numbers are public, including the failures. There is nowhere to hide a bad day — that is the point of running this in public.
 
----
-
 ### follow — день -2 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 Через 2 дня — старт. Новая игра каждый вечер, играется прямо в браузере телефона. Подпишись, чтобы не пропустить первую.
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 Через 2 дня начинается.
 
@@ -277,11 +263,11 @@ Every game’s numbers are public, including the failures. There is nowhere to h
 
 Подпишись сейчас, чтобы не пропустить первую — я не буду повторять анонс дважды.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 Starts in 2 days. A new game every evening, right in your phone browser. Follow now so you catch the first one.
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 Starts in 2 days.
 
@@ -291,17 +277,15 @@ Here and on the channel — every day, the game and yesterday’s numbers.
 
 Follow now so you do not miss the first one — I will not repeat the announcement twice.
 
----
-
 ### announce — день -1 от старта, 19:00
 
-**RU, короткий (для X/Bluesky/Threads):**
+**RU, короткий:**
 
 Завтра. 30 прототипов за 30 дней, новая игра каждый вечер на play.hrytsko.com. С телефона, ставить ничего не надо.
 
 Первая — 1 октября.
 
-**RU, длинный (для LinkedIn/Telegram):**
+**RU, длинный:**
 
 Завтра начинается.
 
@@ -312,13 +296,13 @@ Follow now so you do not miss the first one — I will not repeat the announceme
 
 Первая — 1 октября.
 
-**EN, короткий (для X/Bluesky/Threads):**
+**EN, короткий:**
 
 Tomorrow. 30 prototypes in 30 days, a new game every evening at play.hrytsko.com. Plays in your phone browser, nothing to install.
 
 First one October 1.
 
-**EN, длинный (для LinkedIn/Telegram):**
+**EN, длинный:**
 
 Tomorrow.
 
@@ -331,667 +315,305 @@ First one October 1.
 
 ---
 
-## 30 дней
+## Тридцать дней
 
-Порядок игр по дням — из `games.json`; у дней со статусом `planned` он
-провизорный (по номеру спеки).
+### День 01 — Ящик приезжает
 
-### День 01 — box-arrives
+**Сегодня, RU:** Ящик приезжает — Откручивай винты под текущие ящики; каждые три хода ящик меняется, карман вмещает три.
 
-**Ящик приезжает / Incoming Box**
+**Сегодня, EN:** Incoming Box — Unscrew what matches the boxes below. Every three moves a box leaves, and the pocket holds three.
 
-**Сегодня — RU:**
+**Завтра, RU:** Нужного цвета сейчас нет — значит винт идёт в карман. Мест в кармане три.
 
-Откручивай винты под цвет ящика. Через три хода ящик уедет, а в кармане всего три места.
+**Завтра, EN:** The colour you need isn't there yet. The pocket holds three screws.
 
-**Сегодня — EN:**
+### День 02 — Через два хода
 
-Unscrew what matches the boxes below. Every three moves a box leaves, and the pocket holds three.
+**Сегодня, RU:** Через два хода — Вызывай машины заранее: они въезжают через два хода, и место должно быть свободно.
 
-**Завтра — RU:**
+**Сегодня, EN:** Two Moves Out — Call the cars early—they arrive two moves later, and the space had better be clear by then.
 
-Нужного цвета сейчас нет — значит винт идёт в карман. Мест в кармане три.
+**Завтра, RU:** Ты вызываешь машину сейчас, а приедет она через два хода. Место освобождать тебе.
 
-**Завтра — EN:**
+**Завтра, EN:** You call it now. It arrives two moves later. Clearing the space is your problem.
 
-The colour you need isn't there yet. The pocket holds three screws.
+### День 03 — Подвал
 
----
+**Сегодня, RU:** Подвал — Бери верхнюю фигуру из одной из трёх стопок и укладывай её на поле.
 
-### День 02 — two-moves-later (слаг на хабе ещё не назначен)
+**Сегодня, EN:** The Basement — Take the top piece from one of three stacks and place it. What's underneath is the next problem.
 
-**Через два хода / Two Moves Out**
+**Завтра, RU:** Три стопки, брать можно только сверху. Нужная фигура всегда где-то ниже.
 
-**Сегодня — RU:**
+**Завтра, EN:** Three stacks, top piece only. The one you need is always further down.
 
-Вызывай машины заранее: они въедут через два хода, и место к тому моменту должно быть свободно.
+### День 04 — Тройка
 
-**Сегодня — EN:**
+**Сегодня, RU:** Тройка — Откручивай винты в поддон: три одинаковых исчезают, а переполненный поддон — проигрыш.
 
-Call the cars early—they arrive two moves later, and the space had better be clear by then.
+**Сегодня, EN:** Triple — Drop screws into the tray: three of a kind clear, an overflowing tray ends the run.
 
-**Завтра — RU:**
+**Завтра, RU:** Три одинаковых винта исчезают. Проблема в том, что поддон заполняется быстрее.
 
-Ты вызываешь машину сейчас, а приедет она через два хода. Место освобождать тебе.
+**Завтра, EN:** Three matching screws clear the tray. The tray fills up faster than that.
 
-**Завтра — EN:**
+### День 05 — Только зелёный
 
-You call it now. It arrives two moves later. Clearing the space is your problem.
+**Сегодня, RU:** Только зелёный — Смешивай жидкости в равных пропорциях и собери нужный объём зелёного, не получив бурый.
 
----
+**Сегодня, EN:** Only Green — Mix liquids in equal parts and collect enough green without ever making brown.
 
-### День 03 — basement (слаг на хабе ещё не назначен)
+**Завтра, RU:** Смешал не то — получил бурый. Бурый не отменяется.
 
-**Подвал / The Basement**
+**Завтра, EN:** Mix the wrong two and you get brown. Brown doesn't wash out.
 
-**Сегодня — RU:**
+### День 06 — Тесная полка
 
-Бери верхнюю фигуру из одной из трёх стопок и укладывай на поле. Что под ней — увидишь потом.
+**Сегодня, RU:** Тесная полка — Клади товары на полки: три одинаковых исчезают, а заполненные полки ведут к проигрышу.
 
-**Сегодня — EN:**
+**Сегодня, EN:** Tight Shelf — Shelve the goods: three of a kind clear, and full shelves end the run.
 
-Take the top piece from one of three stacks and place it. What's underneath is the next problem.
+**Завтра, RU:** Полок мало, товар не кончается. Место — единственный ресурс.
 
-**Завтра — RU:**
+**Завтра, EN:** Few shelves, endless goods. Space is the only resource.
 
-Три стопки, брать можно только сверху. Нужная фигура всегда где-то ниже.
+### День 07 — Заглохла
 
-**Завтра — EN:**
+**Сегодня, RU:** Заглохла — Двигай машины к выезду, но у каждой ограничено число сдвигов — потратила все, заглохла.
 
-Three stacks, top piece only. The one you need is always further down.
+**Сегодня, EN:** Stalled — Move the cars to the exit. Each has a limited number of moves—spend them and it stalls for good.
 
----
+**Завтра, RU:** У каждой машины конечное число сдвигов. Потратишь зря — она встанет посреди дороги.
 
-### День 04 — triple (слаг на хабе ещё не назначен)
+**Завтра, EN:** Every car has a fixed number of moves. Waste them and it dies in the middle of the road.
 
-**Тройка / Triple**
+### День 08 — Разворот
 
-**Сегодня — RU:**
+**Сегодня, RU:** Разворот — Двигай блок по его стрелке; после каждого хода стрелка поворачивается на четверть вправо.
 
-Откручивай винты в поддон: три одинаковых исчезают, переполненный поддон — проигрыш.
+**Сегодня, EN:** Turnaround — Push a block the way its arrow points. After every move, that arrow turns a quarter to the right.
 
-**Сегодня — EN:**
+**Завтра, RU:** Стрелка показывает, куда пойдёт блок. После хода она повернётся, и это уже другой блок.
 
-Drop screws into the tray: three of a kind clear, an overflowing tray ends the run.
+**Завтра, EN:** The arrow says where the block goes. Then it turns, and it's a different block now.
 
-**Завтра — RU:**
+### День 09 — Отросток
 
-Три одинаковых винта исчезают. Проблема в том, что поддон заполняется быстрее.
+**Сегодня, RU:** Отросток — Веди ветку к воде, собирай очки; если закончатся шаги, незакреплённая ветка осыплется.
 
-**Завтра — EN:**
+**Сегодня, EN:** Sprout — Grow a branch toward water, scoring as you go. Run out of steps and the unrooted part crumbles.
 
-Three matching screws clear the tray. The tray fills up faster than that.
+**Завтра, RU:** Очки на ветке не твои, пока она не дошла до воды.
 
----
+**Завтра, EN:** Points on the branch aren't yours until it reaches water.
 
-### День 05 — only-green (слаг на хабе ещё не назначен)
+### День 10 — Течёт
 
-**Только зелёный / Only Green**
+**Сегодня, RU:** Течёт — Поворачивай трубы до прихода воды: после каждого хода вода продвигается на одну клетку.
 
-**Сегодня — RU:**
+**Сегодня, EN:** Leak — Turn the pipes while the water runs. Every move you make pushes it one tile further.
 
-Смешивай жидкости в равных долях и собери нужный объём зелёного, не получив бурый.
+**Завтра, RU:** Вода не ждёт. Каждый твой поворот продвигает её на клетку вперёд.
 
-**Сегодня — EN:**
+**Завтра, EN:** The water doesn't wait. Every turn you take moves it one tile closer.
 
-Mix liquids in equal parts and collect enough green without ever making brown.
+### День 11 — Burning Land
 
-**Завтра — RU:**
+**Сегодня, RU:** Burning Land — Каждый ход ставь стену, потом огонь расширится; спаси нужную ценность.
 
-Смешал не то — получил бурый. Бурый не отменяется.
+**Сегодня, EN:** Burning Land — One wall per move, then the fire spreads. You can't save everything—pick what you're defending.
 
-**Завтра — EN:**
+**Завтра, RU:** Одна стена за ход, огонь растёт быстрее. Спасти всё не выйдет.
 
-Mix the wrong two and you get brown. Brown doesn't wash out.
+**Завтра, EN:** One wall per move. The fire grows faster than that.
 
----
+### День 12 — Монета за поворот
 
-### День 06 — tight-shelf (слаг на хабе ещё не назначен)
+**Сегодня, RU:** Монета за поворот — Клади фигуры на поле; каждый поворот стоит монету, а монет на весь уровень только десять.
 
-**Тесная полка / Tight Shelf**
+**Сегодня, EN:** Coin per Turn — Place the pieces. Every rotation costs a coin, and the whole level gives you ten.
 
-**Сегодня — RU:**
+**Завтра, RU:** Повернуть фигуру можно всегда. Вопрос в том, что монет только десять.
 
-Расставляй товар по полкам: три одинаковых исчезают, а забитые полки — проигрыш.
+**Завтра, EN:** You can always rotate the piece. You just have ten coins for the entire level.
 
-**Сегодня — EN:**
+### День 13 — Верхний слой
 
-Shelve the goods: three of a kind clear, and full shelves end the run.
+**Сегодня, RU:** Верхний слой — Нажимай две одинаковые ненакрытые плитки: они сливаются и открывают плитки под ними.
 
-**Завтра — RU:**
+**Сегодня, EN:** Top Layer — Tap two matching uncovered tiles: they merge and reveal whatever was underneath.
 
-Полок мало, товар не кончается. Место — единственный ресурс.
+**Завтра, RU:** Каждая убранная пара открывает новый слой. Что там — узнаешь, только убрав.
 
-**Завтра — EN:**
+**Завтра, EN:** Every pair you clear opens the layer below. You find out what's there by clearing it.
 
-Few shelves, endless goods. Space is the only resource.
+### День 14 — Лента
 
----
+**Сегодня, RU:** Лента — Режь цветные полоски на нужные проценты и собирай заказы до конца ленты.
 
-### День 07 — stalled (слаг на хабе ещё не назначен)
+**Сегодня, EN:** Ribbon — Cut the coloured strips into the right fractions and fill the orders before the ribbon runs out.
 
-**Заглохла / Stalled**
+**Завтра, RU:** Заказ просит 40% красного. Отрезать надо на глаз, а лента конечна.
 
-**Сегодня — RU:**
+**Завтра, EN:** The order wants 40% red. You cut by eye, and the ribbon is finite.
 
-Двигай машины к выезду. У каждой ограничено число сдвигов — потратила все, заглохла навсегда.
+### День 15 — Присох
 
-**Сегодня — EN:**
+**Сегодня, RU:** Присох — Собирай тройки обменом соседних плиток, но каждый обмен тратит по одному действию у обеих плиток.
 
-Move the cars to the exit. Each has a limited number of moves—spend them and it stalls for good.
+**Сегодня, EN:** Stuck Fast — Match triples by swapping neighbours. Each swap spends a move from both tiles involved.
 
-**Завтра — RU:**
+**Завтра, RU:** У каждой плитки свой запас обменов. Потратишь — она присохнет к полю навсегда.
 
-У каждой машины конечное число сдвигов. Потратишь зря — она встанет посреди дороги.
+**Завтра, EN:** Every tile has its own swap budget. Spend it and the tile is stuck there for good.
 
-**Завтра — EN:**
+### День 16 — Схлопни провод
 
-Every car has a fixed number of moves. Waste them and it dies in the middle of the road.
+**Сегодня, RU:** Схлопни провод — Соединяй одинаковые точки проводом; пара исчезает, а остальные точки после каждого соединения сдвигаются на одну соседнюю клетку.
 
----
+**Сегодня, EN:** Collapse the Wire — Wire up matching dots. The pair vanishes—and every other dot shifts one tile.
 
-### День 08 — turnaround (слаг на хабе ещё не назначен)
+**Завтра, RU:** Соединил пару — поле перестроилось. Следующий маршрут придётся искать заново.
 
-**Разворот / Turnaround**
+**Завтра, EN:** Connect a pair and the board rearranges itself. Your next route is gone.
 
-**Сегодня — RU:**
+### День 17 — Схлопнулись
 
-Двигай блок по его стрелке. После каждого хода стрелка поворачивается на четверть вправо.
+**Сегодня, RU:** Схлопнулись — Режь большие фигуры на два куска и совмещай одинаковые пары, чтобы очистить экран.
 
-**Сегодня — EN:**
+**Сегодня, EN:** Collapsed — Cut the big shapes in two and match the identical halves until the screen is clear.
 
-Push a block the way its arrow points. After every move, that arrow turns a quarter to the right.
+**Завтра, RU:** Правильный разрез один. Неправильный оставит кусок, к которому уже нет пары.
 
-**Завтра — RU:**
+**Завтра, EN:** There's one right cut. A wrong one leaves a piece with nothing left to match.
 
-Стрелка показывает, куда пойдёт блок. После хода она повернётся, и это уже другой блок.
+### День 18 — Вдвое
 
-**Завтра — EN:**
+**Сегодня, RU:** Вдвое — Сгибай фигуру по отмеченным линиям так, чтобы накрыть все целевые клетки; сложенная часть становится толстой и больше не гнётся.
 
-The arrow says where the block goes. Then it turns, and it's a different block now.
+**Сегодня, EN:** Fold — Fold the shape along its creases to cover every target cell. A folded part turns thick and won't bend again.
 
----
+**Завтра, RU:** Каждый сгиб делает бумагу толще. Толстое место уже не согнуть.
 
-### День 09 — sprout (слаг на хабе ещё не назначен)
+**Завтра, EN:** Every fold makes the paper thicker. Thick paper doesn't fold.
 
-**Отросток / Sprout**
+### День 19 — Раскоп
 
-**Сегодня — RU:**
+**Сегодня, RU:** Раскоп — Открывай плиты по подсказкам о соседних ловушках, собирай золото и решай, когда остановиться: 5 — пройдено, 7 — хороший результат, 9 — идеальный.
 
-Веди ветку к воде и собирай очки. Кончатся шаги — незакреплённая ветка осыплется вместе с очками.
+**Сегодня, EN:** The Dig — Open slabs using the trap counts around them. Five gold clears it, nine is perfect—and much closer to a trap.
 
-**Сегодня — EN:**
+**Завтра, RU:** Пяти золота хватит, чтобы пройти. Девять лежат вплотную к ловушкам.
 
-Grow a branch toward water, scoring as you go. Run out of steps and the unrooted part crumbles.
+**Завтра, EN:** Five gold is enough to pass. Nine are sitting right next to the traps.
 
-**Завтра — RU:**
+### День 20 — Заклинило
 
-Очки на ветке не твои, пока она не дошла до воды.
+**Сегодня, RU:** Заклинило — Перетаскивай одинаковую плитку на соседнюю: они сливаются в следующую по номиналу, а новая плитка остаётся именно в выбранной клетке; слей всё поле в одну плитку.
 
-**Завтра — EN:**
+**Сегодня, EN:** Jammed — Drag a tile onto its twin: they merge one rank up, exactly in the cell you dragged to.
 
-Points on the branch aren't yours until it reaches water.
+**Завтра, RU:** Ты сам выбираешь, где окажется слияние. Отменить его нельзя.
 
----
+**Завтра, EN:** You choose where the merge lands. You don't get to undo it.
 
-### День 10 — flows (слаг на хабе ещё не назначен)
+### День 21 — Кабель на ставку
 
-**Течёт / Leak**
+**Сегодня, RU:** Кабель на ставку — Соединяй узлы одного цвета, сам выбирай пары и маршруты и уложись в общий запас кабеля, не перекрыв дорогу оставшимся соединениям.
 
-**Сегодня — RU:**
+**Сегодня, EN:** Cable Bet — Connect same-coloured nodes, choosing the pairs and the routes, inside one shared cable budget.
 
-Поворачивай трубы, пока идёт вода. Каждый твой ход — ещё одна клетка, которую она прошла.
+**Завтра, RU:** Кабель один на все соединения. Короткий путь для одной пары перекрывает дорогу другой.
 
-**Сегодня — EN:**
+**Завтра, EN:** One cable for every connection. The short route for one pair blocks the road for another.
 
-Turn the pipes while the water runs. Every move you make pushes it one tile further.
+### День 22 — Запас крутей
 
-**Завтра — RU:**
+**Сегодня, RU:** Запас крутей — Откручивай доступные винты, тратя общий запас крутей; чтобы снять деталь, достаточно освободить нужное число креплений, поэтому дорогие винты иногда выгоднее вообще не трогать.
 
-Вода не ждёт. Каждый твой поворот продвигает её на клетку вперёд.
+**Сегодня, EN:** Screw Budget — Spend from one shared budget of turns. Freeing a part doesn't mean removing every screw holding it.
 
-**Завтра — EN:**
+**Завтра, RU:** Крутей мало. Хорошая новость: половину винтов можно вообще не откручивать.
 
-The water doesn't wait. Every turn you take moves it one tile closer.
+**Завтра, EN:** Turns are scarce. The good news: half those screws don't need to come out at all.
 
----
+### День 23 — Пропусти
 
-### День 11 — burning-land (слаг на хабе ещё не назначен)
+**Сегодня, RU:** Пропусти — Раскладывай предметы из очереди по ограниченному числу ящиков; неудобный предмет можно один раз отправить в конец очереди, но когда он вернётся, его уже придётся разместить.
 
-**Burning Land / Burning Land**
+**Сегодня, EN:** Skip — Sort the queue into a handful of boxes. One awkward item can go to the back—once.
 
-**Сегодня — RU:**
+**Завтра, RU:** Один раз за уровень можно сказать «не сейчас». Предмет вернётся, и разместить его придётся.
 
-Каждый ход ставь одну стену, потом огонь расширяется. Спасти всё нельзя — выбирай, что защищаешь.
+**Завтра, EN:** Once per level you get to say 'not now'. It comes back, and then you have to place it.
 
-**Сегодня — EN:**
+### День 24 — Наощупь
 
-One wall per move, then the fire spreads. You can't save everything—pick what you're defending.
+**Сегодня, RU:** Наощупь — По цифрам на краях угадывай расположение ценных клеток, размещай фигуры раунда и забирай очки вовремя — если внутри раунда фигуры перестанут помещаться, незабранное сгорит.
 
-**Завтра — RU:**
+**Сегодня, EN:** By Touch — Read the edge numbers to work out where the treasure is, place the round's pieces, bank before it burns.
 
-Одна стена за ход, огонь растёт быстрее. Спасти всё не выйдет.
+**Завтра, RU:** Числа по краям говорят, сколько ценного в строке. Где именно — выясняешь фигурами.
 
-**Завтра — EN:**
+**Завтра, EN:** The edge numbers say how much is hidden in each row. Where exactly is yours to find out.
 
-One wall per move. The fire grows faster than that.
+### День 25 — Заказ
 
----
+**Сегодня, RU:** Заказ — Выбирай одну из трёх фигур; игра сама ставит её максимально вниз, а при равенстве — максимально влево. До выбора видно, куда ляжет каждая фигура.
 
-### День 12 — coin-turn (слаг на хабе ещё не назначен)
+**Сегодня, EN:** The Order — Pick one of three pieces—the game places it for you, as low and as far left as it fits. You see where first.
 
-**Монета за поворот / Coin per Turn**
+**Завтра, RU:** Ты выбираешь фигуру. Место выбирает игра. И показывает его до того, как ты выбрал.
 
-**Сегодня — RU:**
+**Завтра, EN:** You pick the piece. The game picks the spot—and shows you the spot before you pick.
 
-Клади фигуры на поле. Каждый поворот стоит монету, а монет на весь уровень десять.
+### День 26 — Сдвиг
 
-**Сегодня — EN:**
+**Сегодня, RU:** Сдвиг — Выбери блок и сдвинь всю его строку или колонку на одну клетку, собирая 2+ одинаковых подряд; если на выходном краю линии стоит блок, он вылетает навсегда.
 
-Place the pieces. Every rotation costs a coin, and the whole level gives you ten.
+**Сегодня, EN:** Shift — Shift a whole row or column one cell to line up matches. Whatever falls off the far edge is gone for good.
 
-**Завтра — RU:**
+**Завтра, RU:** Каждый сдвиг выталкивает блок за край. Иногда именно тот, который был нужен.
 
-Повернуть фигуру можно всегда. Вопрос в том, что монет только десять.
+**Завтра, EN:** Every shift pushes a block off the edge. Sometimes the one you needed.
 
-**Завтра — EN:**
+### День 27 — След
 
-You can always rotate the piece. You just have ten coins for the entire level.
+**Сегодня, RU:** След — Иди по клеткам, собери X/Y/Z в любом порядке и доберись до B, но каждая покинутая клетка исчезает на следующие 3 хода и может отрезать тебе путь.
 
----
+**Сегодня, EN:** Trail — Walk the grid and collect what you need. Every cell you leave vanishes for three moves and can cut you off.
 
-### День 13 — top-layer (слаг на хабе ещё не назначен)
+**Завтра, RU:** Клетка, с которой ты ушёл, исчезает на три хода. Маршрут должен пережить твой собственный след.
 
-**Верхний слой / Top Layer**
+**Завтра, EN:** The cell you step off vanishes for three moves. Your route has to survive your own trail.
 
-**Сегодня — RU:**
+### День 28 — Спелость
 
-Нажимай две одинаковые открытые плитки: они сливаются и открывают то, что лежало под ними.
+**Сегодня, RU:** Спелость — Ходи по полю к плодам с разным временем созревания: каждый шаг старит все плоды на 1 ход, а плод автоматически собирается при входе на его клетку — раньше срока он стоит 2 очка, ровно в срок 3, после срока 1.
 
-**Сегодня — EN:**
+**Сегодня, EN:** Ripeness — Walk to the fruit—every step ages all of it at once. Right on time is 3 points, early 2, late 1.
 
-Tap two matching uncovered tiles: they merge and reveal whatever was underneath.
+**Завтра, RU:** Каждый твой шаг — это ход часов для всего сада. Маршрут и есть таймер.
 
-**Завтра — RU:**
+**Завтра, EN:** Every step you take is a tick of the clock for the whole garden. The route is the timer.
 
-Каждая убранная пара открывает новый слой. Что там — узнаешь, только убрав.
+### День 29 — Стрелка
 
-**Завтра — EN:**
+**Сегодня, RU:** Стрелка — Каждый ход выбери одну из двух стрелок и поставь её на любой блок: стрелка задаёт или меняет его направление, после чего все блоки со стрелками одновременно сдвигаются на одну клетку, а соприкоснувшиеся блоки одного цвета исчезают.
 
-Every pair you clear opens the layer below. You find out what's there by clearing it.
+**Сегодня, EN:** Arrow — Put an arrow on any block—then every arrowed block moves at once. Same colours touching disappear.
 
----
+**Завтра, RU:** Одна стрелка за ход. Но двигаются все блоки, которым ты её когда-то поставил.
 
-### День 14 — ribbon (слаг на хабе ещё не назначен)
+**Завтра, EN:** One arrow per move. But every block you ever pointed moves at the same time.
 
-**Лента / Ribbon**
+### День 30 — Перегруз
 
-**Сегодня — RU:**
+**Сегодня, RU:** Перегруз — Вешай ящики на крюк и поднимай их партиями — трос выдерживает неизвестный вес, а поездок мало, поэтому грузить приходится вслепую и больше, чем безопасно.
 
-Режь цветные полоски на нужные доли и закрывай заказы, пока лента не кончилась.
+**Сегодня, EN:** Overload — Load boxes onto the hook and lift them in batches. Nobody says what the cable holds, and trips are scarce.
 
-**Сегодня — EN:**
+**Завтра, RU:** Зелёная зона держит всегда. В красной трос рвётся — но где именно, тебе не скажут.
 
-Cut the coloured strips into the right fractions and fill the orders before the ribbon runs out.
+**Завтра, EN:** The green zone always holds. Somewhere in the red it snaps. Nobody tells you where.
 
-**Завтра — RU:**
-
-Заказ просит 40% красного. Отрезать надо на глаз, а лента конечна.
-
-**Завтра — EN:**
-
-The order wants 40% red. You cut by eye, and the ribbon is finite.
-
----
-
-### День 15 — stuck (слаг на хабе ещё не назначен)
-
-**Присох / Stuck Fast**
-
-**Сегодня — RU:**
-
-Собирай тройки, меняя соседние плитки местами. Каждый обмен тратит по ходу у обеих плиток.
-
-**Сегодня — EN:**
-
-Match triples by swapping neighbours. Each swap spends a move from both tiles involved.
-
-**Завтра — RU:**
-
-У каждой плитки свой запас обменов. Потратишь — она присохнет к полю навсегда.
-
-**Завтра — EN:**
-
-Every tile has its own swap budget. Spend it and the tile is stuck there for good.
-
----
-
-### День 16 — collapse-wire (слаг на хабе ещё не назначен)
-
-**Схлопни провод / Collapse the Wire**
-
-**Сегодня — RU:**
-
-Соединяй одинаковые точки проводом. Пара исчезает — и всё поле сдвигается на клетку.
-
-**Сегодня — EN:**
-
-Wire up matching dots. The pair vanishes—and every other dot shifts one tile.
-
-**Завтра — RU:**
-
-Соединил пару — поле перестроилось. Следующий маршрут придётся искать заново.
-
-**Завтра — EN:**
-
-Connect a pair and the board rearranges itself. Your next route is gone.
-
----
-
-### День 17 — collapsed (слаг на хабе ещё не назначен)
-
-**Схлопнулись / Collapsed**
-
-**Сегодня — RU:**
-
-Режь большие фигуры на два куска и своди одинаковые пары, пока экран не опустеет.
-
-**Сегодня — EN:**
-
-Cut the big shapes in two and match the identical halves until the screen is clear.
-
-**Завтра — RU:**
-
-Правильный разрез один. Неправильный оставит кусок, к которому уже нет пары.
-
-**Завтра — EN:**
-
-There's one right cut. A wrong one leaves a piece with nothing left to match.
-
----
-
-### День 18 — double (слаг на хабе ещё не назначен)
-
-**Вдвое / Fold**
-
-**Сегодня — RU:**
-
-Сгибай фигуру по линиям, чтобы накрыть все целевые клетки. Сложенное место больше не гнётся.
-
-**Сегодня — EN:**
-
-Fold the shape along its creases to cover every target cell. A folded part turns thick and won't bend again.
-
-**Завтра — RU:**
-
-Каждый сгиб делает бумагу толще. Толстое место уже не согнуть.
-
-**Завтра — EN:**
-
-Every fold makes the paper thicker. Thick paper doesn't fold.
-
----
-
-### День 19 — excavation (слаг на хабе ещё не назначен)
-
-**Раскоп / The Dig**
-
-**Сегодня — RU:**
-
-Вскрывай плиты по числам о соседних ловушках. Пять золота — зачёт, девять — идеально и куда рискованнее.
-
-**Сегодня — EN:**
-
-Open slabs using the trap counts around them. Five gold clears it, nine is perfect—and much closer to a trap.
-
-**Завтра — RU:**
-
-Пяти золота хватит, чтобы пройти. Девять лежат вплотную к ловушкам.
-
-**Завтра — EN:**
-
-Five gold is enough to pass. Nine are sitting right next to the traps.
-
----
-
-### День 20 — jammed (слаг на хабе ещё не назначен)
-
-**Заклинило / Jammed**
-
-**Сегодня — RU:**
-
-Тащи плитку на такую же: они сливаются в следующий номинал ровно в той клетке, куда ты тянул.
-
-**Сегодня — EN:**
-
-Drag a tile onto its twin: they merge one rank up, exactly in the cell you dragged to.
-
-**Завтра — RU:**
-
-Ты сам выбираешь, где окажется слияние. Отменить его нельзя.
-
-**Завтра — EN:**
-
-You choose where the merge lands. You don't get to undo it.
-
----
-
-### День 21 — cable-bet (слаг на хабе ещё не назначен)
-
-**Кабель на ставку / Cable Bet**
-
-**Сегодня — RU:**
-
-Соединяй узлы одного цвета, сам выбирая пары и маршруты, и уложись в общий запас кабеля.
-
-**Сегодня — EN:**
-
-Connect same-coloured nodes, choosing the pairs and the routes, inside one shared cable budget.
-
-**Завтра — RU:**
-
-Кабель один на все соединения. Короткий путь для одной пары перекрывает дорогу другой.
-
-**Завтра — EN:**
-
-One cable for every connection. The short route for one pair blocks the road for another.
-
----
-
-### День 22 — screw-budget (слаг на хабе ещё не назначен)
-
-**Запас крутей / Screw Budget**
-
-**Сегодня — RU:**
-
-Откручивай винты из общего запаса крутей. Чтобы снять деталь, не обязательно трогать все её винты.
-
-**Сегодня — EN:**
-
-Spend from one shared budget of turns. Freeing a part doesn't mean removing every screw holding it.
-
-**Завтра — RU:**
-
-Крутей мало. Хорошая новость: половину винтов можно вообще не откручивать.
-
-**Завтра — EN:**
-
-Turns are scarce. The good news: half those screws don't need to come out at all.
-
----
-
-### День 23 — skip (слаг на хабе ещё не назначен)
-
-**Пропусти / Skip**
-
-**Сегодня — RU:**
-
-Раскладывай предметы из очереди по ящикам. Один неудобный можно отправить в конец — но только один.
-
-**Сегодня — EN:**
-
-Sort the queue into a handful of boxes. One awkward item can go to the back—once.
-
-**Завтра — RU:**
-
-Один раз за уровень можно сказать «не сейчас». Предмет вернётся, и разместить его придётся.
-
-**Завтра — EN:**
-
-Once per level you get to say 'not now'. It comes back, and then you have to place it.
-
----
-
-### День 24 — by-touch (слаг на хабе ещё не назначен)
-
-**Наощупь / By Touch**
-
-**Сегодня — RU:**
-
-По числам на краях вычисли, где ценное, ставь фигуры раунда и забери очки, пока они не сгорели.
-
-**Сегодня — EN:**
-
-Read the edge numbers to work out where the treasure is, place the round's pieces, bank before it burns.
-
-**Завтра — RU:**
-
-Числа по краям говорят, сколько ценного в строке. Где именно — выясняешь фигурами.
-
-**Завтра — EN:**
-
-The edge numbers say how much is hidden in each row. Where exactly is yours to find out.
-
----
-
-### День 25 — order (слаг на хабе ещё не назначен)
-
-**Заказ / The Order**
-
-**Сегодня — RU:**
-
-Выбирай одну из трёх фигур — ставит её игра сама, максимально вниз и влево. Куда ляжет, видно заранее.
-
-**Сегодня — EN:**
-
-Pick one of three pieces—the game places it for you, as low and as far left as it fits. You see where first.
-
-**Завтра — RU:**
-
-Ты выбираешь фигуру. Место выбирает игра. И показывает его до того, как ты выбрал.
-
-**Завтра — EN:**
-
-You pick the piece. The game picks the spot—and shows you the spot before you pick.
-
----
-
-### День 26 — shift (слаг на хабе ещё не назначен)
-
-**Сдвиг / Shift**
-
-**Сегодня — RU:**
-
-Сдвигай целую строку или колонку на клетку, собирая одинаковые подряд. С дальнего края блок вылетает навсегда.
-
-**Сегодня — EN:**
-
-Shift a whole row or column one cell to line up matches. Whatever falls off the far edge is gone for good.
-
-**Завтра — RU:**
-
-Каждый сдвиг выталкивает блок за край. Иногда именно тот, который был нужен.
-
-**Завтра — EN:**
-
-Every shift pushes a block off the edge. Sometimes the one you needed.
-
----
-
-### День 27 — trail (слаг на хабе ещё не назначен)
-
-**След / Trail**
-
-**Сегодня — RU:**
-
-Иди по клеткам и собери всё нужное. Каждая покинутая клетка исчезает на три хода и может отрезать путь.
-
-**Сегодня — EN:**
-
-Walk the grid and collect what you need. Every cell you leave vanishes for three moves and can cut you off.
-
-**Завтра — RU:**
-
-Клетка, с которой ты ушёл, исчезает на три хода. Маршрут должен пережить твой собственный след.
-
-**Завтра — EN:**
-
-The cell you step off vanishes for three moves. Your route has to survive your own trail.
-
----
-
-### День 28 — ripeness (слаг на хабе ещё не назначен)
-
-**Спелость / Ripeness**
-
-**Сегодня — RU:**
-
-Ходи к плодам: каждый шаг старит весь сад разом. Точно в срок — 3 очка, рано — 2, поздно — 1.
-
-**Сегодня — EN:**
-
-Walk to the fruit—every step ages all of it at once. Right on time is 3 points, early 2, late 1.
-
-**Завтра — RU:**
-
-Каждый твой шаг — это ход часов для всего сада. Маршрут и есть таймер.
-
-**Завтра — EN:**
-
-Every step you take is a tick of the clock for the whole garden. The route is the timer.
-
----
-
-### День 29 — arrow (слаг на хабе ещё не назначен)
-
-**Стрелка / Arrow**
-
-**Сегодня — RU:**
-
-Ставь стрелку на любой блок — и все блоки со стрелками двигаются разом. Одинаковые цвета схлопываются.
-
-**Сегодня — EN:**
-
-Put an arrow on any block—then every arrowed block moves at once. Same colours touching disappear.
-
-**Завтра — RU:**
-
-Одна стрелка за ход. Но двигаются все блоки, которым ты её когда-то поставил.
-
-**Завтра — EN:**
-
-One arrow per move. But every block you ever pointed moves at the same time.
-
----
-
-### День 30 — overload (слаг на хабе ещё не назначен)
-
-**Перегруз / Overload**
-
-**Сегодня — RU:**
-
-Вешай ящики на крюк и поднимай партиями. Сколько выдержит трос — неизвестно, а поездок мало.
-
-**Сегодня — EN:**
-
-Load boxes onto the hook and lift them in batches. Nobody says what the cable holds, and trips are scarce.
-
-**Завтра — RU:**
-
-Зелёная зона держит всегда. В красной трос рвётся — но где именно, тебе не скажут.
-
-**Завтра — EN:**
-
-The green zone always holds. Somewhere in the red it snaps. Nobody tells you where.
-
----

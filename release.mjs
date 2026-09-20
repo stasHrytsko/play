@@ -56,7 +56,7 @@ const entry = games.games.find((g) => g.slug === slug);
 
 if (!entry) {
   // Слаг один на всю игру: имя файла спеки, папка в app/games/, ключ в
-  // posts.json и адрес на хабе — см. docs/pipeline.md. Молча опубликовать под
+  // posts.json и адрес на хабе — см. docs/PLAY.md. Молча опубликовать под
   // другим именем значит развести их снова.
   fail(
     `в games.json нет дня со слагом «${slug}».\n` +

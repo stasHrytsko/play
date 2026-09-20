@@ -44,14 +44,16 @@ jobs:
       - name: Dashboard data matches the repository
         run: node pipeline.mjs --check
 
-      # games.json is the source of truth; index.html and the per-game pages
-      # are generated from it. If a games.json edit lands without rerunning
-      # the generator, the published site silently disagrees with the data.
-      - name: Generated pages are in sync with games.json
+      # Три генератора, и у всех трёх выход закоммичен: страницы хаба, CSV
+      # расписания постов и превью текстов. Если источник поменяли, а
+      # генератор не перезапустили, закоммиченное молча расходится с данными.
+      # Проверка одна на всех — иначе один из трёх рано или поздно выпадет.
+      - name: Generated files are in sync with their sources
         run: |
           node build-games.mjs
+          node distribution/build-posts.mjs
           if ! git diff --quiet; then
-            echo "::error::build-games.mjs output differs from what is committed. Run 'node build-games.mjs' and commit the result."
+            echo "::error::Generated output differs from what is committed. Run 'node build-games.mjs && node distribution/build-posts.mjs' and commit the result."
             git diff --stat
             exit 1
           fi
