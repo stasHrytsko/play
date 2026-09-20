@@ -14,7 +14,7 @@ pressure:
 twist: []
 emotion: >-
   ритм — быстро увидеть нужную долю и поймать подходящий цвет в очереди
-family: Cut
+family: cut
 levels: generated
 solver: none
 score:
@@ -31,6 +31,8 @@ trend: true
 difference: >-
   конвейер не сортирует предметы, а заставляет делить целое на нужные
   процентные части.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

@@ -17,7 +17,7 @@ twist:
 emotion: >-
   предвкушение — «если сниму эти верхние плитки, снизу откроется нужная
   цепочка»
-family: Merge
+family: merge
 levels: generated
 solver: required
 score:
@@ -34,6 +34,8 @@ trend: true
 difference: >-
   Mahjong — вместо поиска пар цель в том, чтобы сливать одинаковые
   номиналы и раскрывать нижние слои.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

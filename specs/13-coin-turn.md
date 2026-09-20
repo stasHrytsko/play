@@ -17,7 +17,7 @@ twist:
 emotion: >-
   скупость — «повернуть сейчас или сохранить монету на фигуру, без которой
   потом не обойтись?»
-family: Block
+family: block
 levels: generated
 solver: none
 score:
@@ -34,6 +34,8 @@ trend: true
 difference: >-
   Tetris — вращение обычно бесплатно, здесь каждое вращение расходует
   конечный ресурс.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

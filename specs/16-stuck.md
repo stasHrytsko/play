@@ -16,7 +16,7 @@ twist: []
 emotion: >-
   ответственность — «эту плитку можно потратить ещё раз или лучше
   сохранить её на потом?»
-family: Match
+family: match
 levels: generated
 solver: required
 score:
@@ -33,6 +33,8 @@ trend: false
 difference: >-
   Match-3 — у каждой плитки свой конечный запас перемещений; swap
   расходует этот запас.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

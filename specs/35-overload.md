@@ -18,7 +18,7 @@ twist:
 emotion: >-
   азарт на грани провала — «трос уже держал 21, значит 22 скорее всего
   пройдёт».
-family: push-your-luck / loading puzzle.
+family: push-your-luck
 levels: generated
 solver: required
 score:
@@ -35,6 +35,8 @@ kill_criterion: >-
   доле пройденных уровней бота с фиксированной ставкой «грузить до
   `safeLimit + k`», то сужение предела ничего не решает и концепт
   хоронится как угадайка.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

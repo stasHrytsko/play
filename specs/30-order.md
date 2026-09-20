@@ -18,14 +18,22 @@ twist:
 emotion: >-
   «ага, я выбрал не ту форму» — удовольствие от предсказания будущего
   состояния поля без ручного размещения.
-family: Block
+family: block
 levels: generated
 solver: required
-score: null            # разбивка по шести критериям не записана
+score:
+  readability: 4
+  motivation: 4
+  pressure: 4
+  payoff: 4
+  producibility: 4
+  market: 5
 kill_criterion: >-
   если жадная стратегия «всегда бери вариант с максимальным немедленным
   очищением линий, а при равенстве — с минимальным числом занятых клеток»
   проходит более 80% сгенерированных уровней, концепт хоронится.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

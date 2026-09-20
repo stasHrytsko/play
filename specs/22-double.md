@@ -14,7 +14,7 @@ pressure:
   - необратимая толщина
 twist: []
 emotion: озарение — «если согнуть в другом порядке, всё складывается»
-family: Fold
+family: fold
 levels: generated
 solver: required
 score:
@@ -32,6 +32,8 @@ difference: >-
   Folding Blocks — уже сложенные участки становятся толстыми и навсегда
   исключаются из дальнейших сгибов, поэтому порядок действий определяет
   решение.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

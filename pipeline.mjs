@@ -300,16 +300,20 @@ const rows = slugs.map(statusOf);
 // — остальные видны в таблице пометкой «без gate 2» и ждут своей очереди.
 // Показывать тридцать одинаковых пунктов значит утопить в них остальные.
 const queue = rows
-  .filter((r) => r.day !== null && r.stage === 'спека' && r.note === 'без gate 2')
+  .filter((r) => r.day !== null && r.stage === 'спека' && r.waiting === 'gate 2 — принять спеку')
   .sort((a, b) => a.day - b.day);
 
-if (queue.length > 0) {
-  const next = queue[0];
-  next.waiting = 'gate 2 — принять спеку';
-  next.action = {
-    ...next.action,
-    read: `${next.action.read}. Следующая по расписанию из ${queue.length} без gate 2`,
-  };
+for (const [i, r] of queue.entries()) {
+  if (i === 0) {
+    r.action = {
+      ...r.action,
+      read: `${r.action.read}. Следующая по расписанию из ${queue.length} на приёмке`,
+    };
+    continue;
+  }
+  // Ждёт очереди: в таблице видна, в список не попадает.
+  r.waiting = null;
+  r.note = r.note || 'ждёт gate 2';
 }
 
 const scheduled = rows.filter((r) => r.day !== null).sort((a, b) => a.day - b.day);

@@ -18,13 +18,21 @@ twist:
 emotion: >-
   экономная находчивость — «я не стал тратить ход на дорогой винт и всё
   равно снял деталь».
-family: Screw / layered extraction
+family: screw
 levels: generated
 solver: required
-score: null            # разбивка по шести критериям не записана
+score:
+  readability: 5
+  motivation: 4
+  pressure: 4
+  payoff: 3
+  producibility: 4
+  market: 5
 kill_criterion: >-
   если стратегия «всегда откручивай самый дешёвый доступный винт» проходит
   более 80% сгенерированных уровней, концепт хоронится.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

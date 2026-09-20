@@ -16,7 +16,7 @@ twist: []
 emotion: >-
   ответственность — «если двину этот блок сейчас, следующим ходом он будет
   смотреть уже в другую сторону»
-family: Jam
+family: jam
 levels: generated
 solver: required
 score:
@@ -33,6 +33,8 @@ trend: true
 difference: >-
   Tap Away — направление блока не постоянно, а меняется после каждого его
   собственного хода.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

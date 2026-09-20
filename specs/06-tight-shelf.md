@@ -14,7 +14,7 @@ pressure:
 twist: []
 emotion: >-
   теснота — постоянное ощущение, что свободного места почти не осталось
-family: Sort
+family: sort
 levels: generated
 solver: required
 score:
@@ -30,6 +30,8 @@ kill_criterion: >-
 trend: true
 difference: >-
   Goods Sort — узкое место не поиск тройки, а ограниченная ёмкость полок.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

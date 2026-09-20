@@ -16,7 +16,7 @@ pressure:
 twist:
   - ставка
 emotion: жадность — «я уже могу выйти, но вдруг смогу забрать ещё?»
-family: Reveal
+family: reveal
 levels: generated
 solver: required
 score:
@@ -33,6 +33,8 @@ trend: false
 difference: >-
   Сапёр — риск после достижения минимальной цели становится добровольным;
   игрок сам решает, выйти или продолжить ради лучшего результата.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

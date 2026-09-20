@@ -86,7 +86,14 @@ for (const [slugFromName, { file, text, meta }] of specs) {
   if (meta['score'] === undefined || meta['score'] === null) {
     warnings.push(`${where}: score не разбит по шести критериям`);
   }
-  if (meta['family'] === undefined) warnings.push(`${where}: нет family`);
+  // Словарь семейств открытый, форма — нет: по «route puzzle / grid
+  // navigation.» и «Route» нельзя сгруппировать, а группировать по семейству
+  // придётся при выборе следующих идей.
+  const family = meta['family'];
+  if (family === undefined) warnings.push(`${where}: нет family`);
+  else if (!/^[a-zа-я0-9]+(-[a-zа-я0-9]+)*$/.test(String(family))) {
+    warnings.push(`${where}: family «${String(family)}» — нужны строчные через дефис`);
+  }
   if (text.includes('TODO:')) warnings.push(`${where}: остался TODO`);
 
   // Неотвеченный крайний случай — это либо вопрос от агента посреди сборки,

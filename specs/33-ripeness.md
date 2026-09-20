@@ -18,15 +18,23 @@ twist:
 emotion: >-
   «если пойду к этому сейчас, тот успеет переспеть — какой маршрут даст
   больше?»
-family: grid routing / timing puzzle.
+family: route
 levels: generated
 solver: required
-score: null            # разбивка по шести критериям не записана
+score:
+  readability: 4
+  motivation: 3
+  pressure: 3
+  payoff: 4
+  producibility: 5
+  market: 3
 kill_criterion: >-
   если на тестовом наборе уровней жадная стратегия «иди к плоду, до
   которого можно добраться ближе всего к его моменту спелости; при
   равенстве — к ближайшему» набирает не менее 90% оптимального счёта на
   80%+ уровней, концепт хоронится как слишком очевидный.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

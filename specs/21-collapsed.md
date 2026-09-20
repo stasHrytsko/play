@@ -15,7 +15,7 @@ pressure:
 twist: []
 emotion: >-
   облегчение — «нашёл правильный разрез, и пара наконец исчезла»
-family: Cut / Match-2
+family: cut
 levels: generated
 solver: required
 score:
@@ -32,6 +32,8 @@ kill_criterion: >-
 difference: >-
   match создаётся не перестановкой готовых элементов, а выбором того, как
   разрезать исходные фигуры.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

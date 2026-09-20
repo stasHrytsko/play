@@ -18,13 +18,21 @@ twist:
 emotion: >-
   предусмотрительность — «сейчас лучше не брать, иначе потом сам себе
   закрою место».
-family: Sort / Queue
+family: sort
 levels: generated
 solver: required
-score: null            # разбивка по шести критериям не записана
+score:
+  readability: 5
+  motivation: 4
+  pressure: 4
+  payoff: 3
+  producibility: 5
+  market: 5
 kill_criterion: >-
   если жадная стратегия «клади предмет сразу, если можешь» выигрывает
   более чем в 80% валидных уровней, концепт хоронится.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

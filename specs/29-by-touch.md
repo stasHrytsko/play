@@ -16,10 +16,16 @@ pressure:
 twist:
   - ставка
 emotion: «кажется, я вычислил где ценное — рискну ещё одним раундом».
-family: Block puzzle / deduction.
+family: reveal
 levels: generated
 solver: required
-score: null            # разбивка по шести критериям не записана
+score:
+  readability: 3
+  motivation: 4
+  pressure: 5
+  payoff: 4
+  producibility: 3
+  market: 4
 kill_criterion: >-
   если solver показывает, что рациональная стратегия по видимым подсказкам
   обыгрывает случайное размещение менее чем на 20%, концепт хоронится как
@@ -27,6 +33,8 @@ kill_criterion: >-
 difference: >-
   фигуры не просто заполняют поле — они одновременно являются способом
   проверить гипотезу о скрытых ценных клетках.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

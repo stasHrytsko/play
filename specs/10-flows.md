@@ -15,7 +15,7 @@ pressure:
 twist: []
 emotion: >-
   паника под контролем — «я ещё успеваю подготовить путь впереди воды»
-family: Pipe
+family: pipe
 levels: generated
 solver: required
 score:
@@ -32,6 +32,8 @@ trend: false
 difference: >-
   Pipe Mania без таймера реального времени и физики — вода движется только
   после действий игрока и полностью предсказуема.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

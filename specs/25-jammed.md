@@ -17,7 +17,7 @@ twist: []
 emotion: >-
   ответственность — каждый merge необратимо определяет, где окажется
   будущая крупная плитка.
-family: Merge
+family: merge
 levels: generated
 solver: required
 score:
@@ -35,6 +35,8 @@ trend: false
 difference: >-
   2048 — плитки не ездят по полю и новые не появляются; единственное
   перемещение происходит через merge одной одинаковой плитки в соседнюю.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

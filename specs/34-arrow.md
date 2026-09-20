@@ -18,14 +18,22 @@ twist:
   - стрелку на блоке можно заменить новой
 emotion: >-
   «я сейчас перенаправлю этот блок — и вся система наконец сойдётся».
-family: grid / movement / programming puzzle.
+family: program
 levels: authored
 solver: required
-score: null            # разбивка по шести критериям не записана
+score:
+  readability: 3
+  motivation: 4
+  pressure: 5
+  payoff: 5
+  producibility: 2
+  market: 4
 kill_criterion: >-
   если простая greedy-стратегия «если можно сразу схлопнуть пару — делай
   это, иначе ставь любую допустимую стрелку» успешно проходит 4 из 5
   финальных уровней, концепт считается недостаточно глубоким и хоронится.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

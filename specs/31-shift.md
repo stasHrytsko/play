@@ -17,16 +17,24 @@ twist: []
 emotion: >-
   «ещё один сдвиг соберёт группу, но ради него придётся пожертвовать
   крайним блоком».
-family: line shift / match puzzle.
+family: match
 levels: generated
 solver: required
-score: null            # разбивка по шести критериям не записана
+score:
+  readability: 4
+  motivation: 4
+  pressure: 5
+  payoff: 4
+  producibility: 4
+  market: 4
 kill_criterion: >-
   если простая greedy-стратегия «сначала любой ход с немедленным match,
   среди них избегать выброса блока» набирает не менее 90% результата
   solver на 4 из 5 уровней, концепт хоронится как слишком очевидный.
   Отдельный kill-сигнал — если последние 30% партии системно превращаются
   в длинное бесплатное перекладывание без реальных жертв и развилок.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

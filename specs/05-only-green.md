@@ -17,7 +17,7 @@ twist:
 emotion: >-
   ответственность — «я вижу результат заранее и сам решаю, стоит ли
   смешивать»
-family: Sort
+family: sort
 levels: generated
 solver: required
 score:
@@ -34,6 +34,8 @@ trend: true
 difference: >-
   Water Sort обычно запрещает смешивать разные цвета; здесь смешивание
   разных цветов — единственный способ получить нужный цвет.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

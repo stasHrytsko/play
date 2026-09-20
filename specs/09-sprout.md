@@ -16,7 +16,7 @@ twist:
   - ставка
 emotion: >-
   жадность — «ещё одна ценная клетка или пора спасать ветку у воды?»
-family: Grow
+family: grow
 levels: generated
 solver: required
 score:
@@ -33,6 +33,8 @@ trend: false
 difference: >-
   Paper.io — захват пошаговый и полностью детерминированный; cash-out
   происходит только при доведении ветки до воды.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

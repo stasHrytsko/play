@@ -14,7 +14,7 @@ pressure:
 twist: []
 emotion: >-
   паника — «я не успеваю спасти всё, надо решить, что защищать сейчас»
-family: Block
+family: block
 levels: generated
 solver: required
 score:
@@ -32,6 +32,8 @@ trend: true
 difference: >-
   Block Blast — размещение фигур используется для триажа пространства, а
   не для очистки линий.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

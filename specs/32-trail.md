@@ -17,15 +17,23 @@ twist: []
 emotion: >-
   «ещё шаг — и я сам себе перекрою дорогу; надо найти маршрут, который
   переживёт мой собственный след».
-family: route puzzle / grid navigation.
+family: route
 levels: authored
 solver: required
-score: null            # разбивка по шести критериям не записана
+score:
+  readability: 4
+  motivation: 4
+  pressure: 5
+  payoff: 3
+  producibility: 3
+  market: 3
 kill_criterion: >-
   если на уровнях 3–5 простая стратегия «всегда идти к ближайшей
   непосещённой точке кратчайшим доступным путём» проходит не менее 80%
   тестовых раскладок без необходимости учитывать исчезающие клетки,
   концепт хоронится как слишком слабый.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

@@ -16,7 +16,7 @@ twist: []
 emotion: >-
   скупость — каждый сдвиг хочется потратить только там, где он
   действительно нужен
-family: Jam
+family: jam
 levels: generated
 solver: required
 score:
@@ -33,6 +33,8 @@ trend: true
 difference: >-
   Parking Jam — движение здесь не бесплатное действие, а ограниченный
   ресурс каждой машины.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

@@ -16,10 +16,16 @@ twist:
   - перестройка поля после каждого соединения
 emotion: >-
   облегчение — «соединил, поле освободилось, но теперь всё стоит иначе»
-family: Connect
+family: connect
 levels: generated
 solver: required
-score: null            # разбивка по шести критериям не записана
+score:
+  readability: 4
+  motivation: 4
+  pressure: 4
+  payoff: 4
+  producibility: 3
+  market: 4
 kill_criterion: >-
   если порядок соединения пар не влияет на решаемость большинства уровней,
   концепт хоронится.
@@ -28,6 +34,8 @@ difference: >-
   Flow Free — линия существует только во время жеста и исчезает вместе с
   парой; после каждого успешного соединения оставшиеся точки перестраивают
   поле.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 

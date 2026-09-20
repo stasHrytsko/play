@@ -14,6 +14,7 @@ pressure:
   - навязанная очередь
 twist: []
 emotion: ритм — «я вовремя подготовился к следующему ящику»
+family: screw
 levels: generated
 solver: none
 score:
@@ -26,6 +27,8 @@ score:
 kill_criterion: >-
   Если preview очереди ящиков не заставляет менять порядок откручивания
   минимум в ключевых ситуациях уровня 5, концепт хоронится.
+review: pending
+reviewed:
 ---
 # 1. Паспорт концепта
 
