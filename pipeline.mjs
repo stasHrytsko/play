@@ -4,12 +4,14 @@
 //   node pipeline.mjs            вся доска
 //   node pipeline.mjs --waiting  только то, что ждёт тебя
 //   node pipeline.mjs --json     то же машиночитаемо
+//   node pipeline.mjs --write    записать dashboard/status.json для страницы
+//   node pipeline.mjs --check    упасть, если записанное отстало от репозитория
 //
 // Стадия нигде не хранится — она считается из файлов. Нет поля `status`,
 // которое надо не забыть поменять: артефакт либо есть, либо нет. Поэтому
 // доска не может устареть, в отличие от таблицы со статусами.
 
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,11 +21,15 @@ const root = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const onlyWaiting = args.includes('--waiting');
 const asJson = args.includes('--json');
+const write = args.includes('--write');
+const check = args.includes('--check');
 
-const tty = process.stdout.isTTY && !asJson;
+const tty = process.stdout.isTTY && !asJson && !write && !check;
 const bold = (s) => (tty ? `\u001b[1m${s}\u001b[0m` : s);
 const dim = (s) => (tty ? `\u001b[2m${s}\u001b[0m` : s);
 const warn = (s) => (tty ? `\u001b[33m${s}\u001b[0m` : s);
+// eslint-disable-next-line no-control-regex
+const stripAnsi = (s) => String(s ?? '').replace(/\u001b\[[0-9;]*m/g, '');
 
 const MONTH_DAYS = 30; // окно измерения одного прототипа
 const MIN_COMPLETIONS = 30;
@@ -171,16 +177,79 @@ const backlog = rows
 
 // --- Вывод ------------------------------------------------------------------
 
+// Воронка: сколько концептов дошли **хотя бы** до каждой вехи. Не доля от
+// целого, а накопленный счёт — иначе ранние стадии выглядели бы победой.
+const RANK = {
+  'идея': 0, 'спека': 1, 'собрана': 2, 'принята': 2,
+  'опубликована': 3, 'цифры': 3, 'вердикт': 4,
+};
+const MILESTONES = ['идея', 'спека', 'собрана', 'опубликована', 'вердикт'];
+const ranked = rows.filter((r) => RANK[r.stage] !== undefined);
+const funnel = MILESTONES.map((stage, i) => ({
+  stage,
+  count: ranked.filter((r) => RANK[r.stage] >= i).length,
+}));
+
+const start = games.project.startDate;
+const toStart = daysBetween(today, start);
+
+const payload = {
+  generatedAt: new Date().toISOString(),
+  today,
+  startDate: start,
+  daysToStart: toStart > 0 ? toStart : null,
+  dayOfExperiment: toStart <= 0 ? Math.min(30, -toStart + 1) : null,
+  counts: {
+    ideas: rows.filter((r) => ideas.has(r.slug)).length,
+    rejected: rows.filter((r) => r.stage === 'отклонена').length,
+    specs: rows.filter((r) => specs.has(r.slug)).length,
+    built: ranked.filter((r) => RANK[r.stage] >= 2).length,
+    published: ranked.filter((r) => RANK[r.stage] >= 3).length,
+    judged: rows.filter((r) => r.stage === 'вердикт').length,
+  },
+  funnel,
+  waiting: rows.filter((r) => r.waiting).map((r) => ({
+    slug: r.slug, number: r.number, day: r.day, stage: r.stage, waiting: r.waiting,
+  })),
+  rows: rows.map((r) => ({ ...r, note: stripAnsi(r.note) })),
+};
+
+// Сравнивается только то, что зависит от файлов. Дата и обратный отсчёт до
+// старта меняются сами по себе, и сверять их значило бы ронять CI каждую ночь.
+const FIXED = ({ counts, funnel, waiting, rows }) => JSON.stringify({ counts, funnel, waiting, rows });
+
+if (check) {
+  const out = join(root, 'dashboard', 'status.json');
+  if (!existsSync(out)) {
+    console.error('Нет dashboard/status.json. Запусти: node pipeline.mjs --write');
+    process.exit(1);
+  }
+  if (FIXED(readJson(out)) !== FIXED(payload)) {
+    console.error(
+      'dashboard/status.json отстал от репозитория.\n' +
+        "  Доска показывала бы не то, что есть. Запусти 'node pipeline.mjs --write' и закоммить.",
+    );
+    process.exit(1);
+  }
+  console.log('dashboard/status.json совпадает с состоянием репозитория');
+  process.exit(0);
+}
+
+if (write) {
+  const out = join(root, 'dashboard', 'status.json');
+  writeFileSync(out, `${JSON.stringify(payload, null, 2)}\n`);
+  console.log(`Записано: dashboard/status.json (ждёт решения: ${payload.waiting.length})`);
+  process.exit(0);
+}
+
 if (asJson) {
-  console.log(JSON.stringify({ today, rows }, null, 2));
+  console.log(JSON.stringify(payload, null, 2));
   process.exit(0);
 }
 
 const waiting = rows.filter((r) => r.waiting);
 
 if (!onlyWaiting) {
-  const start = games.project.startDate;
-  const toStart = daysBetween(today, start);
   const when =
     toStart > 0 ? `старт ${start}, через ${toStart} дн.` : `день ${String(-toStart + 1)} из 30`;
   console.log(`\n${bold('PLAY')} · ${today} · ${when}\n`);

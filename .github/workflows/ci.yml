@@ -32,9 +32,15 @@ jobs:
       - name: Specs conform to the template
         run: node specs/validate.mjs
 
-      # Пустая папка ideas/ — не ошибка: этап начинается с концепта 36.
+      # Пустая папка ideas/ — не ошибка: файл идеи заводится под концепт.
       - name: Ideas conform to the template
         run: node ideas/validate.mjs
+
+      # Доска читает закоммиченный status.json. Если его забыли обновить, она
+      # показывает вчерашнее состояние и выглядит при этом свежей — худший вид
+      # поломки. Сверяется только то, что зависит от файлов, без дат.
+      - name: Dashboard data matches the repository
+        run: node pipeline.mjs --check
 
       # games.json is the source of truth; index.html and the per-game pages
       # are generated from it. If a games.json edit lands without rerunning

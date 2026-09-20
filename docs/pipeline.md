@@ -63,6 +63,7 @@ specs/front-matter.mjs         чтение YAML-шапок — общее дл�
 specs/validate.mjs             Gate 2 и сверка шапок с идеями
 ideas/validate.mjs             Gate 1
 pipeline.mjs                   доска: стадии и что ждёт человека
+dashboard/                     та же доска страницей, отдельный проект Vercel
 release.mjs                    публикация одной игры на хаб
 build-games.mjs                генератор хаба
 .github/workflows/ci.yml       Gate 3
@@ -160,8 +161,14 @@ build-games.mjs                генератор хаба
 ```sh
 node pipeline.mjs            # доска целиком
 node pipeline.mjs --waiting  # только то, что ждёт решения человека
-node pipeline.mjs --json     # то же машиночитаемо
+node pipeline.mjs --write    # обновить dashboard/status.json
+node pipeline.mjs --check    # упасть, если он отстал от репозитория (в CI)
 ```
+
+Та же доска страницей — `dashboard/`, отдельный статический проект на Vercel.
+Данные в ней приезжают с коммитом, поэтому она ровно настолько свежа,
+насколько свеж последний пуш: состояние системы и есть содержимое
+репозитория.
 
 ```
 PLAY · 2026-09-20 · старт 2026-10-01, через 11 дн.

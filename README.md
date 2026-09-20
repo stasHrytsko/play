@@ -48,10 +48,14 @@ creating a second identity for the same game.
 ## Where everything stands
 
 ```sh
-node pipeline.mjs            # the whole board
+node pipeline.mjs            # the whole board, in the terminal
 node pipeline.mjs --waiting  # only what needs a decision from you
-node pipeline.mjs --json     # the same, machine-readable
+node pipeline.mjs --write    # refresh dashboard/status.json
+node pipeline.mjs --check    # fail if that file has fallen behind the repo
 ```
+
+`dashboard/` is the same board as a page, deployed separately on Vercel from
+that folder. See `dashboard/README.md`.
 
 Nothing stores a stage. It is computed from which files exist — an idea, a
 spec with its review field, a game folder, a review.md, a play link in
@@ -110,6 +114,7 @@ recording are disabled; the hub emits explicit project events only.
 - `hub.js` — upcoming-date logic, UTM attribution, analytics controls and event capture.
 - `build-games.mjs` — dependency-free generator for the log grid and per-prototype pages.
 - `pipeline.mjs` — the status board: what stage each concept is at and what is waiting on you.
+- `dashboard/` — the same board as a page, for a screen; deployed separately.
 - `release.mjs` — builds `app/` and publishes one game to `g/<slug>/`.
 - `g/` — published playable builds; `g/assets/` holds their shared hashed bundles.
 - `test-hub.mjs` — headless behavior check for `hub.js`.
