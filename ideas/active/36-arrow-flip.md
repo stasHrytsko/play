@@ -12,6 +12,9 @@ emotion: цепочка открывающихся выходов
 family: spatial-logic
 levels: authored
 solver: required
+kill_criterion: >-
+  Если solver показывает, что уровни 2–5 проходятся стратегией «запускай
+  только те стрелки, которые уже могут выйти», концепт хоронится.
 score:
   readability: 4
   motivation: 4

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-20T21:13:54.362Z",
+  "generatedAt": "2026-09-20T21:20:06.579Z",
   "today": "2026-09-20",
   "counts": {
     "ideas": 1,
     "rejected": 0,
-    "specs": 30,
+    "specs": 31,
     "built": 0,
     "published": 0,
     "judged": 0
@@ -24,7 +24,7 @@
     },
     {
       "stage": "спека",
-      "count": 30
+      "count": 31
     },
     {
       "stage": "собрана",
@@ -58,13 +58,13 @@
       "slug": "arrow-flip",
       "number": 36,
       "day": null,
-      "stage": "идея",
-      "waiting": "спеку",
+      "stage": "спека",
+      "waiting": "gate 2 — принять спеку",
       "action": {
-        "actor": "AI",
-        "open": "ideas/active/36-arrow-flip.md",
-        "read": "идею целиком",
-        "write": "specs/36-arrow-flip.md по specs/_TEMPLATE.md"
+        "actor": "человек",
+        "open": "specs/36-arrow-flip.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
       }
     }
   ],
@@ -523,15 +523,15 @@
       "slug": "arrow-flip",
       "number": 36,
       "day": null,
-      "stage": "идея",
-      "waiting": "спеку",
-      "note": "25/30",
+      "stage": "спека",
+      "waiting": "gate 2 — принять спеку",
+      "note": "",
       "releasedAt": null,
       "action": {
-        "actor": "AI",
-        "open": "ideas/active/36-arrow-flip.md",
-        "read": "идею целиком",
-        "write": "specs/36-arrow-flip.md по specs/_TEMPLATE.md"
+        "actor": "человек",
+        "open": "specs/36-arrow-flip.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест",
+        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
       }
     }
   ]
