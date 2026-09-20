@@ -250,15 +250,18 @@ if (asJson) {
 const waiting = rows.filter((r) => r.waiting);
 
 if (!onlyWaiting) {
-  const when =
-    toStart > 0 ? `старт ${start}, через ${toStart} дн.` : `день ${String(-toStart + 1)} из 30`;
-  console.log(`\n${bold('PLAY')} · ${today} · ${when}\n`);
+  // Без общей даты старта: часы каждого прототипа идут от его собственной
+  // публикации, и окно в тридцать дней считается от неё.
+  console.log(`\n${bold('PLAY')} · конвейер\n`);
 
   const width = Math.max(...rows.map((r) => r.slug.length), 8);
   const line = (r, left) =>
-    `  ${left.padStart(3)}  ${r.slug.padEnd(width)}  ${r.stage.padEnd(13)}  ${r.note}`;
+    `  ${left.padStart(3)}  ${r.slug.padEnd(width)}  ${r.stage.padEnd(13)}  ` +
+    `${(r.releasedAt ?? '—').padEnd(11)}${r.note}`;
 
-  console.log(dim(`  ${'день'.padStart(3)}  ${'слаг'.padEnd(width)}  стадия`));
+  console.log(dim(
+    `  ${'№'.padStart(3)}  ${'слаг'.padEnd(width)}  ${'стадия'.padEnd(13)}  ${'вышла'.padEnd(11)}состояние`,
+  ));
   for (const r of scheduled) console.log(line(r, String(r.day)));
 
   if (backlog.length > 0) {

@@ -12,33 +12,18 @@
    Рампа проверена валидатором dataviz в обеих модах: одна тональность,
    монотонная светлота, шаги ≥0.06, светлый конец держит 2:1 к поверхности. */
 :root{
-  color-scheme: light;
-  --ink:#212121; --muted:#61615e; --faint:#8a8a86;
-  --paper:#ededeb; --card:#f6f6f4; --line:#d6d6d2; --soft:#e5e5e2;
-  --accent:#b8461f;
-  --wait:#a8410a;          /* «ждёт тебя» — тот же тёплый тон, контраст 5.2:1 */
-  --ok:#0ca30c;
-  --s1:#ee9c6a; --s2:#ce8557; --s3:#ae6d44; --s4:#905732; --s5:#734121;
-  --sans:Inter,"Helvetica Neue","Segoe UI",system-ui,Arial,sans-serif;
-  --mono:ui-monospace,SFMono-Regular,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme: dark;
-    --ink:#f2f2ef; --muted:#a8a8a2; --faint:#7b7b76;
-    --paper:#141413; --card:#1f1f1d; --line:#33332f; --soft:#262623;
-    --accent:#e8845f;
-    --wait:#f0a173;
-    --ok:#3fc23f;
-    --s1:#863e00; --s2:#9f5a2b; --s3:#b7764c; --s4:#d0926c; --s5:#e9af8d;
-  }
-}
-:root[data-theme="dark"]{
   color-scheme: dark;
   --ink:#f2f2ef; --muted:#a8a8a2; --faint:#7b7b76;
-  --paper:#141413; --card:#1f1f1d; --line:#33332f; --soft:#262623;
-  --accent:#e8845f; --wait:#f0a173; --ok:#3fc23f;
+  --paper:#000; --card:#0e0e0d; --line:#2a2a27; --soft:#1a1a18;
+  --accent:#e8845f;
+  --wait:#f0a173;          /* «ждёт тебя» — 10.1:1 к фону */
+  --ok:#3fc23f;
+  /* Порядковая рампа воронки: одна тональность, монотонная светлота, шаги
+     ≥0.06, ближний к фону шаг держит 2.49:1. Проверена validate_palette.js
+     против поверхности #0e0e0d. */
   --s1:#863e00; --s2:#9f5a2b; --s3:#b7764c; --s4:#d0926c; --s5:#e9af8d;
+  --sans:Inter,"Helvetica Neue","Segoe UI",system-ui,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
 }
 
 *{box-sizing:border-box}
@@ -49,11 +34,9 @@ body{
 }
 .wrap{max-width:1040px; margin:0 auto; padding:32px 16px 64px}
 
-header{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 16px; margin-bottom:28px}
+header{margin-bottom:28px}
 h1{margin:0; font-size:20px; font-weight:700; letter-spacing:-.3px}
 h1 span{color:var(--accent)}
-.meta{color:var(--muted); font-size:13px; font-variant-numeric:tabular-nums}
-.meta b{color:var(--ink); font-weight:600}
 
 h2{
   margin:0 0 14px; font-size:12px; font-weight:600; letter-spacing:.08em;
@@ -102,7 +85,7 @@ section{margin-bottom:36px}
 
 /* --- Таблица ------------------------------------------------------------ */
 table{width:100%; border-collapse:collapse; font-size:13px; table-layout:fixed}
-col.c1{width:56px} col.c2{width:26%} col.c3{width:140px} col.c4{width:96px} col.c5{width:auto}
+col.c1{width:52px} col.c2{width:22%} col.c3{width:128px} col.c4{width:98px} col.c5{width:130px} col.c6{width:auto}
 caption{text-align:left; color:var(--faint); font-size:12px; padding-bottom:8px}
 th{
   text-align:left; font-weight:600; font-size:11px; letter-spacing:.06em;
@@ -113,6 +96,8 @@ td{padding:8px 10px 8px 0; border-bottom:1px solid var(--line); vertical-align:t
 tr:last-child td{border-bottom:0}
 .c-day{color:var(--faint); font-variant-numeric:tabular-nums; white-space:nowrap}
 .c-slug{font-family:var(--mono); font-size:12.5px; overflow-wrap:break-word}
+.c-date{color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+.c-none{color:var(--faint)}
 .c-note{color:var(--muted); font-variant-numeric:tabular-nums}
 .c-wait{color:var(--wait); font-weight:500}
 .chip{
@@ -137,9 +122,9 @@ footer code{font-family:var(--mono); font-size:11.5px; background:var(--soft); p
      дословно повторяет блок «Ждёт тебя» вверху страницы. */
   /* В fixed-раскладке ширина колонки задаётся <col>, и display:none на
      ячейках её не убирает — поэтому обнуляем и сами колонки. */
-  col.c1{width:40px} col.c2{width:auto} col.c3{width:110px}
-  col.c4,col.c5{width:0}
-  th:nth-child(4),td:nth-child(4),th:nth-child(5),td:nth-child(5){display:none}
+  col.c1{width:34px} col.c2{width:auto} col.c3{width:110px}
+  col.c4,col.c5,col.c6{width:0}
+  th:nth-child(n+4),td:nth-child(n+4){display:none}
 }
 </style>
 </head>
@@ -148,7 +133,6 @@ footer code{font-family:var(--mono); font-size:11.5px; background:var(--soft); p
 
 <header>
   <h1>PLAY<span>.</span> конвейер</h1>
-  <div class="meta" id="when">загрузка…</div>
 </header>
 
 <main id="app">
@@ -178,16 +162,18 @@ const daysBetween = (from, to) =>
   Math.round((Date.parse(to + 'T00:00:00Z') - Date.parse(from + 'T00:00:00Z')) / 86400000);
 
 /**
+ * Окно измерения каждого прототипа отсчитывается от его собственной даты
+ * публикации, а не от общей даты старта проекта.
+ *
  * Страница живёт дольше своего деплоя: она может висеть на экране неделями, а
  * «месяц вышел» наступает без единого коммита. Поэтому всё, что зависит от
  * сегодняшней даты, пересчитывается здесь, при каждом рендере, а не берётся
- * из снимка. Правила приезжают в данных, чтобы порог был записан в одном
+ * из снимка. Порог приезжает в данных, чтобы остаться записанным в одном
  * месте — в pipeline.mjs.
  */
 function overlayToday(data) {
   const today = iso(new Date());
   const monthDays = data.rules?.monthDays ?? 30;
-  const toStart = daysBetween(today, data.startDate);
 
   const rows = data.rows.map((r) => {
     if (r.stage !== 'опубликована' || !r.releasedAt) return r;
@@ -200,8 +186,6 @@ function overlayToday(data) {
   return {
     ...data,
     today,
-    daysToStart: toStart > 0 ? toStart : null,
-    dayOfExperiment: toStart <= 0 ? Math.min(30, -toStart + 1) : null,
     rows,
     waiting: rows.filter((r) => r.waiting).map((r) => ({
       slug: r.slug, number: r.number, day: r.day, stage: r.stage, waiting: r.waiting,
@@ -289,6 +273,7 @@ function table(data, rows, title, caption) {
       <td class="c-slug">${esc(r.slug)}</td>
       <td class="c-stage"><span class="chip"><span class="dot" style="background:${
         stageColor(r.stage)}"></span>${esc(r.stage)}</span></td>
+      <td class="c-date">${r.releasedAt ? esc(r.releasedAt) : '<span class="c-none">—</span>'}</td>
       <td class="c-note">${esc(r.note)}</td>
       <td class="c-wait">${r.waiting ? '▸ ' + esc(r.waiting) : ''}</td>
     </tr>`;
@@ -296,25 +281,20 @@ function table(data, rows, title, caption) {
 
   return `<section><h2>${esc(title)}</h2><table>
     ${caption ? `<caption>${esc(caption)}</caption>` : ''}
-    <colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"></colgroup>
-    <thead><tr><th>День</th><th>Слаг</th><th>Стадия</th><th>Цифры</th><th>Ждёт</th></tr></thead>
+    <colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6"></colgroup>
+    <thead><tr><th>№</th><th>Слаг</th><th>Стадия</th><th>Вышла</th><th>Состояние</th><th>Ждёт</th></tr></thead>
     <tbody>${body}</tbody></table></section>`;
 }
 
 function render(data) {
-  const when = data.daysToStart !== null
-    ? `старт <b>${data.startDate}</b>, через <b>${data.daysToStart}</b> дн.`
-    : `<b>день ${data.dayOfExperiment}</b> из 30`;
-  document.getElementById('when').innerHTML = `${data.today} · ${when}`;
-
   const scheduled = data.rows.filter((r) => r.day !== null).sort((a, b) => a.day - b.day);
   const backlog = data.rows.filter((r) => r.day === null)
     .sort((a, b) => (a.number ?? 0) - (b.number ?? 0));
 
   document.getElementById('app').innerHTML =
     hero(data) + tiles(data) + funnel(data)
-    + table(data, scheduled, 'Расписание', '30 дней с 1 октября')
-    + table(data, backlog, 'Вне расписания', 'концепты без назначенного дня');
+    + table(data, scheduled, 'Расписание', 'тридцать прототипов по порядку выхода')
+    + table(data, backlog, 'Вне расписания', 'концепты без назначенного места');
 
   // Снимок собирается на каждом деплое, поэтому «когда снято» — это про
   // последний пуш, а не про свежесть доски: всё, что зависит от даты,
