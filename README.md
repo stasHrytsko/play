@@ -50,24 +50,18 @@ creating a second identity for the same game.
 ```sh
 node pipeline.mjs            # the whole board, in the terminal
 node pipeline.mjs --waiting  # only what needs a decision from you
-node pipeline.mjs --write    # refresh dashboard/status.json
-node pipeline.mjs --check    # fail if that file has fallen behind the repo
+node pipeline.mjs --write    # build dashboard/status.json (Vercel runs this)
 ```
 
 `dashboard/` is the same board as a page, deployed separately on Vercel from
 that folder. See `dashboard/README.md`.
 
-**Rule: the board never lags the repository.** Anything that moves a concept
-along the pipeline ships with a refreshed `dashboard/status.json` in the same
-commit. A board showing yesterday's state while looking current is the worst
-way for it to break, because it gets believed. Enable the hook once per
-machine and it happens by itself:
-
-```sh
-git config core.hooksPath .githooks
-```
-
-CI runs `node pipeline.mjs --check` either way. See `CLAUDE.md`.
+**Rule: the board never lags the repository** — and there is nothing to do
+about it. Stages are never stored, they are computed from which files exist;
+`dashboard/status.json` is gitignored and built on every deploy; and anything
+that depends on today's date is recomputed in the browser, so a tab left open
+does not go stale either. A push refreshes what depends on files, an open tab
+refreshes what depends on the date. See `CLAUDE.md`.
 
 Nothing stores a stage. It is computed from which files exist — an idea, a
 spec with its review field, a game folder, a review.md, a play link in

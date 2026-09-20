@@ -157,8 +157,7 @@ footer code{font-family:var(--mono); font-size:11.5px; background:var(--soft); p
 
 <footer>
   Стадия нигде не хранится — она считается из того, какие файлы есть в
-  репозитории. Обновляется командой <code>node pipeline.mjs --write</code> и
-  выкатывается вместе с коммитом.
+  репозитории, при каждом деплое. Обновлять руками нечего.
   <br><span id="stamp"></span>
 </footer>
 
@@ -173,6 +172,42 @@ const RAMP = ['var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'];
 
 const esc = (v) => String(v ?? '').replace(/[&<>"]/g, (c) =>
   ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+
+const iso = (d) => d.toISOString().slice(0, 10);
+const daysBetween = (from, to) =>
+  Math.round((Date.parse(to + 'T00:00:00Z') - Date.parse(from + 'T00:00:00Z')) / 86400000);
+
+/**
+ * Страница живёт дольше своего деплоя: она может висеть на экране неделями, а
+ * «месяц вышел» наступает без единого коммита. Поэтому всё, что зависит от
+ * сегодняшней даты, пересчитывается здесь, при каждом рендере, а не берётся
+ * из снимка. Правила приезжают в данных, чтобы порог был записан в одном
+ * месте — в pipeline.mjs.
+ */
+function overlayToday(data) {
+  const today = iso(new Date());
+  const monthDays = data.rules?.monthDays ?? 30;
+  const toStart = daysBetween(today, data.startDate);
+
+  const rows = data.rows.map((r) => {
+    if (r.stage !== 'опубликована' || !r.releasedAt) return r;
+    const passed = daysBetween(r.releasedAt, today);
+    return passed >= monthDays
+      ? { ...r, note: 'месяц вышел', waiting: 'снять цифры' }
+      : { ...r, note: `идёт ${passed}/${monthDays} дн.`, waiting: null };
+  });
+
+  return {
+    ...data,
+    today,
+    daysToStart: toStart > 0 ? toStart : null,
+    dayOfExperiment: toStart <= 0 ? Math.min(30, -toStart + 1) : null,
+    rows,
+    waiting: rows.filter((r) => r.waiting).map((r) => ({
+      slug: r.slug, number: r.number, day: r.day, stage: r.stage, waiting: r.waiting,
+    })),
+  };
+}
 
 const stageColor = (stage) => {
   const rank = STAGE_RANK[stage];
@@ -281,14 +316,13 @@ function render(data) {
     + table(data, scheduled, 'Расписание', '30 дней с 1 октября')
     + table(data, backlog, 'Вне расписания', 'концепты без назначенного дня');
 
-  // Доска, которая показывает вчерашнее состояние и выглядит свежей, — худший
-  // вид поломки. CI это ловит, но экран может висеть на старом деплое.
+  // Снимок собирается на каждом деплое, поэтому «когда снято» — это про
+  // последний пуш, а не про свежесть доски: всё, что зависит от даты,
+  // пересчитано только что, в браузере.
   const stamp = new Date(data.generatedAt);
-  const ageDays = Math.floor((Date.now() - stamp.getTime()) / 86400000);
-  const when2 = stamp.toLocaleString('ru-RU', { dateStyle: 'medium', timeStyle: 'short' });
-  document.getElementById('stamp').innerHTML = ageDays >= 3
-    ? `<span style="color:var(--wait)">Снято ${ageDays} дн. назад (${esc(when2)}) — похоже на устаревший деплой.</span>`
-    : 'Снято: ' + esc(when2);
+  document.getElementById('stamp').textContent =
+    'Состояние репозитория на ' +
+    stamp.toLocaleString('ru-RU', { dateStyle: 'medium', timeStyle: 'short' });
 }
 
 let current = null;
@@ -300,7 +334,7 @@ async function load() {
     const data = await res.json();
     if (data.generatedAt === current) return;
     current = data.generatedAt;
-    render(data);
+    render(overlayToday(data));
   } catch (err) {
     const box = document.getElementById('error');
     box.hidden = false;
@@ -312,8 +346,9 @@ async function load() {
 
 load();
 // Страница может висеть на экране сутками. Деплой меняет status.json —
-// перерисовываемся, когда generatedAt поменялся, и только тогда.
-setInterval(load, 5 * 60 * 1000);
+// перерисовываемся, когда generatedAt поменялся, и только тогда. Смена даты
+// при этом учитывается и без нового деплоя: её досчитывает overlayToday().
+setInterval(load, 10 * 60 * 1000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) load(); });
 </script>
 </body>

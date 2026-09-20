@@ -2,3 +2,6 @@
 # Лежат локально, планировщик берёт их с диска. См. docs/templates/media.md.
 app/games/*/media/*.mp4
 app/games/*/media/*.mov
+
+# Снимок доски: собирается Vercel на каждом деплое, как app/dist.
+dashboard/status.json
