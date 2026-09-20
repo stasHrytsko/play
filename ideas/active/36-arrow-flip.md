@@ -19,8 +19,8 @@ score:
   payoff: 5
   producibility: 3
   market: 5
-gate1: pending
-gate1_date:
+gate1: approved
+gate1_date: 20 september 2026
 ---
 
 ## 1. Что делает игрок
