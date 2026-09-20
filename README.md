@@ -45,6 +45,19 @@ The slug in `games.json` must match the folder name in `app/games/`; the
 script refuses to publish under a different name rather than quietly
 creating a second identity for the same game.
 
+## Where everything stands
+
+```sh
+node pipeline.mjs            # the whole board
+node pipeline.mjs --waiting  # only what needs a decision from you
+node pipeline.mjs --json     # the same, machine-readable
+```
+
+Nothing stores a stage. It is computed from which files exist — an idea, a
+spec with its review field, a game folder, a review.md, a play link in
+games.json, a data pull, a verdict. So the board cannot go stale the way a
+status column does.
+
 ## The schedule
 
 `games.json` maps day → slug and holds the links, dates, metrics and feedback.
@@ -96,6 +109,7 @@ recording are disabled; the hub emits explicit project events only.
 - `analytics-config.js` — launch date, timezone and PostHog client configuration.
 - `hub.js` — upcoming-date logic, UTM attribution, analytics controls and event capture.
 - `build-games.mjs` — dependency-free generator for the log grid and per-prototype pages.
+- `pipeline.mjs` — the status board: what stage each concept is at and what is waiting on you.
 - `release.mjs` — builds `app/` and publishes one game to `g/<slug>/`.
 - `g/` — published playable builds; `g/assets/` holds their shared hashed bundles.
 - `test-hub.mjs` — headless behavior check for `hub.js`.

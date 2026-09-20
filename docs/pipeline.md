@@ -62,6 +62,7 @@ docs/                          PLAY.md, архитектура, решения
 specs/front-matter.mjs         чтение YAML-шапок — общее для всех скриптов
 specs/validate.mjs             Gate 2 и сверка шапок с идеями
 ideas/validate.mjs             Gate 1
+pipeline.mjs                   доска: стадии и что ждёт человека
 release.mjs                    публикация одной игры на хаб
 build-games.mjs                генератор хаба
 .github/workflows/ci.yml       Gate 3
@@ -142,31 +143,47 @@ build-games.mjs                генератор хаба
 
 ## Стадия выводится
 
-Никакого поля `status`, которое надо не забыть поменять. Стадия — это
-функция от файлов:
+Никакого поля `status`, которое надо не забыть поменять. Стадия — это функция
+от файлов:
 
 | Стадия | Признак |
 |---|---|
-| `idea` | есть `ideas/NN-slug.md` |
-| `spec` | есть `specs/NN-slug.md` |
-| `built` | есть `app/games/<slug>/game.config.ts` |
-| `published` | в `games.json` заполнен `links.play` |
-| `measured` | есть `data/<slug>.json` |
-| `judged` | есть `results/NN-slug.md` с непустым `verdict` |
+| `идея` | есть `ideas/active/NN-slug.md` |
+| `отклонена` | файл в `ideas/rejected/` |
+| `спека` | есть `specs/NN-slug.md`; `review` говорит, принята ли |
+| `собрана` | есть `app/games/<slug>/game.config.ts` |
+| `принята` | в `app/games/<slug>/review.md` стоит `approved` |
+| `опубликована` | в `games.json` заполнен `links.play` |
+| `цифры` | есть `data/<slug>.json` |
+| `вердикт` | есть `results/NN-slug.md` с непустым `verdict` |
 
-`node pipeline.mjs status` печатает доску:
-
-```
-день  слаг            стадия      вердикт
-  1   box-arrives     judged      PROMOTE
-  2   two-moves-later published   —
-  3   basement        built       —
-  4   triple          spec        —
-  5   only-green      idea        —
+```sh
+node pipeline.mjs            # доска целиком
+node pipeline.mjs --waiting  # только то, что ждёт решения человека
+node pipeline.mjs --json     # то же машиночитаемо
 ```
 
-Это заменяет гугл-трекер: колонки «собрана / протестирована / опубликована»
-перестают быть чек-боксами, которые надо ставить руками.
+```
+PLAY · 2026-09-20 · старт 2026-10-01, через 11 дн.
+
+  день  слаг             стадия
+    1  box-arrives      спека
+    2  two-moves-later  спека
+   ...
+  вне расписания
+  #36  arrow-flip       идея           25/30
+
+Ждёт тебя: 1
+  • arrow-flip (#36) — gate 1 — твоё решение
+```
+
+Это и заменяет гугл-трекер: колонки «собрана / протестирована / опубликована»
+перестают быть чек-боксами, которые надо ставить руками. Поставить их и
+забыть невозможно, потому что ставить нечего.
+
+Главная колонка — **«Ждёт тебя»**. Три из четырёх ворот — решение человека, и
+ровно они теряются первыми. `--waiting` отвечает на единственный вопрос,
+который задают утром: за что браться.
 
 ---
 
@@ -242,7 +259,8 @@ build-games.mjs                генератор хаба
 
 **Потом выход:**
 
-7. `pipeline.mjs status`.
+7. ~~`pipeline.mjs status`.~~ **Сделано.** `node pipeline.mjs` — стадии
+   считаются из файлов, `--waiting` показывает только то, что ждёт человека.
 8. `/pull-data` и папка `data/`.
 9. `/result` и папка `results/`.
 
