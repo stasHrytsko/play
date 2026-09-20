@@ -1,5 +1,9 @@
 # app — shared shell for the Prototype Validation Project
 
+> **Шаги 3–5, Gate 3 и Gate 4.** Вход — `../specs/NN-<slug>.md`.
+> Дальше: `node ../release.mjs <slug>` и `../distribution/`.
+> Путь целиком — `../docs/PLAY.md`.
+
 DOM shell + Phaser mechanic, shared across every 30/30 prototype. One HTML
 entry per game at `games/<slug>/`; only `games/<slug>/mechanic/**` changes
 between games — `src/shell/**` is written and tested once. Forked from
