@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T13:43:51.169Z",
+  "generatedAt": "2026-09-21T14:00:16.521Z",
   "today": "2026-09-21",
   "counts": {
     "ideas": 1,
@@ -62,7 +62,7 @@
       "number": 2,
       "day": 2,
       "stage": "спека",
-      "waiting": "gate 2 — принять спеку",
+      "waiting": "принять спеку",
       "action": {
         "actor": "человек",
         "open": "specs/02-two-moves-later.md",
@@ -80,7 +80,7 @@
         "actor": "AI предлагает, решаешь ты",
         "open": "app/games/box-arrives/review.md",
         "read": "журнал приёмки — почему именно не то",
-        "write": "results/01-box-arrives.md — verdict: REJECTED, без цифр: до релиза не дошло"
+        "write": "results/01-box-arrives.md — gate2: kill, players: 0 и строка почему: до игроков не дошло"
       }
     },
     {
@@ -116,7 +116,7 @@
       "number": 2,
       "day": 2,
       "stage": "спека",
-      "waiting": "gate 2 — принять спеку",
+      "waiting": "принять спеку",
       "note": "",
       "releasedAt": null,
       "action": {
@@ -132,7 +132,7 @@
       "day": 3,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -147,7 +147,7 @@
       "day": 4,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -162,7 +162,7 @@
       "day": 5,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -177,7 +177,7 @@
       "day": 6,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -192,7 +192,7 @@
       "day": 7,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -207,7 +207,7 @@
       "day": 8,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -222,7 +222,7 @@
       "day": 9,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -237,7 +237,7 @@
       "day": 10,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -252,7 +252,7 @@
       "day": 11,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -267,7 +267,7 @@
       "day": 12,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -282,7 +282,7 @@
       "day": 13,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -297,7 +297,7 @@
       "day": 14,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -312,7 +312,7 @@
       "day": 15,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -327,7 +327,7 @@
       "day": 16,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -342,7 +342,7 @@
       "day": 17,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -357,7 +357,7 @@
       "day": 18,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -372,7 +372,7 @@
       "day": 19,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -387,7 +387,7 @@
       "day": 20,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -402,7 +402,7 @@
       "day": 21,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -417,7 +417,7 @@
       "day": 22,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -432,7 +432,7 @@
       "day": 23,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -447,7 +447,7 @@
       "day": 24,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -462,7 +462,7 @@
       "day": 25,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -477,7 +477,7 @@
       "day": 26,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -492,7 +492,7 @@
       "day": 27,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -507,7 +507,7 @@
       "day": 28,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -522,7 +522,7 @@
       "day": 29,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -537,7 +537,7 @@
       "day": 30,
       "stage": "спека",
       "waiting": null,
-      "note": "ждёт gate 2",
+      "note": "ждёт приёмки",
       "releasedAt": null,
       "action": {
         "actor": "человек",
@@ -558,7 +558,7 @@
         "actor": "AI предлагает, решаешь ты",
         "open": "app/games/box-arrives/review.md",
         "read": "журнал приёмки — почему именно не то",
-        "write": "results/01-box-arrives.md — verdict: REJECTED, без цифр: до релиза не дошло"
+        "write": "results/01-box-arrives.md — gate2: kill, players: 0 и строка почему: до игроков не дошло"
       }
     },
     {

@@ -162,14 +162,13 @@ function statusOf(slug) {
     out.action = { actor: 'человек', ...action };
   };
 
-  if (result?.['verdict']) {
-    const verdict = String(result['verdict']);
-    // REJECTED — концепт закрыт до релиза: человек сыграл и сказал нет, цифр
-    // у него нет и не будет. Отдельный вердикт, а не KILL: KILL выносят
-    // игроки по воронке, REJECTED выносит автор на воротах, и в итогах
-    // тридцатки это две разные истории.
-    out.stage = verdict === 'REJECTED' ? 'убита' : 'вердикт';
-    out.note = verdict;
+  if (result?.['gate2']) {
+    // Gate 2 — прототип на живых игроках, ideas/gate2.md. Концепт, закрытый
+    // раньше, на проверке среза, пишется сюда же с players: 0: иначе в итогах
+    // тридцатки будет молчаливая дыра вместо истории.
+    const gate2 = String(result['gate2']);
+    out.stage = gate2 === 'kill' ? 'убита' : 'вердикт';
+    out.note = gate2 === 'rework' ? 'gate 2: доработать' : gate2;
     return out;
   }
 
@@ -178,15 +177,13 @@ function statusOf(slug) {
     const rate = data.opened > 0 ? Math.round((data.completed / data.opened) * 100) : 0;
     out.note = `${data.completed}/${data.opened} (${rate}%)`;
     const enough = data.completed >= MIN_COMPLETIONS;
-    wait(enough ? 'вердикт' : `вердикт — прохождений ${data.completed} из ${MIN_COMPLETIONS}`, {
-      actor: 'AI предлагает, решаешь ты',
+    wait(enough ? 'gate 2 — прототип на игроках' : `gate 2 — прохождений ${data.completed} из ${MIN_COMPLETIONS}`, {
+      actor: 'AI считает, решаешь ты',
       open: dataPath,
-      read: ideaPath
-        ? `цифры и kill-критерий в шапке ${ideaPath}`
-        : `цифры и kill-критерий в шапке ${String(specPath)}`,
+      read: `условия в ideas/gate2.md; kill-критерий в шапке ${ideaPath ?? String(specPath)}`,
       write: enough
-        ? `${resultPath ?? 'results/NN-slug.md'} — карточка и verdict: PROMOTE | KILL | INCONCLUSIVE`
-        : `${resultPath ?? 'results/NN-slug.md'} — verdict: INCONCLUSIVE, выборка мала для вывода`,
+        ? `${resultPath ?? 'results/NN-slug.md'} — gate2: ready_for_production | rework | kill, доли и наблюдения`
+        : `${resultPath ?? 'results/NN-slug.md'} — выборки мало; «понимают цель» из воронки не берётся, нужны живые игроки`,
     });
     return out;
   }
@@ -220,7 +217,7 @@ function statusOf(slug) {
         actor: 'AI предлагает, решаешь ты',
         open: reviewPath,
         read: 'журнал приёмки — почему именно не то',
-        write: `${resultPath ?? 'results/NN-slug.md'} — verdict: REJECTED, без цифр: до релиза не дошло`,
+        write: `${resultPath ?? 'results/NN-slug.md'} — gate2: kill, players: 0 и строка почему: до игроков не дошло`,
       });
       return out;
     }
@@ -284,7 +281,7 @@ function statusOf(slug) {
 
     // Спека написана, а идея вернулась на Gate 1 — так бывает, когда меняется
     // планка (2026-09-21, `prototypeability ≥ 4`). Ждёт при этом Gate 1, а не
-    // Gate 2: принимать спеку у концепта, который ещё не решён, значит
+    // принимать спеку у концепта, который ещё не решён на Gate 1, значит
     // принимать решение задом наперёд.
     if (idea && (idea.meta['gate1'] ?? 'pending') !== 'approved') {
       out.note = `идея на gate 1: ${String(idea.meta['gate1'] ?? 'pending')}`;
@@ -308,17 +305,17 @@ function statusOf(slug) {
         actor: 'AI', open: specPath, read: 'раздел «Замечания» внизу файла', write: specPath,
       };
     } else if (verdict === 'pending') {
-      wait('gate 2 — принять спеку', {
+      wait('принять спеку', {
         open: specPath,
         read: 'спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана',
         write: 'в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла',
       });
     } else {
-      // Поля нет: спеки 1–35 писались до появления Gate 2. Раньше здесь не
+      // Поля нет: спеки 1–35 писались до появления приёмки. Раньше здесь не
       // происходило ничего — ни ожидания, ни пометки, — и доска молчала о
       // тридцати спеках, которые ворот не проходили. Молчание хуже шума:
       // по пустой клетке не отличить «пройдено» от «не дошли руки».
-      out.note = 'без gate 2';
+      out.note = 'спека не принята';
       out.action = {
         actor: 'человек',
         open: specPath,
@@ -399,12 +396,12 @@ for (const game of games.games.filter((g) => !g.slug)) {
   });
 }
 
-// Gate 2 нужен каждой из тридцати спек, но не сегодня: игры делаются по
+// Приёмка нужна каждой из тридцати спек, но не сегодня: игры делаются по
 // одной. Поэтому в список ожидающих попадает только ближайшая по расписанию
-// — остальные видны в таблице пометкой «без gate 2» и ждут своей очереди.
+// — остальные видны в таблице пометкой «ждёт приёмки» и ждут своей очереди.
 // Показывать тридцать одинаковых пунктов значит утопить в них остальные.
 const queue = rows
-  .filter((r) => r.day !== null && r.stage === 'спека' && r.waiting === 'gate 2 — принять спеку')
+  .filter((r) => r.day !== null && r.stage === 'спека' && r.waiting === 'принять спеку')
   .sort((a, b) => a.day - b.day);
 
 for (const [i, r] of queue.entries()) {
@@ -417,7 +414,7 @@ for (const [i, r] of queue.entries()) {
   }
   // Ждёт очереди: в таблице видна, в список не попадает.
   r.waiting = null;
-  r.note = r.note || 'ждёт gate 2';
+  r.note = r.note || 'ждёт приёмки';
 }
 
 const scheduled = rows.filter((r) => r.day !== null).sort((a, b) => a.day - b.day);
