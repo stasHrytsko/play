@@ -32,8 +32,8 @@ kill_criterion: >-
 difference: >-
   match создаётся не перестановкой готовых элементов, а выбором того, как
   разрезать исходные фигуры.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

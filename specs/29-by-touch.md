@@ -33,8 +33,8 @@ kill_criterion: >-
 difference: >-
   фигуры не просто заполняют поле — они одновременно являются способом
   проверить гипотезу о скрытых ценных клетках.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

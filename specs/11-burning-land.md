@@ -32,8 +32,8 @@ trend: true
 difference: >-
   Block Blast — размещение фигур используется для триажа пространства, а
   не для очистки линий.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

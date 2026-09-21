@@ -33,8 +33,8 @@ trend: false
 difference: >-
   Match-3 — у каждой плитки свой конечный запас перемещений; swap
   расходует этот запас.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

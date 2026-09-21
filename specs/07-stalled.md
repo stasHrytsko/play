@@ -33,8 +33,8 @@ trend: true
 difference: >-
   Parking Jam — движение здесь не бесплатное действие, а ограниченный
   ресурс каждой машины.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

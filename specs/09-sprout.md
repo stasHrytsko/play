@@ -33,8 +33,8 @@ trend: false
 difference: >-
   Paper.io — захват пошаговый и полностью детерминированный; cash-out
   происходит только при доведении ветки до воды.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

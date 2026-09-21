@@ -111,14 +111,17 @@ levels.
 1. The spec is `../specs/NN-<slug>.md` (one level up from `app/` — see
    `specs/README.md`) if it's on the 30/30 shelf, or given directly in the
    task otherwise. Read it carefully. Section numbers below refer to
-   `specs/_TEMPLATE.md`, the one normative format. If anything §2 (win and
-   loss), §3 (rules) or §5 (input) would need is missing or ambiguous, stop
-   and ask — do not invent it (same rule as editing an existing game's
-   mechanic). A section marked "не применимо" is an answer; a silently
-   missing one is not. §7.1 is the picture of the screen: what takes which
-   share of it, what has to be readable in a second, and — when the mechanic
-   is built on colour — what the second channel is. No §7.1 is the same kind
-   of gap as a missing rule: raise it rather than inventing a layout.
+   `specs/_TEMPLATE.md`, the one normative format: §1 boundary and
+   hypothesis, §2 goal and loop, §3 objects and state, §4 input and every
+   outcome of every action, §5 win/loss/order of checks, §6 levels, §7
+   feedback, §8 the playtest plan, Appendix A this factory's profile. If
+   anything §4 or §5 would need is missing or ambiguous, stop and ask — do
+   not invent it (same rule as editing an existing game's mechanic). A
+   section marked "не применимо" is an answer; a silently missing one is not.
+   §7.1 is the picture of the screen: what takes which share of it, what has
+   to be readable in a second, and — when the mechanic is built on colour —
+   what the second channel is. No §7.1 is the same kind of gap as a missing
+   rule: raise it rather than inventing a layout.
 2. Copy `games/tap-targets/` as the starting skeleton — folder structure,
    not content: `game.config.ts`, `main.ts`, `index.html`, `rules.md` (copy
    the spec from `../specs/NN-<slug>.md` into this file — `specs/` stays the source,

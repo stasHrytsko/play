@@ -32,8 +32,8 @@ trend: false
 difference: >-
   Pipe Mania без таймера реального времени и физики — вода движется только
   после действий игрока и полностью предсказуема.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

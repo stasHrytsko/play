@@ -259,7 +259,7 @@ function statusOf(slug) {
       out.action = {
         actor: 'AI',
         open: specPath,
-        read: 'раздел 6 спеки — названная разница между соседними уровнями',
+        read: 'раздел 6 спеки — кривая сложности и названная разница между уровнями',
         write: `app/games/${slug}/mechanic/levels/levels.json — до ${FULL_PACK} уровней, тесты кривой и kill-критерия`,
       };
       return out;
@@ -276,7 +276,9 @@ function statusOf(slug) {
   }
 
   if (spec) {
-    const verdict = spec.meta['review'];
+    // Состояние документа, не ворота концепта: draft | review | approved
+    // (specs/_TEMPLATE.md). Ворот двое, и оба в ideas/.
+    const status = spec.meta['spec_status'];
     out.stage = 'спека';
 
     // Спека написана, а идея вернулась на Gate 1 — так бывает, когда меняется
@@ -292,35 +294,35 @@ function statusOf(slug) {
       });
       return out;
     }
-    if (verdict === 'approved') {
+    if (status === 'approved') {
       wait('сборку среза', {
         actor: 'AI',
         open: specPath,
         read: 'спеку целиком, включая §7.1 — макет экрана',
         write: `app/games/${slug}/ — движок, рендер, тесты и ОДИН уровень`,
       });
-    } else if (verdict === 'rework') {
-      out.note = 'на доработке';
+    } else if (status === 'draft') {
+      out.note = 'черновик';
       out.action = {
         actor: 'AI', open: specPath, read: 'раздел «Замечания» внизу файла', write: specPath,
       };
-    } else if (verdict === 'pending') {
+    } else if (status === 'review') {
       wait('принять спеку', {
         open: specPath,
         read: 'спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана',
-        write: 'в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла',
+        write: 'в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла',
       });
     } else {
-      // Поля нет: спеки 1–35 писались до появления приёмки. Раньше здесь не
+      // Поля нет: спека написана до появления spec_status. Раньше здесь не
       // происходило ничего — ни ожидания, ни пометки, — и доска молчала о
       // тридцати спеках, которые ворот не проходили. Молчание хуже шума:
       // по пустой клетке не отличить «пройдено» от «не дошли руки».
-      out.note = 'спека не принята';
+      out.note = 'нет spec_status';
       out.action = {
         actor: 'человек',
         open: specPath,
         read: 'спеку целиком — из каждого пункта должен писаться тест',
-        write: 'в шапке: review: approved | rework и reviewed: дата',
+        write: 'в шапке: spec_status: approved | review | draft и spec_reviewed: дата',
       };
     }
     return out;

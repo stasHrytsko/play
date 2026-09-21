@@ -31,8 +31,8 @@ trend: true
 difference: >-
   конвейер не сортирует предметы, а заставляет делить целое на нужные
   процентные части.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

@@ -32,8 +32,8 @@ difference: >-
   Folding Blocks — уже сложенные участки становятся толстыми и навсегда
   исключаются из дальнейших сгибов, поэтому порядок действий определяет
   решение.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

@@ -29,8 +29,8 @@ score:
 kill_criterion: >-
   Если серия из двух и более разгрузок подряд встречается реже одного раза
   за уровень при корректной игре, концепт хоронится.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

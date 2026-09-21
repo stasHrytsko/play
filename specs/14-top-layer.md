@@ -34,8 +34,8 @@ trend: true
 difference: >-
   Mahjong — вместо поиска пар цель в том, чтобы сливать одинаковые
   номиналы и раскрывать нижние слои.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

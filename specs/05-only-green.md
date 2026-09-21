@@ -34,8 +34,8 @@ trend: true
 difference: >-
   Water Sort обычно запрещает смешивать разные цвета; здесь смешивание
   разных цветов — единственный способ получить нужный цвет.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

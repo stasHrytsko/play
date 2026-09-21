@@ -34,8 +34,8 @@ trend: true
 difference: >-
   Tetris — вращение обычно бесплатно, здесь каждое вращение расходует
   конечный ресурс.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

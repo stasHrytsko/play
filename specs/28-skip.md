@@ -31,8 +31,8 @@ score:
 kill_criterion: >-
   если жадная стратегия «клади предмет сразу, если можешь» выигрывает
   более чем в 80% валидных уровней, концепт хоронится.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

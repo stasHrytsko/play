@@ -33,8 +33,8 @@ trend: true
 difference: >-
   Tap Away — направление блока не постоянно, а меняется после каждого его
   собственного хода.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

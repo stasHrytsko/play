@@ -30,8 +30,8 @@ kill_criterion: >-
 trend: true
 difference: >-
   Goods Sort — узкое место не поиск тройки, а ограниченная ёмкость полок.
-review: pending
-reviewed:
+spec_status: review
+spec_reviewed:
 ---
 # 1. Паспорт концепта
 

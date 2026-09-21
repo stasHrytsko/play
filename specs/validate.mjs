@@ -12,24 +12,28 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { loadSpecs, parseFrontMatter } from './front-matter.mjs';
 
 // Поля шапки, без которых спеку нельзя ни собрать, ни судить.
+// Паспорт — идентификаторы, гипотеза, kill-критерий и состояние документа;
+// оценка идеи остаётся в файле идеи и сюда не переезжает (specs/_TEMPLATE.md).
 const REQUIRED = [
   'slug', 'number', 'title_ru', 'title_en', 'pitch_ru', 'pitch_en',
-  'verb', 'pressure', 'emotion', 'levels', 'solver', 'kill_criterion',
+  'levels', 'solver', 'kill_criterion',
 ];
 const ENUMS = {
   levels: ['generated', 'authored'],
   solver: ['required', 'none'],
-  review: ['pending', 'rework', 'approved'],
+  spec_status: ['draft', 'review', 'approved'],
 };
-// Наследуется из шапки идеи без изменений. pitch_* и review появляются здесь.
-const INHERITED = ['number', 'title_ru', 'title_en', 'verb', 'pressure', 'twist',
-  'emotion', 'family', 'levels', 'solver', 'score', 'kill_criterion'];
+// Наследуется из шапки идеи без изменений. pitch_*, hypothesis и spec_status
+// появляются здесь: формулировки рождаются, когда игра уже описана.
+const INHERITED = ['number', 'title_ru', 'title_en', 'family', 'levels', 'solver',
+  'kill_criterion'];
 // События, которых шелл не шлёт: см. src/shell/signal/SignalSink.ts.
 const RETIRED = ['more_yes', 'session_2', 'return_d1', 'return_d7'];
-const SECTIONS = 12; // §1..§12 заголовками; §0 — это сама YAML-шапка
+const SECTIONS = 8; // §1..§8 заголовками; §0 — шапка, приложение A не нумеруется
 
 const errors = [];
 const warnings = [];
+const withoutHypothesis = [];
 
 const specs = loadSpecs();
 
@@ -75,11 +79,11 @@ for (const [slugFromName, { file, text, meta }] of specs) {
 
   const retired = RETIRED.filter((event) => text.includes(event));
   if (retired.length > 0) {
-    errors.push(`${where}: §10 требует событий, которых шелл не шлёт: ${retired.join(', ')}`);
+    errors.push(`${where}: требует событий, которых шелл не шлёт: ${retired.join(', ')}`);
   }
 
   const pressure = Array.isArray(meta['pressure']) ? meta['pressure'] : [];
-  if (pressure.length > 2) errors.push(`${where}: давлений ${pressure.length}, максимум два (§9.2)`);
+  if (pressure.length > 2) errors.push(`${where}: давлений ${pressure.length}, максимум два`);
 
   const found = (text.match(/^# \d+\./gm) ?? []).length;
   if (found < SECTIONS) warnings.push(`${where}: разделов ${found} из ${SECTIONS}`);
@@ -89,15 +93,29 @@ for (const [slugFromName, { file, text, meta }] of specs) {
   // спеки, до которой очередь дойдёт через месяц, значит получить тридцать
   // одинаковых строк и перестать их читать. У принятой спеки очередь дошла —
   // она следующая в сборку, и раскладку придётся придумывать уже на ходу.
-  if (meta['review'] === 'approved' && !/^## 7\.1\./m.test(text)) {
+  if (meta['spec_status'] === 'approved' && !/^## 7\.1\./m.test(text)) {
     warnings.push(`${where}: спека принята, но нет §7.1 — макета экрана`);
   }
   const screen = /^## 7\.1\.[\s\S]*?!\[[^\]]*\]\(([^)]+)\)/m.exec(text);
   if (screen && !existsSync(new URL(`./${screen[1]}`, import.meta.url))) {
     errors.push(`${where}: §7.1 ссылается на ${screen[1]}, а файла нет`);
   }
-  if (meta['score'] === undefined || meta['score'] === null) {
-    warnings.push(`${where}: score не разбит по шести критериям`);
+  // Гипотеза — то, ради чего собирается прототип (Definition of Ready).
+  // Спрашивается с принятых: тридцать спек написаны до появления поля, и
+  // вечное предупреждение по каждой перестанут читать.
+  const hypothesis = meta['hypothesis'];
+  const noHypothesis = typeof hypothesis !== 'string' || hypothesis.trim() === '';
+  if (meta['spec_status'] === 'approved' && noHypothesis) {
+    errors.push(`${where}: spec_status=approved без hypothesis`);
+  } else if (noHypothesis) {
+    // Копится и печатается одной строкой: тридцать одинаковых предупреждений
+    // утопят те два, которые про конкретную спеку, и читать перестанут оба.
+    withoutHypothesis.push(slugFromName);
+  }
+
+  // Нерешённый вопрос помечается OPEN и не даёт перевести спеку в approved.
+  if (meta['spec_status'] === 'approved' && /\bOPEN\b/.test(text)) {
+    errors.push(`${where}: spec_status=approved, но в тексте остался OPEN`);
   }
   // Словарь семейств открытый, форма — нет: по «route puzzle / grid
   // navigation.» и «Route» нельзя сгруппировать, а группировать по семейству
@@ -112,9 +130,8 @@ for (const [slugFromName, { file, text, meta }] of specs) {
   // Неотвеченный крайний случай — это либо вопрос от агента посреди сборки,
   // либо молча выдуманное правило. Второе хуже: игра расходится со спекой, и
   // измеряется не то, что описано.
-  const edge = /^# 11\.[\s\S]*?(?=^# 12\.|\Z)/m.exec(text)?.[0] ?? '';
-  const unanswered = (edge.match(/^\s*- \[ \]/gm) ?? []).length;
-  if (unanswered > 0) warnings.push(`${where}: §11 — ${unanswered} неотвеченных крайних случаев`);
+  const unanswered = (text.match(/^\s*- \[ \]/gm) ?? []).length;
+  if (unanswered > 0) warnings.push(`${where}: ${unanswered} неотвеченных пунктов`);
 
   // Шапка идеи — источник, спека наследник. Расхождение значит, что одну из
   // двух правили руками, и дальше по конвейеру поедет неизвестно какая версия.
@@ -123,12 +140,12 @@ for (const [slugFromName, { file, text, meta }] of specs) {
   // Gate 2 спрашивается только со спек, у которых есть идея: 1–35 писались до
   // того, как этап появился, и требовать с них поле значит держать тридцать
   // вечных предупреждений, которые перестанут читать.
-  if (idea && meta['review'] === undefined) warnings.push(`${where}: нет review (Gate 2)`);
-  if (meta['review'] !== undefined && meta['review'] !== 'pending' && !meta['reviewed']) {
-    errors.push(`${where}: review=${String(meta['review'])} без даты`);
-  } else if (typeof meta['reviewed'] === 'string' && meta['reviewed'] !== ''
-    && !/^\d{4}-\d{2}-\d{2}$/.test(meta['reviewed'])) {
-    errors.push(`${where}: reviewed «${String(meta['reviewed'])}» — нужен формат YYYY-MM-DD`);
+  if (meta['spec_status'] === undefined) warnings.push(`${where}: нет spec_status`);
+  if (meta['spec_status'] === 'approved' && !meta['spec_reviewed']) {
+    errors.push(`${where}: spec_status=approved без даты`);
+  } else if (typeof meta['spec_reviewed'] === 'string' && meta['spec_reviewed'] !== ''
+    && !/^\d{4}-\d{2}-\d{2}$/.test(meta['spec_reviewed'])) {
+    errors.push(`${where}: spec_reviewed «${String(meta['spec_reviewed'])}» — нужен формат YYYY-MM-DD`);
   }
 
   if (idea) {
@@ -187,6 +204,13 @@ for (const slug of specs.keys()) {
   if (!scheduled.has(slug) && !killed(slug)) {
     warnings.push(`specs/${slug}: не назначен ни на один день в games.json`);
   }
+}
+
+if (withoutHypothesis.length > 0) {
+  warnings.push(
+    `hypothesis нет у ${withoutHypothesis.length} спек: поле появилось после того, как их написали. ` +
+      'Заполняется к приёмке — без него spec_status: approved не ставится',
+  );
 }
 
 for (const line of warnings) console.log(`предупреждение  ${line}`);

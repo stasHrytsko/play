@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T14:00:16.521Z",
+  "generatedAt": "2026-09-21T14:21:32.560Z",
   "today": "2026-09-21",
   "counts": {
     "ideas": 1,
@@ -67,7 +67,7 @@
         "actor": "человек",
         "open": "specs/02-two-moves-later.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 29 на приёмке",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -123,7 +123,7 @@
         "actor": "человек",
         "open": "specs/02-two-moves-later.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 29 на приёмке",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -138,7 +138,7 @@
         "actor": "человек",
         "open": "specs/03-basement.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -153,7 +153,7 @@
         "actor": "человек",
         "open": "specs/04-triple.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -168,7 +168,7 @@
         "actor": "человек",
         "open": "specs/05-only-green.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -183,7 +183,7 @@
         "actor": "человек",
         "open": "specs/06-tight-shelf.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -198,7 +198,7 @@
         "actor": "человек",
         "open": "specs/07-stalled.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -213,7 +213,7 @@
         "actor": "человек",
         "open": "specs/08-turnaround.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -228,7 +228,7 @@
         "actor": "человек",
         "open": "specs/09-sprout.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -243,7 +243,7 @@
         "actor": "человек",
         "open": "specs/10-flows.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -258,7 +258,7 @@
         "actor": "человек",
         "open": "specs/11-burning-land.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -273,7 +273,7 @@
         "actor": "человек",
         "open": "specs/13-coin-turn.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -288,7 +288,7 @@
         "actor": "человек",
         "open": "specs/14-top-layer.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -303,7 +303,7 @@
         "actor": "человек",
         "open": "specs/15-ribbon.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -318,7 +318,7 @@
         "actor": "человек",
         "open": "specs/16-stuck.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -333,7 +333,7 @@
         "actor": "человек",
         "open": "specs/20-collapse-wire.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -348,7 +348,7 @@
         "actor": "человек",
         "open": "specs/21-collapsed.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -363,7 +363,7 @@
         "actor": "человек",
         "open": "specs/22-double.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -378,7 +378,7 @@
         "actor": "человек",
         "open": "specs/24-excavation.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -393,7 +393,7 @@
         "actor": "человек",
         "open": "specs/25-jammed.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -408,7 +408,7 @@
         "actor": "человек",
         "open": "specs/26-cable-bet.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -423,7 +423,7 @@
         "actor": "человек",
         "open": "specs/27-screw-budget.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -438,7 +438,7 @@
         "actor": "человек",
         "open": "specs/28-skip.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -453,7 +453,7 @@
         "actor": "человек",
         "open": "specs/29-by-touch.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -468,7 +468,7 @@
         "actor": "человек",
         "open": "specs/30-order.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -483,7 +483,7 @@
         "actor": "человек",
         "open": "specs/31-shift.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -498,7 +498,7 @@
         "actor": "человек",
         "open": "specs/32-trail.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -513,7 +513,7 @@
         "actor": "человек",
         "open": "specs/33-ripeness.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -528,7 +528,7 @@
         "actor": "человек",
         "open": "specs/34-arrow.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
@@ -543,7 +543,7 @@
         "actor": "человек",
         "open": "specs/35-overload.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
     {
