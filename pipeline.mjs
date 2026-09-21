@@ -281,6 +281,20 @@ function statusOf(slug) {
   if (spec) {
     const verdict = spec.meta['review'];
     out.stage = 'спека';
+
+    // Спека написана, а идея вернулась на Gate 1 — так бывает, когда меняется
+    // планка (2026-09-21, `prototypeability ≥ 4`). Ждёт при этом Gate 1, а не
+    // Gate 2: принимать спеку у концепта, который ещё не решён, значит
+    // принимать решение задом наперёд.
+    if (idea && (idea.meta['gate1'] ?? 'pending') !== 'approved') {
+      out.note = `идея на gate 1: ${String(idea.meta['gate1'] ?? 'pending')}`;
+      wait('gate 1 — твоё решение', {
+        open: ideaPath,
+        read: 'раздел «Оценка» и порог в ideas/README.md — спека уже написана, но идея не одобрена',
+        write: 'в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему',
+      });
+      return out;
+    }
     if (verdict === 'approved') {
       wait('сборку среза', {
         actor: 'AI',

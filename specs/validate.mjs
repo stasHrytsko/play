@@ -138,8 +138,13 @@ for (const [slugFromName, { file, text, meta }] of specs) {
         errors.push(`${where}: ${key} разошлось с ideas/${idea.folder}/${idea.file}`);
       }
     }
-    if (idea.meta['gate1'] !== 'approved') {
-      errors.push(`${where}: спека есть, но идея не прошла Gate 1 (${String(idea.meta['gate1'])})`);
+    if (idea.meta['gate1'] === 'rejected') {
+      errors.push(`${where}: спека есть, а идея отклонена на Gate 1`);
+    } else if (idea.meta['gate1'] !== 'approved') {
+      // Не ошибка: планка Gate 1 может смениться под уже написанной спекой
+      // (2026-09-21, `prototypeability ≥ 4`). Решение — человека, а сборку
+      // всему репозиторию это ронять не должно.
+      warnings.push(`${where}: идея на Gate 1 в статусе ${String(idea.meta['gate1'])} — спека ждёт решения`);
     }
   }
 }

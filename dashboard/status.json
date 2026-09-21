@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T13:29:44.334Z",
+  "generatedAt": "2026-09-21T13:43:51.169Z",
   "today": "2026-09-21",
   "counts": {
     "ideas": 1,
@@ -88,12 +88,12 @@
       "number": 36,
       "day": null,
       "stage": "спека",
-      "waiting": "gate 2 — принять спеку",
+      "waiting": "gate 1 — твоё решение",
       "action": {
         "actor": "человек",
-        "open": "specs/36-arrow-flip.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "open": "ideas/active/36-arrow-flip.md",
+        "read": "раздел «Оценка» и порог в ideas/README.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -566,14 +566,14 @@
       "number": 36,
       "day": null,
       "stage": "спека",
-      "waiting": "gate 2 — принять спеку",
-      "note": "",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/36-arrow-flip.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+        "open": "ideas/active/36-arrow-flip.md",
+        "read": "раздел «Оценка» и порог в ideas/README.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {

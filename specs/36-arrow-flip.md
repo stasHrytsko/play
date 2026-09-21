@@ -24,10 +24,10 @@ kill_criterion: >-
 score:
   readability: 4
   motivation: 4
-  pressure: 4
+  decision_pressure: 4
   payoff: 5
-  producibility: 3
-  market: 5
+  differentiation: 5
+  prototypeability: 3
 trend: true
 difference: >-
   В обычном arrow puzzle направление блока постоянно, и задача — найти

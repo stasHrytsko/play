@@ -55,13 +55,13 @@ emotion: азарт на грани провала
 family: push-your-luck
 levels: generated         # generated | authored
 solver: required          # required | none
-score:                    # шесть критериев, каждый 1–5; сумма не хранится
+score:                    # шесть критериев, каждый 1–5 — ideas/README.md
   readability: 5
   motivation: 5
-  pressure: 5
+  decision_pressure: 5
   payoff: 5
-  producibility: 4
-  market: 3
+  differentiation: 4
+  prototypeability: 4
 kill_criterion: >-
   Осторожный бот, который никогда не выходит за гарантированно безопасную
   зону, проходит все пять уровней.

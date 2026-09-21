@@ -27,13 +27,16 @@ const ENUMS = {
   solver: ['required', 'none'],
   gate1: ['pending', 'approved', 'rejected'],
 };
-const CRITERIA = ['readability', 'motivation', 'pressure', 'payoff', 'producibility', 'market'];
+// Шесть критериев и порог — ideas/README.md, единое правило проверки идеи.
+const CRITERIA = ['readability', 'motivation', 'decision_pressure', 'payoff', 'differentiation', 'prototypeability'];
 const SECTIONS = 8;
 
-// Порог Gate 1. Сумма — общая планка, производимость — отдельная и не
-// компенсируется суммой: три дня работы отнимают три прототипа.
+// Три условия порога, и два последних суммой не компенсируются: балл ниже
+// трёх — дыра в концепте, а идея, которую нельзя проверить за вечер, отнимает
+// не один день, а несколько прототипов.
 const MIN_TOTAL = 24;
-const MIN_PRODUCIBILITY = 3;
+const MIN_EACH = 3;
+const MIN_PROTOTYPEABILITY = 4;
 
 const errors = [];
 const warnings = [];
@@ -120,17 +123,29 @@ for (const { folder, file, where, text } of files) {
 
     if (missing.length === 0 && bad.length === 0) {
       const total = CRITERIA.reduce((sum, c) => sum + score[c], 0);
-      const passes = total >= MIN_TOTAL && score['producibility'] >= MIN_PRODUCIBILITY;
+      const low = CRITERIA.filter((c) => score[c] < MIN_EACH);
+      const reasons = [];
+      if (total < MIN_TOTAL) reasons.push(`сумма ${total} < ${MIN_TOTAL}`);
+      if (low.length > 0) reasons.push(`ниже ${MIN_EACH}: ${low.join(', ')}`);
+      if (score['prototypeability'] < MIN_PROTOTYPEABILITY) {
+        reasons.push(`prototypeability ${score['prototypeability']} < ${MIN_PROTOTYPEABILITY}`);
+      }
+      // Условие похорон, записанное после первых цифр, подогнано под них.
+      const kill = meta['kill_criterion'];
+      if (typeof kill !== 'string' || kill.trim() === '') reasons.push('нет kill_criterion');
 
       // Скрипт не решает за человека — он ловит только approved вопреки цифрам.
-      if (gate === 'approved' && !passes) {
-        const why = total < MIN_TOTAL
-          ? `сумма ${total} < ${MIN_TOTAL}`
-          : `производимость ${score['producibility']} < ${MIN_PRODUCIBILITY}`;
-        errors.push(`${where}: gate1=approved, но порог не взят (${why})`);
+      if (gate === 'approved' && reasons.length > 0) {
+        errors.push(`${where}: gate1=approved, но порог не взят (${reasons.join('; ')})`);
       }
-      if (gate === 'pending' && !passes) {
-        warnings.push(`${where}: порог не взят — сумма ${total}, производимость ${score['producibility']}`);
+      if (gate === 'pending' && reasons.length > 0) {
+        warnings.push(`${where}: порог не взят — ${reasons.join('; ')}`);
+      }
+      // Полоса решения из ideas/README.md: она не ворота, а подсказка, с чего
+      // начинать очередь, поэтому печатается и при взятом пороге.
+      if (gate === 'pending' && reasons.length === 0) {
+        const band = total >= 26 ? 'приоритетный прототип' : 'обычный прототип';
+        warnings.push(`${where}: порог взят, сумма ${total} — ${band}, ждёт решения`);
       }
     }
   }
@@ -152,9 +167,14 @@ for (const { folder, file, where, text } of files) {
     errors.push(`${where}: gate1=rejected, но файл не переехал в ideas/rejected/`);
   }
 
-  // Спека может существовать только у одобренной идеи.
-  if (spec && gate !== 'approved') {
-    errors.push(`${where}: есть specs/${spec.file}, но gate1=${gate}`);
+  // Спека при неодобренной идее. Предупреждение, а не ошибка: планка Gate 1
+  // может смениться под уже написанной спекой — так и случилось 2026-09-21,
+  // когда `prototypeability ≥ 4` вернуло arrow-flip в pending. Это вопрос
+  // очереди к человеку, а не повод ронять сборку всему репозиторию.
+  if (spec && gate === 'rejected') {
+    errors.push(`${where}: gate1=rejected, а specs/${spec.file} на месте`);
+  } else if (spec && gate !== 'approved') {
+    warnings.push(`${where}: есть specs/${spec.file}, но gate1=${gate} — спека ждёт решения`);
   }
 }
 
