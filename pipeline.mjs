@@ -37,6 +37,7 @@ const warn = (s) => (tty ? `\u001b[33m${s}\u001b[0m` : s);
 const stripAnsi = (s) => String(s ?? '').replace(/\u001b\[[0-9;]*m/g, '');
 
 const MONTH_DAYS = 30; // окно измерения одного прототипа
+const FULL_PACK = 5;   // уровней в готовой игре, см. app/src/game-definition.ts
 const MIN_COMPLETIONS = 30;
 const MIN_TOTAL = 24;  // порог Gate 1, см. ideas/validate.mjs
 
@@ -112,6 +113,14 @@ function statusOf(slug) {
   const gameDir = join(root, 'app', 'games', slug);
   const built = existsSync(join(gameDir, 'game.config.ts'));
   const review = readMeta(join(gameDir, 'review.md'));
+  // Срез от готовой игры отличается числом уровней в паке — отдельного поля
+  // «это срез» нет намеренно: оно бы разошлось с содержимым levels.json, а
+  // стадия обязана считаться из файлов, а не из пометки о файлах.
+  const levelsPath = join(gameDir, 'mechanic', 'levels', 'levels.json');
+  const levelCount = existsSync(levelsPath)
+    ? (readJson(levelsPath).levels ?? []).length
+    : 0;
+  const fullPack = levelCount >= FULL_PACK;
   const published = Boolean(game?.links?.play);
   const data = existsSync(join(root, 'data', `${slug}.json`))
     ? readJson(join(root, 'data', `${slug}.json`))
@@ -180,8 +189,27 @@ function statusOf(slug) {
   }
 
   if (built) {
-    const verdict = review?.['review'];
-    if (verdict === 'approved') {
+    const slice = review?.['slice'];
+    const release = review?.['release'];
+
+    // Возврат на доработку читается раньше всего остального: пока замечания
+    // не закрыты, игра стоит, на каких бы воротах её ни вернули.
+    const rework = (gate, where) => {
+      out.stage = fullPack ? 'сборка' : 'срез';
+      out.note = `${gate} — на доработке`;
+      out.action = {
+        actor: 'AI',
+        open: reviewPath,
+        read: `замечания последнего захода (${where})`,
+        write: `правки в app/games/${slug}/`,
+      };
+      return out;
+    };
+
+    if (slice === 'rework') return rework('срез', 'один уровень');
+    if (release === 'rework') return rework('релиз', 'вся игра');
+
+    if (release === 'approved') {
       out.stage = 'принята';
       wait('релиз', {
         actor: 'ты запускаешь',
@@ -189,24 +217,49 @@ function statusOf(slug) {
         read: `${reviewPath} — подписано`,
         write: 'скрипт сам проставит links.play и дату в games.json',
       });
-    } else if (verdict === 'rework') {
-      out.stage = 'сборка';
-      out.note = 'на доработке';
+      return out;
+    }
+
+    // Срез собран, но человек его ещё не щупал: самая дешёвая точка выхода в
+    // конвейере — дальше уже подбираются пять раскладок.
+    if (!fullPack && slice !== 'approved') {
+      out.stage = 'срез';
+      out.note = `${levelCount} из ${FULL_PACK} уровней`;
+      wait('gate 4a — пощупать срез', {
+        // --host поднимает dev-сервер на локальной сети: срез открывается с
+        // телефона по адресу из вывода. Проверка «три минуты», которую
+        // нельзя сделать с телефона, откладывается — а отложенные ворота
+        // это ворота, которых нет.
+        run: 'cd app && npm run dev -- --host   # открой с телефона',
+        open: review === null ? null : reviewPath,
+        read: ideaPath
+          ? `раздел 4 в ${ideaPath} — ради какого момента играют; §7.1 спеки — как должен выглядеть экран`
+          : 'спеку, раздел 7.1 — как должен выглядеть экран',
+        write: `${reviewPath} — slice: approved | rework, reviewed: дата. Три минуты и три ответа: идём / доработать / убить`,
+      });
+      return out;
+    }
+
+    // Срез принят — уровни дописывает AI, человека это не ждёт.
+    if (!fullPack) {
+      out.stage = 'срез';
+      out.note = `${levelCount} из ${FULL_PACK} уровней`;
       out.action = {
         actor: 'AI',
-        open: reviewPath,
-        read: 'замечания последнего захода',
-        write: `правки в app/games/${slug}/`,
+        open: specPath,
+        read: 'раздел 6 спеки — названная разница между соседними уровнями',
+        write: `app/games/${slug}/mechanic/levels/levels.json — до ${FULL_PACK} уровней, тесты кривой и kill-критерия`,
       };
-    } else {
-      wait(review === null ? 'gate 4 — сыграть' : 'gate 4 — решение', {
-        open: review === null ? null : reviewPath,
-        run: 'cd app && npm run dev',
-        read: ideaPath ? `раздел 4 в ${ideaPath} — ради какого момента играют` : 'спеку',
-        write: `${reviewPath} — review: approved | rework, reviewed: дата, ниже журнал`,
-      });
-      out.stage = 'собрана';
+      return out;
     }
+
+    out.stage = 'собрана';
+    wait('gate 4b — сыграть целиком', {
+      run: 'cd app && npm run dev -- --host   # открой с телефона',
+      open: review === null ? null : reviewPath,
+      read: 'растёт ли сложность к пятому уровню и не стыдно ли показать',
+      write: `${reviewPath} — release: approved | rework, reviewed: дата, ниже журнал`,
+    });
     return out;
   }
 
@@ -214,11 +267,11 @@ function statusOf(slug) {
     const verdict = spec.meta['review'];
     out.stage = 'спека';
     if (verdict === 'approved') {
-      wait('сборку', {
+      wait('сборку среза', {
         actor: 'AI',
         open: specPath,
-        read: 'спеку целиком',
-        write: `app/games/${slug}/`,
+        read: 'спеку целиком, включая §7.1 — макет экрана',
+        write: `app/games/${slug}/ — движок, рендер, тесты и ОДИН уровень`,
       });
     } else if (verdict === 'rework') {
       out.note = 'на доработке';
@@ -228,7 +281,7 @@ function statusOf(slug) {
     } else if (verdict === 'pending') {
       wait('gate 2 — принять спеку', {
         open: specPath,
-        read: 'спеку целиком — из каждого пункта должен писаться тест',
+        read: 'спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана',
         write: 'в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла',
       });
     } else {
@@ -326,10 +379,10 @@ const backlog = rows
 // Воронка: сколько концептов дошли **хотя бы** до каждой вехи. Не доля от
 // целого, а накопленный счёт — иначе ранние стадии выглядели бы победой.
 const RANK = {
-  'идея': 0, 'спека': 1, 'собрана': 2, 'принята': 2,
-  'опубликована': 3, 'цифры': 3, 'вердикт': 4,
+  'идея': 0, 'спека': 1, 'срез': 2, 'сборка': 2, 'собрана': 3, 'принята': 3,
+  'опубликована': 4, 'цифры': 4, 'вердикт': 5,
 };
-const MILESTONES = ['идея', 'спека', 'собрана', 'опубликована', 'вердикт'];
+const MILESTONES = ['идея', 'спека', 'срез', 'собрана', 'опубликована', 'вердикт'];
 const ranked = rows.filter((r) => RANK[r.stage] !== undefined);
 const funnel = MILESTONES.map((stage, i) => ({
   stage,
@@ -346,15 +399,17 @@ const payload = {
     ideas: rows.filter((r) => ideas.has(r.slug)).length,
     rejected: rows.filter((r) => r.stage === 'отклонена').length,
     specs: rows.filter((r) => specs.has(r.slug)).length,
-    built: ranked.filter((r) => RANK[r.stage] >= 2).length,
-    published: ranked.filter((r) => RANK[r.stage] >= 3).length,
+    built: ranked.filter((r) => RANK[r.stage] >= 3).length,
+    published: ranked.filter((r) => RANK[r.stage] >= 4).length,
     judged: rows.filter((r) => r.stage === 'вердикт').length,
   },
   trends,
   // Страница переживает свой деплой: она может висеть на экране неделями, а
   // «месяц вышел» наступает без единого коммита. Поэтому правила едут с
   // данными, и всё, что зависит от даты, страница досчитывает сама.
-  rules: { monthDays: MONTH_DAYS, minCompletions: MIN_COMPLETIONS },
+  // stageRank едет вместе с данными, а не лежит копией в index.html: стадия
+  // добавляется в pipeline.mjs, и страница должна узнавать о ней оттуда же.
+  rules: { monthDays: MONTH_DAYS, minCompletions: MIN_COMPLETIONS, stageRank: RANK },
   funnel,
   repoUrl: repoUrl(),
   waiting: rows.filter((r) => r.waiting).map((r) => ({
@@ -446,6 +501,7 @@ if (!onlyWaiting) {
         (daysSinceTrend === null ? '' : ` (последнее ${daysSinceTrend} дн. назад)`) + ' · ' +
         `идей ${count((r) => ideas.has(r.slug))} · ` +
         `спек ${count((r) => specs.has(r.slug))} · ` +
+        `срезов ${count((r) => r.stage === 'срез')} · ` +
         `собрано ${count((r) => ['собрана', 'принята', 'опубликована', 'цифры', 'вердикт'].includes(r.stage))} · ` +
         `опубликовано ${count((r) => ['опубликована', 'цифры', 'вердикт'].includes(r.stage))} · ` +
         `с вердиктом ${count((r) => r.stage === 'вердикт')}\n`,

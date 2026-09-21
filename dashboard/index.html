@@ -167,9 +167,13 @@ footer code{font-family:var(--mono); font-size:11.5px; background:var(--soft); p
 </div>
 
 <script>
-const STAGE_RANK = {
-  'идея': 0, 'спека': 1, 'собрана': 2, 'принята': 2,
-  'опубликована': 3, 'цифры': 3, 'вердикт': 4,
+// Карта стадий приезжает в данных (rules.stageRank): стадии заводятся в
+// pipeline.mjs, и копия здесь однажды отстала бы от него молча — новая стадия
+// просто красилась бы серым. Значение по умолчанию оставлено на случай
+// старого снимка, а не как второй источник правды.
+const FALLBACK_RANK = {
+  'идея': 0, 'спека': 1, 'срез': 2, 'сборка': 2, 'собрана': 3, 'принята': 3,
+  'опубликована': 4, 'цифры': 4, 'вердикт': 5,
 };
 const RAMP = ['var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'];
 
@@ -226,9 +230,15 @@ function overlayToday(data) {
   };
 }
 
-const stageColor = (stage) => {
-  const rank = STAGE_RANK[stage];
-  return rank === undefined ? 'var(--line)' : RAMP[Math.min(rank, RAMP.length - 1)];
+// Рампа из пяти цветов растягивается на сколько угодно стадий: ранги едут в
+// данных и их число может вырасти, а палитра проверена как ordinal-шкала и
+// растёт не по желанию.
+const stageColor = (stage, ranks) => {
+  const map = ranks ?? FALLBACK_RANK;
+  const rank = map[stage];
+  if (rank === undefined) return 'var(--line)';
+  const max = Math.max(...Object.values(map), 1);
+  return RAMP[Math.round((rank / max) * (RAMP.length - 1))];
 };
 
 function hero(data) {
@@ -323,7 +333,7 @@ function table(data, rows, title, caption) {
       <td class="c-day">${r.day === null ? (r.number ? '#' + esc(r.number) : '—') : esc(r.day)}</td>
       <td class="c-slug">${esc(r.slug)}</td>
       <td class="c-stage"><span class="chip"><span class="dot" style="background:${
-        stageColor(r.stage)}"></span>${esc(r.stage)}</span></td>
+        stageColor(r.stage, data.rules?.stageRank)}"></span>${esc(r.stage)}</span></td>
       <td class="c-date">${r.releasedAt ? esc(r.releasedAt) : '<span class="c-none">—</span>'}</td>
       <td class="c-note">${esc(r.note)}</td>
       <td class="c-wait">${r.waiting ? '▸ ' + esc(r.waiting) : ''}</td>

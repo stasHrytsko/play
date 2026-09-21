@@ -7,7 +7,7 @@
 // Недозаполненное сообщается предупреждением и сборку не роняет: пробел
 // должен быть виден, но не блокировать работу над другими играми.
 
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 
 import { loadSpecs, parseFrontMatter } from './front-matter.mjs';
 
@@ -83,6 +83,19 @@ for (const [slugFromName, { file, text, meta }] of specs) {
 
   const found = (text.match(/^# \d+\./gm) ?? []).length;
   if (found < SECTIONS) warnings.push(`${where}: разделов ${found} из ${SECTIONS}`);
+
+  // §7.1 — макет экрана. Спрашивается только у принятых спек: раздел появился
+  // после того, как первые тридцать были написаны, и требовать картинку от
+  // спеки, до которой очередь дойдёт через месяц, значит получить тридцать
+  // одинаковых строк и перестать их читать. У принятой спеки очередь дошла —
+  // она следующая в сборку, и раскладку придётся придумывать уже на ходу.
+  if (meta['review'] === 'approved' && !/^## 7\.1\./m.test(text)) {
+    warnings.push(`${where}: спека принята, но нет §7.1 — макета экрана`);
+  }
+  const screen = /^## 7\.1\.[\s\S]*?!\[[^\]]*\]\(([^)]+)\)/m.exec(text);
+  if (screen && !existsSync(new URL(`./${screen[1]}`, import.meta.url))) {
+    errors.push(`${where}: §7.1 ссылается на ${screen[1]}, а файла нет`);
+  }
   if (meta['score'] === undefined || meta['score'] === null) {
     warnings.push(`${where}: score не разбит по шести критериям`);
   }

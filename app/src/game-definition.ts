@@ -4,11 +4,17 @@
  * lives here, so no value is duplicated across LevelSelect, progress and the
  * mechanic.
  *
- * `levelCount` is not a free parameter: it is always 5 for this experiment
- * (docs/decisions.md, 2026-09-16 — was 9 in the original template). It stays
- * a field rather than a hard-coded constant so LevelSelect, progress and
- * `game.levelCount` never have three different numbers to keep in sync — but
- * a game.config.ts that sets it to anything but 5 is a mistake, not a choice.
+ * `levelCount` is not a free parameter: a finished game always has 5 for this
+ * experiment (docs/decisions.md, 2026-09-16 — was 9 in the original
+ * template). It stays a field rather than a hard-coded constant so
+ * LevelSelect, progress and `game.levelCount` never have three different
+ * numbers to keep in sync.
+ *
+ * The one other legal value is 1, and only while the game is a slice — the
+ * single level built for Gate 4a (../docs/PLAY.md). The slice ships one real
+ * level and says so: `levelCount: 1` means the level grid shows the one level
+ * that exists instead of four locked ghosts. The second pass sets it to 5
+ * together with the full pack. Anything else is a mistake, not a choice.
  */
 export interface GameDefinition {
   /** Stable slug: games/<id>/, the progress storage key, the signal payload. */
@@ -22,7 +28,7 @@ export interface GameDefinition {
   /** Content version of the game itself. Bump when levels change. */
   version: number;
 
-  /** Always 5. See the note on this interface. */
+  /** 5 in a finished game, 1 while it is a slice. See the note above. */
   levelCount: number;
 
   onboarding: {

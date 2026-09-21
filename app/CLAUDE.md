@@ -60,7 +60,8 @@ layered on each other — DOM interface and Phaser juice stay orthogonal.
 - Shell screens are HTML/CSS. Phaser renders the game only.
 - Colours, spacing and fonts live in `src/styles/tokens.css`. The Phaser scene
   reads them at runtime — do not hard-code a colour in a scene.
-- `levelCount` is always 5 (was 9 in the original template). Levels: versioned
+- `levelCount` is 5 in a finished game and 1 while it is a slice (was 9 in the
+  original template), and always equals the pack's length. Levels: versioned
   JSON in `games/<slug>/mechanic/levels`, validated on load.
 - Progress via `ProgressRepository` — never `window.localStorage` directly.
 - Signals via `SignalSink` (PostHog) — never call PostHog directly from a
@@ -90,9 +91,18 @@ npm run typecheck && npm run lint && npm test && npm run build && npm run e2e
 
 ## New game
 
-Making `games/<slug>/` a real, buildable game is one pass, not several — end
-of it, `npm run check` is green, levels included. There is no separate
-"levels" step to leave for later.
+Two passes, with a human gate between them (`../docs/PLAY.md`):
+
+- **Pass 1 — the slice.** Everything real (engine, renderer, HUD, tests) but
+  **one** level. `npm run check` green at the end of it. Then stop and hand it
+  over: Gate 4a is three minutes on a phone, and the answer may be "kill".
+- **Pass 2 — the levels.** Only after `slice: approved` in
+  `games/<slug>/review.md`: levels 2–5, the difficulty curve, the
+  kill-criterion check, `levelCount: 5`.
+
+Each pass ends green. Neither ends with something to finish later — a slice
+with a stubbed engine is not a slice, it is an unfinished game with fewer
+levels.
 
 1. The spec is `../specs/NN-<slug>.md` (one level up from `app/` — see
    `specs/README.md`) if it's on the 30/30 shelf, or given directly in the
@@ -101,7 +111,10 @@ of it, `npm run check` is green, levels included. There is no separate
    loss), §3 (rules) or §5 (input) would need is missing or ambiguous, stop
    and ask — do not invent it (same rule as editing an existing game's
    mechanic). A section marked "не применимо" is an answer; a silently
-   missing one is not.
+   missing one is not. §7.1 is the picture of the screen: what takes which
+   share of it, what has to be readable in a second, and — when the mechanic
+   is built on colour — what the second channel is. No §7.1 is the same kind
+   of gap as a missing rule: raise it rather than inventing a layout.
 2. Copy `games/tap-targets/` as the starting skeleton — folder structure,
    not content: `game.config.ts`, `main.ts`, `index.html`, `rules.md` (copy
    the spec from `../specs/NN-<slug>.md` into this file — `specs/` stays the source,
@@ -110,8 +123,9 @@ of it, `npm run check` is green, levels included. There is no separate
    shows the exact `MechanicHost` wiring; `main.ts` shows the three-line
    `bootShell(GAME, createMechanicHost())` entry every game uses unchanged.
 3. `game.config.ts`: new `id`/`title`/`tagline`/`onboarding` from the rules.
-   `levelCount: 5` — never anything else (`src/game-definition.ts` explains
-   why). `analytics.postHogProjectToken`/`postHogHost` — copy from
+   `levelCount: 1` in pass 1, `levelCount: 5` in pass 2 — those are the only
+   two legal values, and it always equals the number of levels in
+   `levels.json` (`src/game-definition.ts` explains why). `analytics.postHogProjectToken`/`postHogHost` — copy from
    `games/tap-targets/game.config.ts` verbatim, every game shares the one
    PostHog project. `feedback.web3formsAccessKey` — copy the placeholder
    unless a real key has been provided for this game specifically.
@@ -125,20 +139,20 @@ of it, `npm run check` is green, levels included. There is no separate
    `onFirstAction()` and every deterministic loss through
    `onFail('<stable_reason_code>')`. The shell de-duplicates first action,
    emits analytics, shows the loss popup and owns retry.
-5. `mechanic/levels/`: `levels.json` with real content for all 5 levels
-   (Способ А or Б from `specs/_TEMPLATE.md` §6 — whichever the spec used),
-   plus a `loadLevels.ts` that validates the pack's length against
-   `GAME.levelCount` on import, same pattern as `games/tap-targets`'s. A
-   build that doesn't typecheck/build because `levels.json` is still a stub
-   is the expected state mid-step-5, not a bug — but the game is not done
-   until it's real content matching the difficulty curve the spec describes
-   (`specs/_TEMPLATE.md` §6, which requires the difference between every
-   adjacent pair of levels to be named), not a placeholder. Standard genre
-   convention applies unless the rules say otherwise: level 1 close to a
-   tutorial (a player should clear it without failing), difficulty rises
-   step to step without a spike, level 5 is the hardest and meant to take
-   real effort. If a level plays no harder than the one before it, that is
-   a levels.json bug, the same as any other.
+5. `mechanic/levels/`: `levels.json` (Способ А or Б from
+   `specs/_TEMPLATE.md` §6 — whichever the spec used) plus a `loadLevels.ts`
+   that validates the pack's length against `GAME.levelCount` on import, same
+   pattern as `games/tap-targets`'s.
+   **Pass 1: one level, and it is real content** — close to a tutorial, a
+   player should clear it without failing, and every rule the mechanic has
+   should be reachable on it. It is the only thing the human will see at
+   Gate 4a, so a placeholder grid makes the gate meaningless.
+   **Pass 2: levels 2–5**, matching the difficulty curve the spec describes
+   (§6 requires the difference between every adjacent pair to be named).
+   Difficulty rises step to step without a spike, level 5 is the hardest and
+   meant to take real effort. If a level plays no harder than the one before
+   it, that is a levels.json bug, the same as any other. Bump
+   `levelCount` to 5 in the same pass.
 6. `mechanic/render/`: `theme.ts` — copy `games/tap-targets/mechanic/render/theme.ts`
    as-is (it calls `ui-kit`'s `readUiTheme()`, nothing here is game-specific).
    The scene itself: build every animation from `render-kit` (`punch`,
@@ -157,7 +171,15 @@ of it, `npm run check` is green, levels included. There is no separate
    `games/*/index.html` automatically, `playwright.config.ts` globs every
    `games/*/tests/e2e/**/*.spec.ts` automatically.
 9. `npm run check`. All five must pass. Report failures with their output —
-   never describe a red suite as green.
+   never describe a red suite as green. Screenshot the level on a phone
+   viewport and look at it before calling the pass done: both bugs in the
+   first game built this way were layout bugs that every test and every type
+   was happy with — the plate collapsed to 4px, and later outgrew its box.
+   E2E asserts a floor and a fit on the canvas for exactly that reason.
+10. End of pass 1: say the slice is ready for Gate 4a and stop. The human
+   writes `slice: approved | rework` into `games/<slug>/review.md`
+   (`../docs/templates/review.md`). Pass 2 starts from that line, not from
+   your own judgement that the slice looks fine.
 
 ## Kill-criterion (bot check)
 
@@ -167,9 +189,10 @@ games don't have one; `solver: required` in the spec's front matter is what
 says it does — check that before assuming it needs this at all. If it doesn't, skip this section entirely —
 don't add a bot for a game that was never meant to have one.
 
-When it does apply: simulate on the real `mechanic/engine` — a random-play
-bot and a greedy/solver-play bot, on the real `levels.json` from step 5
-above, not a hand-picked easy case. Compare the metric the kill-criterion
+When it does apply: it belongs to pass 2, not to the slice — one level proves
+nothing about a strategy. Simulate on the real `mechanic/engine` — a
+random-play bot and a greedy/solver-play bot, on the real `levels.json` from
+step 5 above, not a hand-picked easy case. Compare the metric the kill-criterion
 document defines (win rate, survival rate — whatever the specific game's
 rules named) against the threshold set for that game. This is deliberately
 not built as reusable infrastructure ahead of time (no `scripts/greedy-check.ts`

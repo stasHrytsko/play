@@ -14,7 +14,7 @@
 //
 // Полные ворота качества — это CI (`npm run check`), а не этот скрипт. Здесь
 // только быстрая проверка, что код собирается, и отказ публиковать игру,
-// которую человек ещё не принял (Gate 4).
+// которую человек ещё не принял (Gate 4b).
 
 import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -65,11 +65,15 @@ if (!entry) {
   );
 }
 
-// --- 3. Gate 4: человек принял игру -----------------------------------------
+// --- 3. Gate 4b: человек принял игру целиком --------------------------------
 
 // Зелёный CI говорит, что игра не падает. Он не говорит, понятна ли она и не
 // стыдно ли её показывать. Это решает человек, и решение записано файлом —
 // иначе однажды вечером в спешке шаг просто пропустится.
+//
+// Подписей в файле две: `slice` — срез из одного уровня, `release` — игра
+// целиком. Публикацию держит вторая; первая стоит раньше и дешевле, и её
+// проверяет доска, а не этот скрипт.
 const reviewPath = join(gameDir, 'review.md');
 if (!existsSync(reviewPath)) {
   fail(
@@ -79,10 +83,10 @@ if (!existsSync(reviewPath)) {
 }
 
 const review = parseFrontMatter(readFileSync(reviewPath, 'utf8')) ?? {};
-if (review['review'] !== 'approved') {
+if (review['release'] !== 'approved') {
   fail(
-    `app/games/${slug}/review.md: review=${String(review['review'] ?? '—')}, нужно approved.\n` +
-      '  Gate 4 не пройден — публиковать нечего.',
+    `app/games/${slug}/review.md: release=${String(review['release'] ?? '—')}, нужно approved.\n` +
+      '  Gate 4b не пройден — публиковать нечего.',
   );
 }
 

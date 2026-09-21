@@ -1,6 +1,7 @@
 # app — shared shell for the Prototype Validation Project
 
-> **Шаги 3–5, Gate 3 и Gate 4.** Вход — `../specs/NN-<slug>.md`.
+> **Шаги 3–5, Gate 3, Gate 4a и Gate 4b.** Вход — `../specs/NN-<slug>.md`.
+> Сборка в два прохода: срез из одного уровня, ворота, потом уровни 2–5.
 > Дальше: `node ../release.mjs <slug>` и `../distribution/`.
 > Путь целиком — `../docs/PLAY.md`.
 
