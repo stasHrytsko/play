@@ -20,12 +20,15 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
 
 // Обязательные поля идеи — без них раздел 1–8 не дописан. Не все наследуются
-// спекой без изменений: verb, pressure, twist и emotion там формулируются
-// заново, когда игра уже описана (см. INHERITED в specs/validate.mjs).
+// спекой без изменений: verb, pressure и emotion там формулируются заново,
+// когда игра уже описана (см. INHERITED в specs/validate.mjs). `twist` в
+// REQUIRED намеренно нет: пятнадцать из тридцати живых концептов держат
+// `twist: []` — сильная идея не обязана иметь отдельный от давления хук,
+// и требовать его значило бы дописывать твист туда, где его нет.
 // kill_criterion — третья строка раздела 8, требуется сразу, а не только при
 // оценке: условие похорон, записанное после первых цифр, подогнано под них.
 const REQUIRED = [
-  'slug', 'number', 'title_ru', 'title_en', 'verb', 'pressure', 'twist',
+  'slug', 'number', 'title_ru', 'title_en', 'verb', 'pressure',
   'emotion', 'family', 'levels', 'solver', 'kill_criterion',
 ];
 const ENUMS = {
