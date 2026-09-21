@@ -19,9 +19,15 @@ import { parseFrontMatter, loadSpecs } from '../specs/front-matter.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
 
-// Поля, которые переезжают в шапку спеки без изменений. pitch_* здесь
-// намеренно отсутствуют: формулировка рождается, когда игра уже описана.
-const REQUIRED = ['slug', 'number', 'title_ru', 'title_en', 'verb', 'pressure', 'emotion', 'levels', 'solver'];
+// Обязательные поля идеи — без них раздел 1–8 не дописан. Не все наследуются
+// спекой без изменений: verb, pressure, twist и emotion там формулируются
+// заново, когда игра уже описана (см. INHERITED в specs/validate.mjs).
+// kill_criterion — третья строка раздела 8, требуется сразу, а не только при
+// оценке: условие похорон, записанное после первых цифр, подогнано под них.
+const REQUIRED = [
+  'slug', 'number', 'title_ru', 'title_en', 'verb', 'pressure', 'twist',
+  'emotion', 'family', 'levels', 'solver', 'kill_criterion',
+];
 const ENUMS = {
   levels: ['generated', 'authored'],
   solver: ['required', 'none'],
@@ -130,9 +136,6 @@ for (const { folder, file, where, text } of files) {
       if (score['prototypeability'] < MIN_PROTOTYPEABILITY) {
         reasons.push(`prototypeability ${score['prototypeability']} < ${MIN_PROTOTYPEABILITY}`);
       }
-      // Условие похорон, записанное после первых цифр, подогнано под них.
-      const kill = meta['kill_criterion'];
-      if (typeof kill !== 'string' || kill.trim() === '') reasons.push('нет kill_criterion');
 
       // Скрипт не решает за человека — он ловит только approved вопреки цифрам.
       if (gate === 'approved' && reasons.length > 0) {
