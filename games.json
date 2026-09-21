@@ -10,9 +10,9 @@
   "games": [
     {
       "day": 1,
-      "slug": "box-arrives",
+      "slug": null,
       "date": "2026-10-01",
-      "status": "scheduled",
+      "status": "planned",
       "links": {},
       "metrics": {},
       "notes": {},

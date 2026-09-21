@@ -48,6 +48,22 @@ if (!existsSync(join(gameDir, 'game.config.ts'))) {
   fail(`нет app/games/${slug}/game.config.ts. Собранные игры: ${built.join(', ') || '—'}`);
 }
 
+// --- 1.5. Концепт не закрыт на воротах --------------------------------------
+
+// Раньше остального: у закрытого концепта слаг снят с расписания, и без этой
+// проверки скрипт ругался бы на расписание — правдиво, но не про то.
+const killedReview = join(gameDir, 'review.md');
+if (existsSync(killedReview)) {
+  const meta = parseFrontMatter(readFileSync(killedReview, 'utf8')) ?? {};
+  if (meta['slice'] === 'rejected' || meta['release'] === 'rejected') {
+    fail(
+      `app/games/${slug}/review.md: концепт закрыт на воротах (rejected).\n` +
+        '  Публиковать нечего и незачем. Что закрытый концепт оставляет после\n' +
+        '  себя — docs/PLAY.md, «Когда концепт убит».',
+    );
+  }
+}
+
 // --- 2. Запись в games.json -------------------------------------------------
 
 const gamesPath = join(root, 'games.json');

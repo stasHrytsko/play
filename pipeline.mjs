@@ -163,8 +163,13 @@ function statusOf(slug) {
   };
 
   if (result?.['verdict']) {
-    out.stage = 'вердикт';
-    out.note = String(result['verdict']);
+    const verdict = String(result['verdict']);
+    // REJECTED — концепт закрыт до релиза: человек сыграл и сказал нет, цифр
+    // у него нет и не будет. Отдельный вердикт, а не KILL: KILL выносят
+    // игроки по воронке, REJECTED выносит автор на воротах, и в итогах
+    // тридцатки это две разные истории.
+    out.stage = verdict === 'REJECTED' ? 'убита' : 'вердикт';
+    out.note = verdict;
     return out;
   }
 
@@ -220,6 +225,21 @@ function statusOf(slug) {
       return out;
     };
 
+    // Третий ответ на воротах — «убить». Читается раньше доработок: у
+    // закрытого концепта нет ни доработок, ни релиза, ему остаётся только
+    // запись о том, чем он кончился.
+    if (slice === 'rejected' || release === 'rejected') {
+      out.stage = 'убита';
+      out.note = slice === 'rejected' ? 'gate 4a — не то' : 'gate 4b — не то';
+      wait('закрыть концепт', {
+        actor: 'AI предлагает, решаешь ты',
+        open: reviewPath,
+        read: 'журнал приёмки — почему именно не то',
+        write: `${resultPath ?? 'results/NN-slug.md'} — verdict: REJECTED, killedAt, без цифр: до релиза не дошло`,
+      });
+      return out;
+    }
+
     if (slice === 'rework') return rework('срез', 'один уровень');
     if (release === 'rework') return rework('релиз', 'вся игра');
 
@@ -247,7 +267,7 @@ function statusOf(slug) {
         read: ideaPath
           ? `раздел 4 в ${ideaPath} — ради какого момента играют; §7.1 спеки — как должен выглядеть экран`
           : 'спеку, раздел 7.1 — как должен выглядеть экран',
-        write: `${reviewPath} — slice: approved | rework, reviewed: дата. Три минуты и три ответа: идём / доработать / убить`,
+        write: `${reviewPath} — slice: approved | rework | rejected, reviewed: дата. Три минуты и три ответа: идём / доработать / убить`,
       });
       return out;
     }
@@ -269,7 +289,7 @@ function statusOf(slug) {
     wait('gate 4b — сыграть целиком', {
       ...playIt(slug),
       read: 'растёт ли сложность к пятому уровню и не стыдно ли показать',
-      write: `${reviewPath} — release: approved | rework, reviewed: дата, ниже журнал`,
+      write: `${reviewPath} — release: approved | rework | rejected, reviewed: дата, ниже журнал`,
     });
     return out;
   }
@@ -359,6 +379,28 @@ function statusOf(slug) {
 const slugs = [...new Set([...dayBySlug.keys(), ...specs.keys(), ...ideas.keys()])];
 const rows = slugs.map(statusOf);
 
+// День без слага — дыра в расписании: концепт убит или ещё не выбран. Без
+// этой строки день просто исчезает с доски, потому что строки строятся по
+// слагам. Исчезнувший день — худший вид пустой клетки: его не видно даже как
+// вопрос.
+for (const game of games.games.filter((g) => !g.slug)) {
+  rows.push({
+    slug: '—',
+    number: null,
+    day: game.day,
+    stage: 'день пуст',
+    note: 'концепт не назначен',
+    releasedAt: null,
+    waiting: 'выбрать концепт на день',
+    action: {
+      actor: 'человек',
+      open: 'games.json',
+      read: 'полку концептов: `node pipeline.mjs`, стадия «спека» — что уже написано и принято',
+      write: `games.json → день ${String(game.day)}: slug концепта, который выходит в этот день`,
+    },
+  });
+}
+
 // Gate 2 нужен каждой из тридцати спек, но не сегодня: игры делаются по
 // одной. Поэтому в список ожидающих попадает только ближайшая по расписанию
 // — остальные видны в таблице пометкой «без gate 2» и ждут своей очереди.
@@ -392,6 +434,9 @@ const backlog = rows
 const RANK = {
   'идея': 0, 'спека': 1, 'срез': 2, 'сборка': 2, 'собрана': 3, 'принята': 3,
   'опубликована': 4, 'цифры': 4, 'вердикт': 5,
+  // «Убита» — не стадия пути, а его конец: концепт дошёл до сборки и дальше
+  // не поедет. В воронке он честно стоит там, где остановился.
+  'убита': 3,
 };
 const MILESTONES = ['идея', 'спека', 'срез', 'собрана', 'опубликована', 'вердикт'];
 const ranked = rows.filter((r) => RANK[r.stage] !== undefined);

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T08:51:21.177Z",
+  "generatedAt": "2026-09-21T09:32:51.587Z",
   "today": "2026-09-21",
   "counts": {
     "ideas": 1,
@@ -25,7 +25,8 @@
       "принята": 3,
       "опубликована": 4,
       "цифры": 4,
-      "вердикт": 5
+      "вердикт": 5,
+      "убита": 3
     }
   },
   "funnel": [
@@ -57,20 +58,6 @@
   "repoUrl": "https://github.com/stasHrytsko/play/blob/main",
   "waiting": [
     {
-      "slug": "box-arrives",
-      "number": 1,
-      "day": 1,
-      "stage": "собрана",
-      "waiting": "gate 4b — сыграть целиком",
-      "action": {
-        "actor": "человек",
-        "run": "cd app && npm run dev -- --host   # открой с телефона",
-        "note": "ссылки нет: project.labUrl в games.json пустой, см. docs/PLAY.md → Лаборатория",
-        "read": "растёт ли сложность к пятому уровню и не стыдно ли показать",
-        "write": "app/games/box-arrives/review.md — release: approved | rework, reviewed: дата, ниже журнал"
-      }
-    },
-    {
       "slug": "two-moves-later",
       "number": 2,
       "day": 2,
@@ -81,6 +68,19 @@
         "open": "specs/02-two-moves-later.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 29 на приёмке",
         "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+      }
+    },
+    {
+      "slug": "box-arrives",
+      "number": 1,
+      "day": null,
+      "stage": "убита",
+      "waiting": "закрыть концепт",
+      "action": {
+        "actor": "AI предлагает, решаешь ты",
+        "open": "app/games/box-arrives/review.md",
+        "read": "журнал приёмки — почему именно не то",
+        "write": "results/01-box-arrives.md — verdict: REJECTED, killedAt, без цифр: до релиза не дошло"
       }
     },
     {
@@ -95,25 +95,22 @@
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
         "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
       }
+    },
+    {
+      "slug": "—",
+      "number": null,
+      "day": 1,
+      "stage": "день пуст",
+      "waiting": "выбрать концепт на день",
+      "action": {
+        "actor": "человек",
+        "open": "games.json",
+        "read": "полку концептов: `node pipeline.mjs`, стадия «спека» — что уже написано и принято",
+        "write": "games.json → день 1: slug концепта, который выходит в этот день"
+      }
     }
   ],
   "rows": [
-    {
-      "slug": "box-arrives",
-      "number": 1,
-      "day": 1,
-      "stage": "собрана",
-      "waiting": "gate 4b — сыграть целиком",
-      "note": "",
-      "releasedAt": null,
-      "action": {
-        "actor": "человек",
-        "run": "cd app && npm run dev -- --host   # открой с телефона",
-        "note": "ссылки нет: project.labUrl в games.json пустой, см. docs/PLAY.md → Лаборатория",
-        "read": "растёт ли сложность к пятому уровню и не стыдно ли показать",
-        "write": "app/games/box-arrives/review.md — release: approved | rework, reviewed: дата, ниже журнал"
-      }
-    },
     {
       "slug": "two-moves-later",
       "number": 2,
@@ -550,6 +547,21 @@
       }
     },
     {
+      "slug": "box-arrives",
+      "number": 1,
+      "day": null,
+      "stage": "убита",
+      "waiting": "закрыть концепт",
+      "note": "gate 4b — не то",
+      "releasedAt": null,
+      "action": {
+        "actor": "AI предлагает, решаешь ты",
+        "open": "app/games/box-arrives/review.md",
+        "read": "журнал приёмки — почему именно не то",
+        "write": "results/01-box-arrives.md — verdict: REJECTED, killedAt, без цифр: до релиза не дошло"
+      }
+    },
+    {
       "slug": "arrow-flip",
       "number": 36,
       "day": null,
@@ -562,6 +574,21 @@
         "open": "specs/36-arrow-flip.md",
         "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
         "write": "в шапке: review: approved | rework и reviewed: дата; при rework — раздел «Замечания» внизу файла"
+      }
+    },
+    {
+      "slug": "—",
+      "number": null,
+      "day": 1,
+      "stage": "день пуст",
+      "note": "концепт не назначен",
+      "releasedAt": null,
+      "waiting": "выбрать концепт на день",
+      "action": {
+        "actor": "человек",
+        "open": "games.json",
+        "read": "полку концептов: `node pipeline.mjs`, стадия «спека» — что уже написано и принято",
+        "write": "games.json → день 1: slug концепта, который выходит в этот день"
       }
     }
   ]
