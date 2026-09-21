@@ -14,7 +14,7 @@
 //
 // Полные ворота качества — это CI (`npm run check`), а не этот скрипт. Здесь
 // только быстрая проверка, что код собирается, и отказ публиковать игру,
-// которую человек ещё не принял (Gate 4b).
+// которую человек ещё не принял.
 
 import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -52,10 +52,10 @@ if (!existsSync(join(gameDir, 'game.config.ts'))) {
 
 // Раньше остального: у закрытого концепта слаг снят с расписания, и без этой
 // проверки скрипт ругался бы на расписание — правдиво, но не про то.
-const killedReview = join(gameDir, 'review.md');
-if (existsSync(killedReview)) {
-  const meta = parseFrontMatter(readFileSync(killedReview, 'utf8')) ?? {};
-  if (meta['slice'] === 'rejected' || meta['release'] === 'rejected') {
+const earlyReview = join(gameDir, 'review.md');
+if (existsSync(earlyReview)) {
+  const meta = parseFrontMatter(readFileSync(earlyReview, 'utf8')) ?? {};
+  if (meta['review'] === 'rejected') {
     fail(
       `app/games/${slug}/review.md: концепт закрыт на воротах (rejected).\n` +
         '  Публиковать нечего и незачем. Что закрытый концепт оставляет после\n' +
@@ -81,15 +81,15 @@ if (!entry) {
   );
 }
 
-// --- 3. Gate 4b: человек принял игру целиком --------------------------------
+// --- 3. Ворота: человек играл ------------------------------------------------
 
 // Зелёный CI говорит, что игра не падает. Он не говорит, понятна ли она и не
 // стыдно ли её показывать. Это решает человек, и решение записано файлом —
 // иначе однажды вечером в спешке шаг просто пропустится.
 //
-// Подписей в файле две: `slice` — срез из одного уровня, `release` — игра
-// целиком. Публикацию держит вторая; первая стоит раньше и дешевле, и её
-// проверяет доска, а не этот скрипт.
+// Подпись одна — на срезе. Второй, под готовой игрой, нет намеренно: запуск
+// этого скрипта и есть решение публиковать, а лишние ворота стоят круг
+// ожидания на каждую из тридцати игр.
 const reviewPath = join(gameDir, 'review.md');
 if (!existsSync(reviewPath)) {
   fail(
@@ -99,10 +99,10 @@ if (!existsSync(reviewPath)) {
 }
 
 const review = parseFrontMatter(readFileSync(reviewPath, 'utf8')) ?? {};
-if (review['release'] !== 'approved') {
+if (review['review'] !== 'approved') {
   fail(
-    `app/games/${slug}/review.md: release=${String(review['release'] ?? '—')}, нужно approved.\n` +
-      '  Gate 4b не пройден — публиковать нечего.',
+    `app/games/${slug}/review.md: review=${String(review['review'] ?? '—')}, нужно approved.\n` +
+      '  Ворота не пройдены — публиковать нечего.',
   );
 }
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T10:58:52.688Z",
+  "generatedAt": "2026-09-21T11:21:34.560Z",
   "today": "2026-09-21",
   "counts": {
     "ideas": 1,
@@ -80,7 +80,7 @@
         "actor": "AI предлагает, решаешь ты",
         "open": "app/games/box-arrives/review.md",
         "read": "журнал приёмки — почему именно не то",
-        "write": "results/01-box-arrives.md — verdict: REJECTED, killedAt, без цифр: до релиза не дошло"
+        "write": "results/01-box-arrives.md — verdict: REJECTED, без цифр: до релиза не дошло"
       }
     },
     {
@@ -552,13 +552,13 @@
       "day": null,
       "stage": "убита",
       "waiting": "закрыть концепт",
-      "note": "gate 4b — не то",
+      "note": "сыграл — не то",
       "releasedAt": null,
       "action": {
         "actor": "AI предлагает, решаешь ты",
         "open": "app/games/box-arrives/review.md",
         "read": "журнал приёмки — почему именно не то",
-        "write": "results/01-box-arrives.md — verdict: REJECTED, killedAt, без цифр: до релиза не дошло"
+        "write": "results/01-box-arrives.md — verdict: REJECTED, без цифр: до релиза не дошло"
       }
     },
     {

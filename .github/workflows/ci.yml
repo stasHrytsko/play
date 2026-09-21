@@ -44,16 +44,17 @@ jobs:
       - name: Dashboard data matches the repository
         run: node pipeline.mjs --check
 
-      # Три генератора, и у всех трёх выход закоммичен: страницы хаба, CSV
-      # расписания постов и превью текстов. Если источник поменяли, а
-      # генератор не перезапустили, закоммиченное молча расходится с данными.
-      # Проверка одна на всех — иначе один из трёх рано или поздно выпадет.
+      # Страницы хаба генерируются из games.json и шапок спек, и их выход
+      # закоммичен. Если источник поменяли, а генератор не перезапустили,
+      # закоммиченное молча расходится с данными.
+      #
+      # distribution/build-posts.mjs сюда не входит: дистрибуция заморожена до
+      # первой публикации, её выход не коммитится (distribution/README.md).
       - name: Generated files are in sync with their sources
         run: |
           node build-games.mjs
-          node distribution/build-posts.mjs
           if ! git diff --quiet; then
-            echo "::error::Generated output differs from what is committed. Run 'node build-games.mjs && node distribution/build-posts.mjs' and commit the result."
+            echo "::error::Generated output differs from what is committed. Run 'node build-games.mjs' and commit the result."
             git diff --stat
             exit 1
           fi

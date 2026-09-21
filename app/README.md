@@ -1,6 +1,6 @@
 # app — shared shell for the Prototype Validation Project
 
-> **Шаги 3–5, Gate 3, Gate 4a и Gate 4b.** Вход — `../specs/NN-<slug>.md`.
+> **Шаги 3–5, CI и ворота «человек играл».** Вход — `../specs/NN-<slug>.md`.
 > Сборка в два прохода: срез из одного уровня, ворота, потом уровни 2–5.
 > Дальше: `node ../release.mjs <slug>` и `../distribution/`.
 > Путь целиком — `../docs/PLAY.md`.
@@ -20,7 +20,7 @@ stopped existing, and both files here had to spend a paragraph telling readers
 to discount it.
 
 Spec format lives outside `app/`: `specs/_TEMPLATE.md` is normative,
-`specs/HOWTO.md` is the authoring guide.
+`specs/_TEMPLATE.md` is both the normative format and the authoring guide.
 
 ## New game
 

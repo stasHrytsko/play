@@ -11,7 +11,7 @@
  * numbers to keep in sync.
  *
  * The one other legal value is 1, and only while the game is a slice — the
- * single level built for Gate 4a (../docs/PLAY.md). The slice ships one real
+ * single level built for the human gate (../docs/PLAY.md). The slice ships one real
  * level and says so: `levelCount: 1` means the level grid shows the one level
  * that exists instead of four locked ghosts. The second pass sets it to 5
  * together with the full pack. Anything else is a mistake, not a choice.

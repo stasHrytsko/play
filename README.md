@@ -66,7 +66,7 @@ not go stale either. See `CLAUDE.md`.
 
 Nothing stores a stage. It is computed from which files exist — an idea, a
 spec with its review field, a game folder, how many levels its pack holds
-(one means a slice awaiting Gate 4a), the two signatures in its review.md, a
+(one means a slice awaiting the human gate), the signature in its review.md, a
 play link in games.json, a data pull, a verdict. So the board cannot go stale
 the way a status column does.
 

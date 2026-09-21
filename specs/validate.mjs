@@ -172,7 +172,7 @@ function killed(slug) {
   } catch {
     return false; // приёмки нет — значит игру ещё не собирали
   }
-  return meta['slice'] === 'rejected' || meta['release'] === 'rejected';
+  return meta['review'] === 'rejected';
 }
 
 for (const slug of specs.keys()) {

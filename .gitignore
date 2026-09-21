@@ -2,3 +2,9 @@
 # Лежат локально, планировщик берёт их с диска. См. docs/templates/media.md.
 app/games/*/media/*.mp4
 app/games/*/media/*.mov
+
+# Дистрибуция заморожена до первой публикации: расписание постов на тридцать
+# дней вперёд для игр, которых ещё нет, — не расписание, а фантазия. Скрипт
+# на месте, выход не коммитится (distribution/README.md).
+distribution/publer-posts.csv
+distribution/posts-draft.md

@@ -9,7 +9,8 @@ Shared DOM shell + Phaser mechanic. One game per `games/<slug>/`; only
   trade-offs. Read D-011 first; it is the fork's own entry. Project-level
   decisions — pipeline, gates, thresholds — live in `../docs/decisions.md`.
 - `../docs/PLAY.md` — the pipeline this factory sits inside.
-- `../CLAUDE.md` — the three rules that hold across the repository.
+- `../CLAUDE.md` — the four rules that hold across the repository, including
+  rule 4: no new machinery until the same thing has broken twice.
 - `src/shell-contract.ts` — the Shell ↔ Mechanic boundary.
 - `src/game-definition.ts` — the shared `GameDefinition` shape.
 - `src/ui-kit/` — shared DOM interface primitives (buttons, counters, queues,
@@ -94,12 +95,12 @@ npm run typecheck && npm run lint && npm test && npm run build && npm run e2e
 
 ## New game
 
-Two passes, with a human gate between them (`../docs/PLAY.md`):
+Two passes, with the one human gate between them (`../docs/PLAY.md`):
 
 - **Pass 1 — the slice.** Everything real (engine, renderer, HUD, tests) but
   **one** level. `npm run check` green at the end of it. Then stop and hand it
-  over: Gate 4a is three minutes on a phone, and the answer may be "kill".
-- **Pass 2 — the levels.** Only after `slice: approved` in
+  over: the gate is three minutes on a phone, and the answer may be "kill".
+- **Pass 2 — the levels.** Only after `review: approved` in
   `games/<slug>/review.md`: levels 2–5, the difficulty curve, the
   kill-criterion check, `levelCount: 5`.
 
@@ -149,7 +150,7 @@ levels.
    **Pass 1: one level, and it is real content** — close to a tutorial, a
    player should clear it without failing, and every rule the mechanic has
    should be reachable on it. It is the only thing the human will see at
-   Gate 4a, so a placeholder grid makes the gate meaningless.
+   the gate, so a placeholder grid makes the gate meaningless.
    **Pass 2: levels 2–5**, matching the difficulty curve the spec describes
    (§6 requires the difference between every adjacent pair to be named).
    Difficulty rises step to step without a spike, level 5 is the hardest and
@@ -179,8 +180,8 @@ levels.
    first game built this way were layout bugs that every test and every type
    was happy with — the plate collapsed to 4px, and later outgrew its box.
    E2E asserts a floor and a fit on the canvas for exactly that reason.
-10. End of pass 1: say the slice is ready for Gate 4a and stop. The human
-   writes `slice: approved | rework` into `games/<slug>/review.md`
+10. End of pass 1: say the slice is ready to play and stop. The human writes
+   `review: approved | rework | rejected` into `games/<slug>/review.md`
    (`../docs/templates/review.md`). Pass 2 starts from that line, not from
    your own judgement that the slice looks fine.
 

@@ -208,58 +208,41 @@ function statusOf(slug) {
   }
 
   if (built) {
-    const slice = review?.['slice'];
-    const release = review?.['release'];
+    // Одно поле, одни ворота: человек играет срез и отвечает
+    // approved | rework | rejected. Публикация отдельной подписи не требует —
+    // запуск release.mjs и есть решение публиковать.
+    const verdict = review?.['review'];
 
-    // Возврат на доработку читается раньше всего остального: пока замечания
-    // не закрыты, игра стоит, на каких бы воротах её ни вернули.
-    const rework = (gate, where) => {
-      out.stage = fullPack ? 'сборка' : 'срез';
-      out.note = `${gate} — на доработке`;
-      out.action = {
-        actor: 'AI',
-        open: reviewPath,
-        read: `замечания последнего захода (${where})`,
-        write: `правки в app/games/${slug}/`,
-      };
-      return out;
-    };
-
-    // Третий ответ на воротах — «убить». Читается раньше доработок: у
-    // закрытого концепта нет ни доработок, ни релиза, ему остаётся только
-    // запись о том, чем он кончился.
-    if (slice === 'rejected' || release === 'rejected') {
+    if (verdict === 'rejected') {
       out.stage = 'убита';
-      out.note = slice === 'rejected' ? 'gate 4a — не то' : 'gate 4b — не то';
+      out.note = 'сыграл — не то';
       wait('закрыть концепт', {
         actor: 'AI предлагает, решаешь ты',
         open: reviewPath,
         read: 'журнал приёмки — почему именно не то',
-        write: `${resultPath ?? 'results/NN-slug.md'} — verdict: REJECTED, killedAt, без цифр: до релиза не дошло`,
+        write: `${resultPath ?? 'results/NN-slug.md'} — verdict: REJECTED, без цифр: до релиза не дошло`,
       });
       return out;
     }
 
-    if (slice === 'rework') return rework('срез', 'один уровень');
-    if (release === 'rework') return rework('релиз', 'вся игра');
-
-    if (release === 'approved') {
-      out.stage = 'принята';
-      wait('релиз', {
-        actor: 'ты запускаешь',
-        run: `node release.mjs ${slug}`,
-        read: `${reviewPath} — подписано`,
-        write: 'скрипт сам проставит links.play и дату в games.json',
-      });
+    if (verdict === 'rework') {
+      out.stage = fullPack ? 'сборка' : 'срез';
+      out.note = 'на доработке';
+      out.action = {
+        actor: 'AI',
+        open: reviewPath,
+        read: 'замечания последнего захода',
+        write: `правки в app/games/${slug}/`,
+      };
       return out;
     }
 
     // Срез собран, но человек его ещё не щупал: самая дешёвая точка выхода в
     // конвейере — дальше уже подбираются пять раскладок.
-    if (!fullPack && slice !== 'approved') {
-      out.stage = 'срез';
+    if (verdict !== 'approved') {
+      out.stage = fullPack ? 'собрана' : 'срез';
       out.note = `${levelCount} из ${FULL_PACK} уровней`;
-      wait('gate 4a — пощупать срез', {
+      wait('сыграть срез', {
         // Проверка «три минуты», которую нельзя сделать с телефона,
         // откладывается — а отложенные ворота это ворота, которых нет.
         // Поэтому первым делом ссылка, и только если её нет — dev-сервер.
@@ -267,7 +250,7 @@ function statusOf(slug) {
         read: ideaPath
           ? `раздел 4 в ${ideaPath} — ради какого момента играют; §7.1 спеки — как должен выглядеть экран`
           : 'спеку, раздел 7.1 — как должен выглядеть экран',
-        write: `${reviewPath} — slice: approved | rework | rejected, reviewed: дата. Три минуты и три ответа: идём / доработать / убить`,
+        write: `${reviewPath} — review: approved | rework | rejected, reviewed: дата. Три минуты и три ответа: идём / доработать / убить`,
       });
       return out;
     }
@@ -285,11 +268,12 @@ function statusOf(slug) {
       return out;
     }
 
-    out.stage = 'собрана';
-    wait('gate 4b — сыграть целиком', {
-      ...playIt(slug),
-      read: 'растёт ли сложность к пятому уровню и не стыдно ли показать',
-      write: `${reviewPath} — release: approved | rework | rejected, reviewed: дата, ниже журнал`,
+    out.stage = 'принята';
+    wait('релиз', {
+      actor: 'ты запускаешь',
+      run: `node release.mjs ${slug}`,
+      read: 'сыграй пять уровней перед запуском — отдельной подписи под это нет, запуск и есть решение',
+      write: 'скрипт сам проставит links.play и дату в games.json',
     });
     return out;
   }
