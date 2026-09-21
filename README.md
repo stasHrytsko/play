@@ -5,8 +5,11 @@ game-design project. PLAY is a repeatable production pipeline that turns a
 game idea into a standardized spec, a playable prototype, a checked build and
 a published game. Deployed at play.hrytsko.com.
 
-The canonical high-level definition of PLAY, its framework, responsibilities
-and production flow lives in [docs/PLAY.md](docs/PLAY.md).
+**Start here:** [docs/PLAY.md](docs/PLAY.md) — the whole pipeline in one
+document, and the canonical one: where anything disagrees with it, it wins.
+Then [CLAUDE.md](CLAUDE.md) for the four rules that hold across the
+repository, and `node pipeline.mjs` for what the repository actually looks
+like right now.
 
 The write-up, career page and the rest of the personal site live in a separate
 repository (`stasHrytsko/hrytsko`, hrytsko.com); this repo holds the hub and
@@ -100,10 +103,15 @@ first/latest UTM attribution in local storage and attaches that attribution
 to every custom event. Cards render in schedule order (Day 01 → Day 30), not
 shuffled.
 
-PostHog is intentionally inactive until `projectToken` and `apiHost` are
-filled in `analytics-config.js`. Use the Project API token from PostHog
-project settings, never a personal API key. Autocapture and session
-recording are disabled; the hub emits explicit project events only.
+The PostHog project token and host live in `analytics-config.js` — a Project
+API token, never a personal API key. Autocapture and session recording are
+disabled; the hub emits explicit project events only.
+
+Events leave the browser **only from the hub's own domain** (`hub.js`, and
+`app/src/shell/reporting.ts` for the games). Every build carries the same
+token, so a local server, a preview deployment or a test run would otherwise
+land in the funnel the experiment's verdict is read off. `?signals=on` turns
+reporting on anywhere, `?signals=off` silences a visit that should not count.
 
 ## Structure
 
