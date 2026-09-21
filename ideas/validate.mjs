@@ -47,9 +47,14 @@ const MIN_TOTAL = 24;
 const MIN_EACH = 3;
 const MIN_PROTOTYPEABILITY = 4;
 
+// ideas/gate1.md, «Концепты 1–35»: писались до появления этого этапа и
+// approved задним числом, по факту дошедшей до спеки идеи — не по score.
+const LEGACY_MAX_NUMBER = 35;
+
 const errors = [];
 const warnings = [];
 const seen = [];
+const legacyApprovedWithoutScore = [];
 
 /** Идеи из одной папки. Папка несёт решение человека, а не отдельное поле. */
 function read(folder) {
@@ -121,8 +126,11 @@ for (const { folder, file, where, text } of files) {
   const score = meta['score'];
   const scored = score !== undefined && score !== null && typeof score === 'object';
 
+  const isLegacy = typeof meta['number'] === 'number' && meta['number'] <= LEGACY_MAX_NUMBER;
+
   if (!scored) {
     if (gate === 'pending') warnings.push(`${where}: не оценена`);
+    else if (gate === 'approved' && isLegacy) legacyApprovedWithoutScore.push(slugFromName);
     else errors.push(`${where}: gate1=${gate} без оценки`);
   } else {
     const missing = CRITERIA.filter((c) => typeof score[c] !== 'number');
@@ -182,6 +190,13 @@ for (const { folder, file, where, text } of files) {
   } else if (spec && gate !== 'approved') {
     warnings.push(`${where}: есть specs/${spec.file}, но gate1=${gate} — спека ждёт решения`);
   }
+}
+
+if (legacyApprovedWithoutScore.length > 0) {
+  warnings.push(
+    `score нет у ${legacyApprovedWithoutScore.length} концептов ≤ ${LEGACY_MAX_NUMBER}: approved по факту дошедшей ` +
+      'до спеки идеи, задним числом не оценивается (ideas/gate1.md, «Концепты 1–35»)',
+  );
 }
 
 for (const line of warnings) console.log(`предупреждение  ${line}`);
