@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T17:24:34.618Z",
+  "generatedAt": "2026-09-21T17:58:11.703Z",
   "today": "2026-09-21",
   "counts": {
     "ideas": 31,
@@ -66,8 +66,333 @@
       "action": {
         "actor": "человек",
         "open": "specs/02-two-moves-later.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 29 на приёмке",
+        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 4 на приёмке",
         "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+      }
+    },
+    {
+      "slug": "basement",
+      "number": 3,
+      "day": 3,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/03-basement.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "triple",
+      "number": 4,
+      "day": 4,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/04-triple.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "only-green",
+      "number": 5,
+      "day": 5,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/05-only-green.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "tight-shelf",
+      "number": 6,
+      "day": 6,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/06-tight-shelf.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "stalled",
+      "number": 7,
+      "day": 7,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/07-stalled.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "turnaround",
+      "number": 8,
+      "day": 8,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/08-turnaround.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "sprout",
+      "number": 9,
+      "day": 9,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/09-sprout.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "flows",
+      "number": 10,
+      "day": 10,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/10-flows.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "burning-land",
+      "number": 11,
+      "day": 11,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/11-burning-land.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "coin-turn",
+      "number": 13,
+      "day": 12,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/13-coin-turn.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "top-layer",
+      "number": 14,
+      "day": 13,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/14-top-layer.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "ribbon",
+      "number": 15,
+      "day": 14,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/15-ribbon.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "stuck",
+      "number": 16,
+      "day": 15,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/16-stuck.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "collapse-wire",
+      "number": 20,
+      "day": 16,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/20-collapse-wire.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "collapsed",
+      "number": 21,
+      "day": 17,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/21-collapsed.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "double",
+      "number": 22,
+      "day": 18,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/22-double.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "excavation",
+      "number": 24,
+      "day": 19,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/24-excavation.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "jammed",
+      "number": 25,
+      "day": 20,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/25-jammed.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "cable-bet",
+      "number": 26,
+      "day": 21,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/26-cable-bet.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "skip",
+      "number": 28,
+      "day": 23,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/28-skip.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "by-touch",
+      "number": 29,
+      "day": 24,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/29-by-touch.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "order",
+      "number": 30,
+      "day": 25,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/30-order.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "shift",
+      "number": 31,
+      "day": 26,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/31-shift.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "trail",
+      "number": 32,
+      "day": 27,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/32-trail.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
+      }
+    },
+    {
+      "slug": "arrow",
+      "number": 34,
+      "day": 29,
+      "stage": "спека",
+      "waiting": "gate 1 — твоё решение",
+      "action": {
+        "actor": "человек",
+        "open": "ideas/active/34-arrow.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -122,7 +447,7 @@
       "action": {
         "actor": "человек",
         "open": "specs/02-two-moves-later.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 29 на приёмке",
+        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 4 на приёмке",
         "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
@@ -131,14 +456,14 @@
       "number": 3,
       "day": 3,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/03-basement.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/03-basement.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -146,14 +471,14 @@
       "number": 4,
       "day": 4,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/04-triple.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/04-triple.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -161,14 +486,14 @@
       "number": 5,
       "day": 5,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/05-only-green.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/05-only-green.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -176,14 +501,14 @@
       "number": 6,
       "day": 6,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/06-tight-shelf.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/06-tight-shelf.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -191,14 +516,14 @@
       "number": 7,
       "day": 7,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/07-stalled.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/07-stalled.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -206,14 +531,14 @@
       "number": 8,
       "day": 8,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/08-turnaround.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/08-turnaround.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -221,14 +546,14 @@
       "number": 9,
       "day": 9,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/09-sprout.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/09-sprout.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -236,14 +561,14 @@
       "number": 10,
       "day": 10,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/10-flows.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/10-flows.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -251,14 +576,14 @@
       "number": 11,
       "day": 11,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/11-burning-land.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/11-burning-land.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -266,14 +591,14 @@
       "number": 13,
       "day": 12,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/13-coin-turn.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/13-coin-turn.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -281,14 +606,14 @@
       "number": 14,
       "day": 13,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/14-top-layer.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/14-top-layer.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -296,14 +621,14 @@
       "number": 15,
       "day": 14,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/15-ribbon.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/15-ribbon.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -311,14 +636,14 @@
       "number": 16,
       "day": 15,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/16-stuck.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/16-stuck.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -326,14 +651,14 @@
       "number": 20,
       "day": 16,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/20-collapse-wire.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/20-collapse-wire.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -341,14 +666,14 @@
       "number": 21,
       "day": 17,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/21-collapsed.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/21-collapsed.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -356,14 +681,14 @@
       "number": 22,
       "day": 18,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/22-double.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/22-double.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -371,14 +696,14 @@
       "number": 24,
       "day": 19,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/24-excavation.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/24-excavation.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -386,14 +711,14 @@
       "number": 25,
       "day": 20,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/25-jammed.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/25-jammed.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -401,14 +726,14 @@
       "number": 26,
       "day": 21,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/26-cable-bet.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/26-cable-bet.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -431,14 +756,14 @@
       "number": 28,
       "day": 23,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/28-skip.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/28-skip.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -446,14 +771,14 @@
       "number": 29,
       "day": 24,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/29-by-touch.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/29-by-touch.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -461,14 +786,14 @@
       "number": 30,
       "day": 25,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/30-order.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/30-order.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -476,14 +801,14 @@
       "number": 31,
       "day": 26,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/31-shift.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/31-shift.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -491,14 +816,14 @@
       "number": 32,
       "day": 27,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/32-trail.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/32-trail.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
@@ -521,14 +846,14 @@
       "number": 34,
       "day": 29,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "gate 1 — твоё решение",
+      "note": "идея на gate 1: pending",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/34-arrow.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "open": "ideas/active/34-arrow.md",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
+        "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
     {
