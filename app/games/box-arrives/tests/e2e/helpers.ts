@@ -3,8 +3,15 @@ import type { Level } from '../../mechanic/engine/types.ts';
 import { winningLine } from '../lines.ts';
 import { levelAt } from './levelPack.ts';
 
-/** Multi-page build: this game's built page lives at dist/games/box-arrives/. */
-export const GAME_PATH = '/games/box-arrives/';
+/**
+ * Multi-page build: this game's built page lives at dist/games/box-arrives/.
+ *
+ * `?signals=on` because the shell reports only from the hub's own domain
+ * (src/shell/reporting.ts) — a Playwright run must not land in the funnel the
+ * experiment's verdict is read off. The flag is what this suite asserts
+ * against: without it there would be no network calls to intercept.
+ */
+export const GAME_PATH = '/games/box-arrives/?signals=on';
 
 export function testId(page: Page, id: string) {
   return page.locator(`[data-testid="${id}"]`);

@@ -66,7 +66,10 @@ layered on each other — DOM interface and Phaser juice stay orthogonal.
 - Progress via `ProgressRepository` — never `window.localStorage` directly.
 - Signals via `SignalSink` (PostHog) — never call PostHog directly from a
   screen. Free-text comments via `FeedbackSink` (Web3Forms) — a separate
-  interface, never mixed into `SignalSink`.
+  interface, never mixed into `SignalSink`. Both are live only on the hub's
+  own domain (`src/shell/reporting.ts`): every build ships the same PostHog
+  token, and the experiment's verdict is read off that one funnel. `?signals=on`
+  turns them on anywhere, which is what the E2E suite navigates with.
 - Safe areas: use the `--safe-*` tokens, never bare `env(safe-area-inset-*)`.
 - Every interactive element gets a `data-testid`. The E2E suite locates by it.
 - No new production dependencies without approval. Keep `package-lock.json`.

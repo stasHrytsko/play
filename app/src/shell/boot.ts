@@ -5,11 +5,12 @@ import type { MechanicHost } from '../shell-contract.ts';
 import '../styles/shell.css';
 import '../styles/tokens.css';
 import { ShellApp } from './App.ts';
-import type { FeedbackSink } from './feedback/FeedbackSink.ts';
+import { NoopFeedbackSink, type FeedbackSink } from './feedback/FeedbackSink.ts';
 import { Web3FormsFeedbackSink } from './feedback/Web3FormsFeedbackSink.ts';
 import { PreferencesProgressRepository } from './progress/PreferencesProgressRepository.ts';
+import { reportingEnabled } from './reporting.ts';
 import { PostHogSignalSink } from './signal/PostHogSignalSink.ts';
-import type { SignalSink } from './signal/SignalSink.ts';
+import { NoopSignalSink, type SignalSink } from './signal/SignalSink.ts';
 
 /**
  * Composition root, shared by every game (docs/decisions.md, 2026-09-16 —
@@ -27,12 +28,21 @@ export async function bootShell(game: GameDefinition, mechanic: MechanicHost): P
 
   document.title = game.title;
 
-  const signal: SignalSink = new PostHogSignalSink({
-    projectToken: game.analytics.postHogProjectToken,
-    host: game.analytics.postHogHost,
-  });
+  // Off everywhere but the hub (reporting.ts): a dev server, a preview
+  // deployment and a Playwright run all ship the same PostHog token, and the
+  // experiment's verdict is read off that one funnel.
+  const real = reportingEnabled(window.location);
 
-  const feedback: FeedbackSink = new Web3FormsFeedbackSink(game.feedback.web3formsAccessKey);
+  const signal: SignalSink = real
+    ? new PostHogSignalSink({
+        projectToken: game.analytics.postHogProjectToken,
+        host: game.analytics.postHogHost,
+      })
+    : new NoopSignalSink();
+
+  const feedback: FeedbackSink = real
+    ? new Web3FormsFeedbackSink(game.feedback.web3formsAccessKey)
+    : new NoopFeedbackSink();
 
   const app = await ShellApp.create({
     root,

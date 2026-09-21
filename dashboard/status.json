@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T06:56:32.782Z",
+  "generatedAt": "2026-09-21T08:51:21.177Z",
   "today": "2026-09-21",
   "counts": {
     "ideas": 1,
@@ -65,7 +65,7 @@
       "action": {
         "actor": "человек",
         "run": "cd app && npm run dev -- --host   # открой с телефона",
-        "open": null,
+        "note": "ссылки нет: project.labUrl в games.json пустой, см. docs/PLAY.md → Лаборатория",
         "read": "растёт ли сложность к пятому уровню и не стыдно ли показать",
         "write": "app/games/box-arrives/review.md — release: approved | rework, reviewed: дата, ниже журнал"
       }
@@ -109,7 +109,7 @@
       "action": {
         "actor": "человек",
         "run": "cd app && npm run dev -- --host   # открой с телефона",
-        "open": null,
+        "note": "ссылки нет: project.labUrl в games.json пустой, см. docs/PLAY.md → Лаборатория",
         "read": "растёт ли сложность к пятому уровню и не стыдно ли показать",
         "write": "app/games/box-arrives/review.md — release: approved | rework, reviewed: дата, ниже журнал"
       }

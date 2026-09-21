@@ -223,6 +223,28 @@ test.describe('playthrough', () => {
     await expect(hud).toHaveAttribute('data-pocket', '0');
   });
 
+  test('without ?signals=on nothing reaches the funnel', async ({ page }) => {
+    // The other side of the flag, and the one that matters: every build ships
+    // the same PostHog token, so a preview deployment played on a phone would
+    // otherwise count as a real player in the funnel the verdict is read off
+    // (src/shell/reporting.ts).
+    const signals = await captureSignals(page);
+
+    await page.goto('/games/box-arrives/');
+    await testId(page, 'play').click();
+    await testId(page, 'onboarding-continue').click();
+    await testId(page, 'level-1').click();
+
+    const level = levelAt(0);
+    await tapScrew(page, level, 'l1s4');
+    await expect(testId(page, 'mechanic-hud')).toHaveAttribute('data-pocket', '1');
+
+    // Long enough for posthog-js to have flushed a batch, had it captured one.
+    await page.waitForTimeout(3_000);
+    expect(signals.posthog).toEqual([]);
+    expect(signals.feedback).toEqual([]);
+  });
+
   test('the box pair shifts every third move and empties what it now accepts', async ({ page }) => {
     // The twist, on screen: a colour with nowhere to go waits in the pocket,
     // and the shift three moves later takes it. If this ever stops holding,

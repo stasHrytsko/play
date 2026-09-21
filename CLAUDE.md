@@ -70,7 +70,7 @@ node pipeline.mjs --write && (cd dashboard && python3 -m http.server 8077)
 |---|---|
 | Замысел, kill-критерий, оценка | шапка `ideas/active/NN-slug.md` |
 | Название, питч, правила игры | `specs/NN-slug.md` (шапка наследует идею) |
-| День выхода, ссылки, даты | `games.json` |
+| День выхода, ссылки, даты, адрес лаборатории | `games.json` |
 | Приёмка спеки | `review` в шапке спеки |
 | Приёмка среза и игры | `slice` и `release` в `app/games/<slug>/review.md` |
 | Тексты и медиа игры | `app/games/<slug>/media/` |
@@ -97,6 +97,7 @@ results/NN-slug.md             метрики + вердикт             ← A
 
 games.json                     реестр: день → слаг, статус, ссылки, даты
 g/<slug>/                      опубликованная сборка         ← release.mjs
+app/public/                    robots.txt и заглушка лаборатории
 distribution/                  каналы, шаблоны, прогрев, генератор CSV
 dashboard/                     доска страницей
 docs/PLAY.md                   конвейер целиком — канонический документ

@@ -1,8 +1,15 @@
 import { expect, type Page } from '@playwright/test';
 import { LEVELS } from './levelPack.ts';
 
-/** Multi-page build: this game's built page lives at dist/games/tap-targets/. */
-export const GAME_PATH = '/games/tap-targets/';
+/**
+ * Multi-page build: this game's built page lives at dist/games/tap-targets/.
+ *
+ * `?signals=on` because the shell reports only from the hub's own domain
+ * (src/shell/reporting.ts) — a Playwright run must not land in the funnel the
+ * experiment's verdict is read off. The flag is what this suite asserts
+ * against: without it there would be no network calls to intercept.
+ */
+export const GAME_PATH = '/games/tap-targets/?signals=on';
 
 export function testId(page: Page, id: string) {
   return page.locator(`[data-testid="${id}"]`);

@@ -88,6 +88,20 @@ for (const folder of ['active', 'rejected']) {
 
 const dayBySlug = new Map(games.games.filter((g) => g.slug).map((g) => [g.slug, g]));
 
+// Лаборатория: собранная игра до релиза, по ссылке, которая открывается с
+// телефона. Адрес живёт в games.json рядом с остальными ссылками проекта.
+// Пусто — значит проекта ещё нет, и доска зовёт поднимать dev-сервер, а не
+// показывает ссылку, которой не существует.
+const labUrl = String(games.project?.labUrl ?? '').replace(/\/$/, '');
+const labLink = (slug) => (labUrl === '' ? null : `${labUrl}/games/${slug}/`);
+const playIt = (slug) =>
+  labUrl === ''
+    ? {
+        run: 'cd app && npm run dev -- --host   # открой с телефона',
+        note: 'ссылки нет: project.labUrl в games.json пустой, см. docs/PLAY.md → Лаборатория',
+      }
+    : { open: labLink(slug) };
+
 // Наблюдения по рынку — не стадия конвейера, но это то, что в проекте
 // меняется чаще всего. Доска обязана показывать и их, иначе неделя работы с
 // трендами выглядит на ней как неделя простоя.
@@ -226,12 +240,10 @@ function statusOf(slug) {
       out.stage = 'срез';
       out.note = `${levelCount} из ${FULL_PACK} уровней`;
       wait('gate 4a — пощупать срез', {
-        // --host поднимает dev-сервер на локальной сети: срез открывается с
-        // телефона по адресу из вывода. Проверка «три минуты», которую
-        // нельзя сделать с телефона, откладывается — а отложенные ворота
-        // это ворота, которых нет.
-        run: 'cd app && npm run dev -- --host   # открой с телефона',
-        open: review === null ? null : reviewPath,
+        // Проверка «три минуты», которую нельзя сделать с телефона,
+        // откладывается — а отложенные ворота это ворота, которых нет.
+        // Поэтому первым делом ссылка, и только если её нет — dev-сервер.
+        ...playIt(slug),
         read: ideaPath
           ? `раздел 4 в ${ideaPath} — ради какого момента играют; §7.1 спеки — как должен выглядеть экран`
           : 'спеку, раздел 7.1 — как должен выглядеть экран',
@@ -255,8 +267,7 @@ function statusOf(slug) {
 
     out.stage = 'собрана';
     wait('gate 4b — сыграть целиком', {
-      run: 'cd app && npm run dev -- --host   # открой с телефона',
-      open: review === null ? null : reviewPath,
+      ...playIt(slug),
       read: 'растёт ли сложность к пятому уровню и не стыдно ли показать',
       write: `${reviewPath} — release: approved | rework, reviewed: дата, ниже журнал`,
     });
@@ -488,6 +499,7 @@ if (waiting.length === 0) {
     if (a.run) console.log(`      ${dim('запустить')}  ${a.run}`);
     if (a.read) console.log(`      ${dim('прочитать')}  ${a.read}`);
     if (a.write) console.log(`      ${dim('записать')}   ${a.write}`);
+    if (a.note) console.log(`      ${dim('учти')}       ${a.note}`);
   }
   console.log('');
 }

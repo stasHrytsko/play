@@ -256,15 +256,22 @@ function hero(data) {
 
   const items = list.map((w) => {
     const a = w.action ?? {};
+    // `open` — либо путь к файлу в репозитории, либо уже готовый адрес:
+    // ссылка на лабораторию, которую открывают с телефона. Внешний адрес
+    // нельзя достраивать к repoUrl — получится ссылка в никуда.
+    const external = typeof a.open === 'string' && /^https?:\/\//.test(a.open);
     const file = a.open
-      ? (data.repoUrl
-        ? `<a class="path" href="${esc(data.repoUrl)}/${esc(a.open)}" target="_blank" rel="noopener">${esc(a.open)}</a>`
-        : `<span class="path">${esc(a.open)}</span>`)
+      ? (external
+        ? `<a class="path" href="${esc(a.open)}" target="_blank" rel="noopener">${esc(a.open)}</a>`
+        : data.repoUrl
+          ? `<a class="path" href="${esc(data.repoUrl)}/${esc(a.open)}" target="_blank" rel="noopener">${esc(a.open)}</a>`
+          : `<span class="path">${esc(a.open)}</span>`)
       : '';
     const steps = [
       a.run ? `<div class="step"><b>запустить</b><code>${esc(a.run)}</code></div>` : '',
       a.read ? `<div class="step"><b>прочитать</b>${esc(a.read)}</div>` : '',
       a.write ? `<div class="step"><b>записать</b>${esc(a.write)}</div>` : '',
+      a.note ? `<div class="step"><b>учти</b>${esc(a.note)}</div>` : '',
     ].join('');
 
     return `<li>
