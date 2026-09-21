@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T15:42:54.176Z",
+  "generatedAt": "2026-09-21T16:25:42.377Z",
   "today": "2026-09-21",
   "counts": {
     "ideas": 1,
@@ -92,7 +92,7 @@
       "action": {
         "actor": "человек",
         "open": "ideas/active/36-arrow-flip.md",
-        "read": "раздел «Оценка» и порог в ideas/README.md — спека уже написана, но идея не одобрена",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
         "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },
@@ -572,7 +572,7 @@
       "action": {
         "actor": "человек",
         "open": "ideas/active/36-arrow-flip.md",
-        "read": "раздел «Оценка» и порог в ideas/README.md — спека уже написана, но идея не одобрена",
+        "read": "раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена",
         "write": "в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему"
       }
     },

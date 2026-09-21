@@ -54,7 +54,7 @@ node pipeline.mjs --write && (cd dashboard && python3 -m http.server 8077)
 | Тексты и медиа игры | `app/games/<slug>/media/` |
 | Правила и шаблоны постов | `distribution/` |
 | Цифры | `data/<slug>.json` |
-| Правило Gate 1 и Gate 2 | `ideas/README.md` и `results/gate2.md` — каждое рядом со своим решением |
+| Правило Gate 1 и Gate 2 | `ideas/gate1.md` и `results/gate2.md` — каждое рядом со своим решением |
 | Результат Gate 2 | `gate2` в шапке `results/NN-slug.md` |
 
 Расхождение шапки спеки с шапкой идеи роняет `specs/validate.mjs`.
@@ -63,7 +63,7 @@ node pipeline.mjs --write && (cd dashboard && python3 -m http.server 8077)
 
 ```
 trends/YYYY-MM-DD-тема.md      наблюдения по рынку           ← человек
-ideas/README.md                правило Gate 1 — оценка идеи
+ideas/gate1.md                 правило Gate 1 — оценка идеи
 ideas/_TEMPLATE.md             шаблон идеи
 ideas/active/NN-slug.md        идея + оценка + Gate 1        ← человек, оценка AI
 ideas/rejected/NN-slug.md      не прошла Gate 1
@@ -109,7 +109,7 @@ test-hub.mjs                   поведение хаба
 
 | Ворота | Правило | Где записано | Кто держит |
 |---|---|---|---|
-| Gate 1 — идея → прототип | `ideas/README.md` | `gate1` + `score` в шапке идеи | `ideas/validate.mjs` |
+| Gate 1 — идея → прототип | `ideas/gate1.md` | `gate1` + `score` в шапке идеи | `ideas/validate.mjs` |
 | Gate 2 — прототип → производство | `results/gate2.md` | `gate2` в шапке `results/NN-slug.md` | человек; доли считает AI |
 
 Между ними три проверки, которые воротами не называются: человек принимает

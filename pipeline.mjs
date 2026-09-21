@@ -289,7 +289,7 @@ function statusOf(slug) {
       out.note = `идея на gate 1: ${String(idea.meta['gate1'] ?? 'pending')}`;
       wait('gate 1 — твоё решение', {
         open: ideaPath,
-        read: 'раздел «Оценка» и порог в ideas/README.md — спека уже написана, но идея не одобрена',
+        read: 'раздел «Оценка» и порог в ideas/gate1.md — спека уже написана, но идея не одобрена',
         write: 'в шапке идеи: gate1: approved | rejected и gate1_date. При rejected — файл в ideas/rejected/ с одной строкой почему',
       });
       return out;

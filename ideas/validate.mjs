@@ -27,7 +27,7 @@ const ENUMS = {
   solver: ['required', 'none'],
   gate1: ['pending', 'approved', 'rejected'],
 };
-// Шесть критериев и порог — ideas/README.md, единое правило проверки идеи.
+// Шесть критериев и порог — ideas/gate1.md, единое правило проверки идеи.
 const CRITERIA = ['readability', 'motivation', 'decision_pressure', 'payoff', 'differentiation', 'prototypeability'];
 const SECTIONS = 8;
 
@@ -141,7 +141,7 @@ for (const { folder, file, where, text } of files) {
       if (gate === 'pending' && reasons.length > 0) {
         warnings.push(`${where}: порог не взят — ${reasons.join('; ')}`);
       }
-      // Полоса решения из ideas/README.md: она не ворота, а подсказка, с чего
+      // Полоса решения из ideas/gate1.md: она не ворота, а подсказка, с чего
       // начинать очередь, поэтому печатается и при взятом пороге.
       if (gate === 'pending' && reasons.length === 0) {
         const band = total >= 26 ? 'приоритетный прототип' : 'обычный прототип';

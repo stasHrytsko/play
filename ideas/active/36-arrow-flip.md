@@ -115,7 +115,7 @@ puzzle нет, и именно он должен оказаться нужным
 
 ## Оценка
 
-Пересчитано 2026-09-21 по новому правилу (`ideas/README.md`): критерии
+Пересчитано 2026-09-21 по новому правилу (`ideas/gate1.md`): критерии
 `pressure`, `producibility`, `market` заменены на `decision_pressure`,
 `prototypeability`, `differentiation`, и появилось жёсткое условие
 `prototypeability ≥ 4`.
