@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Ворота Gate 1. Проверяет идеи против docs/templates/idea.md.
+// Ворота Gate 1. Проверяет идеи против ideas/_TEMPLATE.md.
 //
 //   node ideas/validate.mjs
 //

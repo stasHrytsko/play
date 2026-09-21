@@ -163,7 +163,7 @@ function statusOf(slug) {
   };
 
   if (result?.['gate2']) {
-    // Gate 2 — прототип на живых игроках, ideas/gate2.md. Концепт, закрытый
+    // Gate 2 — прототип на живых игроках, results/gate2.md. Концепт, закрытый
     // раньше, на проверке среза, пишется сюда же с players: 0: иначе в итогах
     // тридцатки будет молчаливая дыра вместо истории.
     const gate2 = String(result['gate2']);
@@ -180,7 +180,7 @@ function statusOf(slug) {
     wait(enough ? 'gate 2 — прототип на игроках' : `gate 2 — прохождений ${data.completed} из ${MIN_COMPLETIONS}`, {
       actor: 'AI считает, решаешь ты',
       open: dataPath,
-      read: `условия в ideas/gate2.md; kill-критерий в шапке ${ideaPath ?? String(specPath)}`,
+      read: `условия в results/gate2.md; kill-критерий в шапке ${ideaPath ?? String(specPath)}`,
       write: enough
         ? `${resultPath ?? 'results/NN-slug.md'} — gate2: ready_for_production | rework | kill, доли и наблюдения`
         : `${resultPath ?? 'results/NN-slug.md'} — выборки мало; «понимают цель» из воронки не берётся, нужны живые игроки`,

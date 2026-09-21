@@ -44,7 +44,13 @@ function fail(message) {
 
 const gameDir = join(app, 'games', slug);
 if (!existsSync(join(gameDir, 'game.config.ts'))) {
-  const built = existsSync(join(app, 'games')) ? readdirSync(join(app, 'games')) : [];
+  // withFileTypes: в app/games/ рядом с играми лежат шаблоны _REVIEW.md и
+  // _MEDIA.md — в списке собранных игр им делать нечего.
+  const built = existsSync(join(app, 'games'))
+    ? readdirSync(join(app, 'games'), { withFileTypes: true })
+        .filter((e) => e.isDirectory())
+        .map((e) => e.name)
+    : [];
   fail(`нет app/games/${slug}/game.config.ts. Собранные игры: ${built.join(', ') || '—'}`);
 }
 
@@ -94,7 +100,7 @@ const reviewPath = join(gameDir, 'review.md');
 if (!existsSync(reviewPath)) {
   fail(
     `нет app/games/${slug}/review.md — игра не прошла ручную проверку.\n` +
-      '  Шаблон: docs/templates/review.md. Сыграй сам, потом публикуй.',
+      '  Шаблон: app/games/_REVIEW.md. Сыграй сам, потом публикуй.',
   );
 }
 

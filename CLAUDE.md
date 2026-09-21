@@ -54,7 +54,7 @@ node pipeline.mjs --write && (cd dashboard && python3 -m http.server 8077)
 | Тексты и медиа игры | `app/games/<slug>/media/` |
 | Правила и шаблоны постов | `distribution/` |
 | Цифры | `data/<slug>.json` |
-| Правило Gate 1 и Gate 2 | `ideas/README.md` и `ideas/gate2.md` |
+| Правило Gate 1 и Gate 2 | `ideas/README.md` и `results/gate2.md` — каждое рядом со своим решением |
 | Результат Gate 2 | `gate2` в шапке `results/NN-slug.md` |
 
 Расхождение шапки спеки с шапкой идеи роняет `specs/validate.mjs`.
@@ -64,16 +64,20 @@ node pipeline.mjs --write && (cd dashboard && python3 -m http.server 8077)
 ```
 trends/YYYY-MM-DD-тема.md      наблюдения по рынку           ← человек
 ideas/README.md                правило Gate 1 — оценка идеи
-ideas/gate2.md                 правило Gate 2 — прототип на игроках
+ideas/_TEMPLATE.md             шаблон идеи
 ideas/active/NN-slug.md        идея + оценка + Gate 1        ← человек, оценка AI
 ideas/rejected/NN-slug.md      не прошла Gate 1
+specs/_TEMPLATE.md             нормативный шаблон спеки
 specs/NN-slug.md               спека, приёмка человеком      ← AI пишет
 specs/screens/NN-slug.png      макет экрана                  ← человек
 app/                           фабрика: общий шелл и игры
+app/games/_REVIEW.md           шаблон проверки среза
+app/games/_MEDIA.md            шаблон медиа игры
 app/games/<slug>/              код одной игры                ← AI по спеке
 app/games/<slug>/review.md     проверка среза автором        ← человек
 app/games/<slug>/media/        обложка, баннер, кадр, ролик, тексты
 data/<slug>.json               воронка из PostHog            ← скрипт
+results/gate2.md               правило Gate 2 — прототип на игроках
 results/NN-slug.md             Gate 2: наблюдения и решение  ← AI считает, подписывает человек
 
 games.json                     реестр: день → слаг, статус, ссылки, даты
@@ -83,7 +87,6 @@ distribution/                  каналы, шаблоны, прогрев (з�
 dashboard/                     доска страницей
 docs/PLAY.md                   конвейер целиком — канон
 docs/decisions.md              журнал решений проекта
-docs/templates/                шаблоны идеи, приёмки, медиа
 
 specs/front-matter.mjs         чтение YAML-шапок — общее для скриптов
 specs/validate.mjs             спеки и сверка шапок с идеями
@@ -107,7 +110,7 @@ test-hub.mjs                   поведение хаба
 | Ворота | Правило | Где записано | Кто держит |
 |---|---|---|---|
 | Gate 1 — идея → прототип | `ideas/README.md` | `gate1` + `score` в шапке идеи | `ideas/validate.mjs` |
-| Gate 2 — прототип → производство | `ideas/gate2.md` | `gate2` в шапке `results/NN-slug.md` | человек; доли считает AI |
+| Gate 2 — прототип → производство | `results/gate2.md` | `gate2` в шапке `results/NN-slug.md` | человек; доли считает AI |
 
 Между ними три проверки, которые воротами не называются: человек принимает
 спеку (`review` в её шапке), он же смотрит срез три минуты (`review` в

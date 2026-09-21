@@ -185,7 +185,7 @@ levels.
    E2E asserts a floor and a fit on the canvas for exactly that reason.
 10. End of pass 1: say the slice is ready to play and stop. The human writes
    `review: approved | rework | rejected` into `games/<slug>/review.md`
-   (`../docs/templates/review.md`). Pass 2 starts from that line, not from
+   (`games/_REVIEW.md`). Pass 2 starts from that line, not from
    your own judgement that the slice looks fine.
 
 ## Kill-criterion (bot check)

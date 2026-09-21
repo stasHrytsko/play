@@ -67,7 +67,7 @@ function readJson(path) {
  * Тизер игры. Живёт в папке игры — там же, где её картинки и ролик. Пока
  * папки нет, берётся из posts.json: тизеры тридцати концептов написаны
  * раньше, чем появились их папки. По мере сборки они переезжают, и в
- * posts.json остаётся только прогрев. См. docs/templates/media.md.
+ * posts.json остаётся только прогрев. См. app/games/_MEDIA.md.
  */
 function teaserFor(slug) {
   const copy = join(root, 'app', 'games', slug, 'media', 'copy.md');
