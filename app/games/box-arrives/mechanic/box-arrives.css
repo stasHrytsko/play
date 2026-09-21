@@ -1,0 +1,116 @@
+.box-arrives-surface {
+  background: var(--surface);
+}
+
+/*
+ * Pinned to the surface rather than sized at 100%: a percentage height inside
+ * .game-surface resolves against an auto height and collapses the plate to a
+ * few pixels, with the dock still looking correct — the board was 6px tall
+ * before the E2E taps caught it. inset: 0 makes the height definite, so the
+ * plate gets everything the HUD and the dock do not.
+ */
+.box-arrives-layout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: var(--space-2);
+  padding: var(--space-3);
+}
+
+.box-arrives-hud {
+  flex: none;
+}
+
+.box-arrives-hud__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.box-arrives-hud__stats .ui-counter {
+  width: 100%;
+}
+
+/* The plate. Screws fly out through its bottom edge into the dock below. */
+.box-arrives-board {
+  position: relative;
+  flex: 1 1 auto;
+  /* A plate this short is unplayable — better a scrollless squeeze elsewhere. */
+  min-height: 240px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-soft);
+}
+
+/*
+ * No width/height here: Phaser's RESIZE mode already sizes the canvas to this
+ * box, and forcing 100% on top of it stretched the drawing buffer — screws
+ * came out as ellipses.
+ */
+.box-arrives-board canvas {
+  display: block;
+}
+
+.box-arrives-dock {
+  flex: none;
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-soft);
+}
+
+.box-arrives-dock__row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.box-arrives-dock__caption {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* The two active boxes are the thing being matched against — they read first. */
+.box-arrives-dock__active .ui-piece {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.35rem;
+}
+
+.box-arrives-dock__row--muted .ui-piece {
+  width: 1.9rem;
+  height: 1.9rem;
+  font-size: 0.9rem;
+  opacity: 0.72;
+}
+
+/*
+ * The shift is the payoff (§7): the old box leaves, the new one arrives and
+ * matching screws cascade out of the pocket. One short pulse on the dock ties
+ * those three together into a single readable beat.
+ */
+@keyframes box-arrives-shift {
+  0% { transform: translateX(0); }
+  35% { transform: translateX(-0.4rem); }
+  100% { transform: translateX(0); }
+}
+
+.box-arrives-hud[data-shifted='yes'] + .box-arrives-board + .box-arrives-dock .box-arrives-dock__active {
+  animation: box-arrives-shift 320ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .box-arrives-hud[data-shifted='yes'] + .box-arrives-board + .box-arrives-dock .box-arrives-dock__active {
+    animation: none;
+  }
+}

@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-20T21:25:33.214Z",
-  "today": "2026-09-20",
+  "generatedAt": "2026-09-21T06:02:27.010Z",
+  "today": "2026-09-21",
   "counts": {
     "ideas": 1,
     "rejected": 0,
     "specs": 31,
-    "built": 0,
+    "built": 1,
     "published": 0,
     "judged": 0
   },
@@ -28,7 +28,7 @@
     },
     {
       "stage": "собрана",
-      "count": 0
+      "count": 1
     },
     {
       "stage": "опубликована",
@@ -45,13 +45,14 @@
       "slug": "box-arrives",
       "number": 1,
       "day": 1,
-      "stage": "спека",
-      "waiting": "сборку",
+      "stage": "собрана",
+      "waiting": "gate 4 — сыграть",
       "action": {
-        "actor": "AI",
-        "open": "specs/01-box-arrives.md",
-        "read": "спеку целиком",
-        "write": "app/games/box-arrives/"
+        "actor": "человек",
+        "open": null,
+        "run": "cd app && npm run dev",
+        "read": "спеку",
+        "write": "app/games/box-arrives/review.md — review: approved | rework, reviewed: дата, ниже журнал"
       }
     },
     {
@@ -86,15 +87,16 @@
       "slug": "box-arrives",
       "number": 1,
       "day": 1,
-      "stage": "спека",
-      "waiting": "сборку",
+      "stage": "собрана",
+      "waiting": "gate 4 — сыграть",
       "note": "",
       "releasedAt": null,
       "action": {
-        "actor": "AI",
-        "open": "specs/01-box-arrives.md",
-        "read": "спеку целиком",
-        "write": "app/games/box-arrives/"
+        "actor": "человек",
+        "open": null,
+        "run": "cd app && npm run dev",
+        "read": "спеку",
+        "write": "app/games/box-arrives/review.md — review: approved | rework, reviewed: дата, ниже журнал"
       }
     },
     {
