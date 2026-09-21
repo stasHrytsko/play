@@ -155,9 +155,12 @@ for (const [slugFromName, { file, text, meta }] of specs) {
         errors.push(`${where}: ${key} разошлось с ideas/${idea.folder}/${idea.file}`);
       }
     }
-    if (idea.meta['gate1'] === 'rejected') {
+    // Спека, дожившая до сборки и убитая на review.md, отклонена не на
+    // Gate 1 — это разные рубежи, и код с ней остаётся в репозитории
+    // нарочно (app/games/_REVIEW.md, «когда ответ — убить»).
+    if (idea.meta['gate1'] === 'rejected' && !killed(slugFromName)) {
       errors.push(`${where}: спека есть, а идея отклонена на Gate 1`);
-    } else if (idea.meta['gate1'] !== 'approved') {
+    } else if (idea.meta['gate1'] !== 'approved' && !(idea.meta['gate1'] === 'rejected' && killed(slugFromName))) {
       // Не ошибка: планка Gate 1 может смениться под уже написанной спекой
       // (2026-09-21, `prototypeability ≥ 4`). Решение — человека, а сборку
       // всему репозиторию это ронять не должно.
