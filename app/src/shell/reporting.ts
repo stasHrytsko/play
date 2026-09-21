@@ -13,7 +13,14 @@
  * pollutes the data. The hub's own domain is the only place a player can be.
  */
 
-/** The hub. Only a game served from here has real players in front of it. */
+/**
+ * The hub. Only a game served from here has real players in front of it.
+ *
+ * The same constant and the same two flags live in the hub's own `hub.js`,
+ * which sends hub_impression and hub_click from a dependency-free static page
+ * with no bundler and no module to share. Two copies on purpose; a domain move
+ * edits both, and each names the other.
+ */
 export const REPORTING_HOST = 'play.hrytsko.com';
 
 /**

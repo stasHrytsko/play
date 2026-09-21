@@ -90,6 +90,27 @@
     return properties;
   }
 
+  /**
+   * Хаб шлёт hub_impression и hub_click — верх той самой воронки, по которой
+   * читается вердикт. Отсюда события уходят только с настоящего адреса хаба:
+   * с локального сервера, с превью-деплоя и из прогонов они бы завышали
+   * «открытий» и занижали долю дошедших, то есть портили именно ту цифру,
+   * ради которой всё считается.
+   *
+   * Тот же признак и та же пара флагов, что у игр (app/src/shell/reporting.ts).
+   * Строка адреса написана дважды намеренно: хаб и фабрика — две независимые
+   * сборки без общего модуля, и общий модуль ради одной строки стоил бы
+   * дороже. Переезжает домен — правятся оба места, и второе названо здесь.
+   */
+  const REPORTING_HOST = 'play.hrytsko.com';
+
+  function reportingEnabled() {
+    const flag = new URLSearchParams(window.location.search || '').get('signals');
+    if (flag === 'on') return true;
+    if (flag === 'off') return false;
+    return window.location.hostname === REPORTING_HOST;
+  }
+
   function installPostHog(projectToken, apiHost, defaults) {
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split('.');2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement('script')).type='text/javascript',p.crossOrigin='anonymous',p.async=!0,p.src=s.api_host.replace('.i.posthog.com','-assets.i.posthog.com')+'/static/array.js',(r=t.getElementsByTagName('script')[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a='posthog',u.people=u.people||[],Object.defineProperty(u,'toString',{configurable:!0,enumerable:!0,writable:!0,value:function(t){var e='posthog';return'posthog'!==a&&(e+='.'+a),t||(e+=' (stub)'),e}}),Object.defineProperty(u.people,'toString',{configurable:!0,enumerable:!0,writable:!0,value:function(){return u.toString(1)+'.people (stub)'}}),o='init capture opt_in_capturing opt_out_capturing has_opted_out_capturing'.split(' '),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
 
@@ -107,12 +128,13 @@
 
   const analyticsConfigured = Boolean(config.posthog?.projectToken && config.posthog?.apiHost);
   const analyticsOptedOut = readJson(optOutKey) === true;
-  if (analyticsConfigured && !analyticsOptedOut) {
+  const analyticsLive = analyticsConfigured && !analyticsOptedOut && reportingEnabled();
+  if (analyticsLive) {
     installPostHog(config.posthog.projectToken, config.posthog.apiHost, config.posthog.defaults || '2026-05-30');
   }
 
   function track(name, extra = {}) {
-    if (!analyticsConfigured || analyticsOptedOut || !window.posthog?.capture) return;
+    if (!analyticsLive || !window.posthog?.capture) return;
     window.posthog.capture(name, eventProperties(extra));
   }
 

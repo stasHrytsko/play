@@ -163,8 +163,25 @@ for (const game of registry.games) {
   scheduled.add(game.slug);
 }
 
+/** Концепт, закрытый на воротах: `rejected` в приёмке игры. */
+function killed(slug) {
+  const url = new URL(`../app/games/${slug}/review.md`, import.meta.url);
+  let meta;
+  try {
+    meta = parseFrontMatter(readFileSync(url, 'utf8')) ?? {};
+  } catch {
+    return false; // приёмки нет — значит игру ещё не собирали
+  }
+  return meta['slice'] === 'rejected' || meta['release'] === 'rejected';
+}
+
 for (const slug of specs.keys()) {
-  if (!scheduled.has(slug)) warnings.push(`specs/${slug}: не назначен ни на один день в games.json`);
+  // «Не назначен ни на один день» у закрытого концепта читается как «назначь»,
+  // а назначать его некуда: он не поедет. Доска показывает его стадией
+  // «убита», и это единственное, что про него нужно знать.
+  if (!scheduled.has(slug) && !killed(slug)) {
+    warnings.push(`specs/${slug}: не назначен ни на один день в games.json`);
+  }
 }
 
 for (const line of warnings) console.log(`предупреждение  ${line}`);
