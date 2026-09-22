@@ -22,7 +22,13 @@ const specs = loadSpecs(join(root, 'specs'));
 for (const game of data.games) {
   const spec = game.slug ? specs.get(game.slug) : undefined;
   if (game.slug && !spec) {
-    throw new Error(`games.json день ${game.day}: нет specs/*-${game.slug}.md`);
+    // Не роняем сборку хаба целиком из-за одного отсутствующего дня: спека
+    // может быть в процессе переписывания. node specs/validate.mjs уже
+    // ловит это как ошибку — здесь достаточно предупреждения и пропуска.
+    // Карточка непубликованного дня (status !== 'published') title/pitch не
+    // читает, так что null безопасен; для published это будет заметно на
+    // странице как "null" — сигнал чинить раньше, на шаге release.mjs.
+    console.warn(`build-games.mjs: games.json день ${game.day} — нет specs/*-${game.slug}.md, день пропущен`);
   }
   game.title = spec ? spec.meta.title_en : null;
   game.pitch = spec ? spec.meta.pitch_en : null;
