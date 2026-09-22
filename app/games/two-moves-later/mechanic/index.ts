@@ -10,8 +10,13 @@ export function createMechanicHost(): MechanicHost {
   return {
     createLevel(params: CreateLevelParams): LevelSession {
       const level = getLevel(params.levelIndex);
-      const theme = readTheme();
+      // Scoped to this game's own container, not document.documentElement:
+      // two-moves-later.css overrides --piece-* under .two-moves-later-surface,
+      // so this game's canvas gets its own palette while everything outside
+      // the canvas (buttons, onboarding, rating) still reads the shared
+      // tokens.css unchanged.
       params.container.classList.add('two-moves-later-surface');
+      const theme = readTheme(params.container);
 
       const layout = uiEl('div', { className: 'two-moves-later-layout' });
       const hud = uiEl('div', {

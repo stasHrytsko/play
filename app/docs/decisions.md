@@ -360,3 +360,57 @@ open would make its rules and experiment metrics disagree with the runtime.
 **Boundary cost:** every game host now receives the two callbacks, but games
 without a loss condition simply never call `onFail`. Analytics remains owned
 by the shell; the pure engine remains unaware of UI and PostHog.
+
+
+---
+
+## D-015 — `readTheme()` scopes to `params.container`, not `document.documentElement`; a game may shadow `--piece-*` locally, 2026-09-22
+
+**Decision:** `games/<slug>/mechanic/index.ts` now calls `readTheme(params.container)`
+instead of `readTheme()`, and adds the game's root class to `params.container`
+*before* that call, not after. `ui-kit`'s `readUiTheme(root)` already took an
+optional root element (D-013) — it was simply never called with one. No
+change to `ui-kit`, `render-kit`, or `tokens.css` itself.
+
+A game's own stylesheet can now declare, under its own root class:
+
+```css
+.two-moves-later-surface {
+  --piece-rose: #e0483f;
+  --piece-blue: #2f6fe0;
+  --piece-mustard: #f0b429;
+}
+```
+
+CSS custom-property inheritance does the rest: `getComputedStyle` on that
+element resolves to the shadowed value, `getComputedStyle` on anything
+outside it (buttons, onboarding, rating — none of which live inside the
+game's root class) still resolves to the unshadowed `tokens.css` value.
+Nothing shared changed; two elements now legitimately disagree on one
+custom property's value, which is what CSS custom properties are for.
+
+**Why:** `tokens.css`'s own comment says the DOM shell and the Phaser canvas
+"cannot drift apart" — true and still enforced, for the shell chrome. But the
+one shared palette (dusty brand pastels — rose/blue/mustard) was never a
+considered choice for game canvases specifically; it's what a fork of the
+personal-site template happened to carry over, and no decision entry argued
+for it before this one. `two-moves-later`'s taxi colours read as near-
+identical at a glance on a phone — the opposite of what a colour-match
+mechanic needs. The fix is a one-line override in the one file that's
+already game-specific, not a second palette system.
+
+**What this does not change:** the shell chrome — buttons, onboarding card,
+rating popup — stays on one palette across every game, on purpose: comparing
+thirty prototypes stays easier when the frame around each one is identical,
+and fixing the chrome once still fixes it everywhere. Only the canvas-only
+`--piece-*` tokens are meant to be shadowed this way; shadowing `--accent`,
+`--surface`, or anything the shell itself reads would leak into the chrome
+through the same container, since `.two-moves-later-surface` is inside the
+shell's own DOM tree.
+
+**Verified:** typecheck, lint, test (106/106), build, e2e (both
+`two-moves-later` specs) — all pass. Confirmed by reading computed styles at
+runtime: `document.documentElement`'s `--piece-rose` stayed `#df8ca0`,
+`.two-moves-later-surface`'s resolved to `#e0483f`; `--accent` unchanged on
+both. Screenshot taken on a phone viewport to confirm the board itself, not
+just the numbers.

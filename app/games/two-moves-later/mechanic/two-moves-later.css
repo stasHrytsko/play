@@ -1,6 +1,21 @@
 .two-moves-later-surface {
   background: var(--surface);
   touch-action: none;
+
+  /* Override, not a copy: shadows src/styles/tokens.css's --piece-* only
+   * inside this game's own container (render/theme.ts reads computed styles
+   * off params.container, not document.documentElement). Everything outside
+   * the canvas — buttons, onboarding, rating — still reads the unshadowed
+   * tokens.css values, so the shell chrome stays identical across games.
+   *
+   * Picked for this game specifically: a colour-match mechanic needs
+   * maximally distinct hues, and tokens.css's dusty brand pastels (rose/
+   * blue/mustard) read as near-identical on a small phone screen at a
+   * glance — the opposite of what "swipe the red taxi" needs.
+   */
+  --piece-rose: #e0483f; /* red taxis */
+  --piece-blue: #2f6fe0; /* blue taxis */
+  --piece-mustard: #f0b429; /* yellow taxis */
 }
 
 .two-moves-later-layout {
