@@ -59,14 +59,16 @@ layered on each other — DOM interface and Phaser juice stay orthogonal.
 - `games/<slug>/mechanic/engine` — pure functions. No mutation of the state
   passed in.
 - Shell screens are HTML/CSS. Phaser renders the game only.
-- Colours, spacing and fonts default from `src/styles/tokens.css`. The Phaser
-  scene reads them at runtime — do not hard-code a colour in a scene. A game
-  may shadow individual `--piece-*` tokens under its own root class in its
-  own CSS (`games/two-moves-later/mechanic/two-moves-later.css` is the
-  precedent, `docs/decisions.md` D-015) when the shared brand pastels hurt
-  legibility for that mechanic specifically — the shell chrome (buttons,
-  onboarding, rating) stays on the unshadowed tokens either way, because
-  `readTheme()` is scoped to `params.container`, not `document.documentElement`.
+- Colours, spacing and fonts default from `src/styles/tokens.css`. The DOM
+  shell reads them unmodified. A game's own `mechanic/render/theme.ts` may
+  read a token through as-is, shadow it via a CSS custom property scoped to
+  its own root class, or hard-code a game-specific value directly (
+  `games/two-moves-later/mechanic/render/theme.ts` does the latter for its
+  taxi colours — `docs/decisions.md` D-015/D-016) when the shared brand
+  palette doesn't fit that mechanic. Whichever it does, the shell chrome
+  (buttons, onboarding, rating) stays on the unshadowed tokens, because
+  `readTheme()` is scoped to `params.container`, not `document.documentElement`,
+  and none of the chrome lives inside a game's own root class.
 - `levelCount` is 5 in a finished game and 1 while it is a slice (was 9 in the
   original template), and always equals the pack's length. Levels: versioned
   JSON in `games/<slug>/mechanic/levels`, validated on load.

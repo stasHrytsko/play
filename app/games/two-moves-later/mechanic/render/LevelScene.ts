@@ -20,16 +20,18 @@ import type { SceneTheme } from './theme.ts';
 
 const SWIPE_THRESHOLD = 18;
 const MOVE_DURATION = 135;
+type TaxiOrientation = 'front' | 'side';
 
 interface TaxiVisual {
   readonly container: Phaser.GameObjects.Container;
   readonly body: Phaser.GameObjects.Graphics;
-  readonly glyph: Phaser.GameObjects.Text;
   readonly hitArea: Phaser.Geom.Rectangle;
 }
 
 interface PassengerVisual {
   readonly container: Phaser.GameObjects.Container;
+  readonly body: Phaser.GameObjects.Graphics;
+  readonly timerBadge: Phaser.GameObjects.Graphics;
   readonly timer: Phaser.GameObjects.Text;
 }
 
@@ -52,6 +54,7 @@ export class LevelScene extends Phaser.Scene {
   readonly #options: LevelSceneOptions;
   #grid!: Phaser.GameObjects.Graphics;
   readonly #taxis = new Map<string, TaxiVisual>();
+  readonly #taxiOrientations = new Map<string, TaxiOrientation>();
   readonly #passengers = new Map<string, PassengerVisual>();
 
   #state: LevelState;
@@ -94,13 +97,7 @@ export class LevelScene extends Phaser.Scene {
 
   #createTaxi(taxi: Taxi): void {
     const body = this.add.graphics();
-    const glyph = this.add.text(0, 0, this.#options.theme.colors[taxi.color].glyph, {
-      fontFamily: 'system-ui, sans-serif',
-      color: this.#options.theme.text,
-      fontStyle: '700',
-    });
-    glyph.setOrigin(0.5);
-    const container = this.add.container(0, 0, [body, glyph]);
+    const container = this.add.container(0, 0, [body]);
     container.setDepth(2);
     const hitArea = new Phaser.Geom.Rectangle(-20, -20, 40, 40);
     body.setInteractive(
@@ -116,65 +113,155 @@ export class LevelScene extends Phaser.Scene {
         void punch(container, { scale: 1.06, duration: 100 });
       },
     );
-    this.#taxis.set(taxi.id, { container, body, glyph, hitArea });
+    const numericId = Number.parseInt(taxi.id.replace(/\D/g, ''), 10);
+    this.#taxiOrientations.set(taxi.id, numericId % 2 === 0 ? 'front' : 'side');
+    this.#taxis.set(taxi.id, { container, body, hitArea });
   }
 
   #createPassenger(passenger: PassengerDefinition): PassengerVisual {
-    const style = this.#options.theme.colors[passenger.color];
-    const ring = this.add.circle(0, 0, 18, style.fill);
-    ring.setStrokeStyle(3, this.#options.theme.passengerRing, 1);
-    const glyph = this.add.text(0, -5, style.glyph, {
+    const body = this.add.graphics();
+    const timerBadge = this.add.graphics();
+    const timer = this.add.text(0, 0, String(passenger.initialPatience), {
       fontFamily: 'system-ui, sans-serif',
-      color: this.#options.theme.text,
-      fontStyle: '700',
-    });
-    glyph.setOrigin(0.5);
-    const timer = this.add.text(0, 9, String(passenger.initialPatience), {
-      fontFamily: 'system-ui, sans-serif',
-      color: this.#options.theme.text,
+      color: this.#options.theme.timerText,
       fontStyle: '800',
     });
     timer.setOrigin(0.5);
-    const container = this.add.container(0, 0, [ring, glyph, timer]);
+    const container = this.add.container(0, 0, [body, timerBadge, timer]);
     container.setDepth(4);
-    const visual = { container, timer };
+    const visual = { container, body, timerBadge, timer };
     this.#passengers.set(passenger.id, visual);
     return visual;
   }
 
   #drawTaxi(visual: TaxiVisual, taxi: Taxi): void {
-    const size = this.#geometry.cell * 0.78;
-    const radius = Math.max(7, size * 0.18);
+    const size = this.#geometry.cell * 0.8;
+    const orientation = this.#taxiOrientations.get(taxi.id) ?? 'front';
+    const color = this.#options.theme.colors[taxi.color].fill;
+    const shadow = this.#options.theme.textDark;
     visual.body.clear();
-    visual.body.fillStyle(this.#options.theme.textDark, 0.1);
-    visual.body.fillRoundedRect(-size / 2, -size / 2 + 3, size, size, radius);
-    visual.body.fillStyle(this.#options.theme.colors[taxi.color].fill, 1);
-    visual.body.fillRoundedRect(-size / 2, -size / 2, size, size, radius);
-    visual.body.lineStyle(2, this.#options.theme.textDark, 0.13);
-    visual.body.strokeRoundedRect(-size / 2, -size / 2, size, size, radius);
-    visual.glyph.setFontSize(Math.round(size * 0.33));
+
+    if (orientation === 'side') {
+      const width = size;
+      const height = size * 0.56;
+      const x = -width / 2;
+      const y = -height / 2;
+      const wheel = Math.max(4, size * 0.11);
+
+      visual.body.fillStyle(shadow, 0.16);
+      visual.body.fillRoundedRect(x, y + 3, width, height, Math.max(7, size * 0.15));
+      visual.body.fillStyle(color, 1);
+      visual.body.fillRoundedRect(x, y, width, height, Math.max(7, size * 0.15));
+      visual.body.lineStyle(2, shadow, 0.15);
+      visual.body.strokeRoundedRect(x, y, width, height, Math.max(7, size * 0.15));
+
+      const windowWidth = width * 0.46;
+      const windowHeight = height * 0.38;
+      const windowX = -windowWidth / 2;
+      const windowY = y + height * 0.14;
+      visual.body.fillStyle(this.#options.theme.glass, 1);
+      visual.body.fillRoundedRect(windowX, windowY, windowWidth, windowHeight, Math.max(3, size * 0.06));
+      visual.body.fillStyle(this.#options.theme.glassDivider, 0.5);
+      visual.body.fillRect(-1, windowY, 2, windowHeight);
+
+      visual.body.fillStyle(this.#options.theme.wheel, 1);
+      visual.body.fillRoundedRect(x + width * 0.14, y + height - wheel * 0.35, wheel, wheel * 0.7, 3);
+      visual.body.fillRoundedRect(x + width * 0.76, y + height - wheel * 0.35, wheel, wheel * 0.7, 3);
+    } else {
+      const width = size * 0.66;
+      const height = size;
+      const x = -width / 2;
+      const y = -height / 2;
+      const wheelWidth = Math.max(4, size * 0.08);
+
+      visual.body.fillStyle(shadow, 0.16);
+      visual.body.fillRoundedRect(x, y + 3, width, height, Math.max(7, size * 0.15));
+      visual.body.fillStyle(color, 1);
+      visual.body.fillRoundedRect(x, y, width, height, Math.max(7, size * 0.15));
+      visual.body.lineStyle(2, shadow, 0.15);
+      visual.body.strokeRoundedRect(x, y, width, height, Math.max(7, size * 0.15));
+
+      const windowWidth = width * 0.68;
+      const windowHeight = height * 0.28;
+      visual.body.fillStyle(this.#options.theme.glass, 1);
+      visual.body.fillRoundedRect(-windowWidth / 2, y + height * 0.15, windowWidth, windowHeight, Math.max(3, size * 0.06));
+
+      visual.body.fillStyle(this.#options.theme.wheel, 1);
+      visual.body.fillRoundedRect(x - wheelWidth * 0.45, y + height * 0.25, wheelWidth, height * 0.24, 3);
+      visual.body.fillRoundedRect(x + width - wheelWidth * 0.55, y + height * 0.25, wheelWidth, height * 0.24, 3);
+      visual.body.fillRoundedRect(x - wheelWidth * 0.45, y + height * 0.65, wheelWidth, height * 0.18, 3);
+      visual.body.fillRoundedRect(x + width - wheelWidth * 0.55, y + height * 0.65, wheelWidth, height * 0.18, 3);
+    }
+
     visual.hitArea.setTo(-size / 2, -size / 2, size, size);
+  }
+
+  #drawPassenger(visual: PassengerVisual, passenger: PassengerDefinition): void {
+    const size = Math.max(34, this.#geometry.cell * 0.62);
+    const color = this.#options.theme.colors[passenger.color].fill;
+    const outline = this.#options.theme.passengerRing;
+    visual.body.clear();
+
+    visual.body.fillStyle(this.#options.theme.textDark, 0.14);
+    visual.body.fillEllipse(0, size * 0.43, size * 0.64, size * 0.18);
+
+    visual.body.lineStyle(Math.max(4, size * 0.12), color, 1);
+    visual.body.lineBetween(-size * 0.1, size * 0.16, -size * 0.2, size * 0.48);
+    visual.body.lineBetween(size * 0.1, size * 0.16, size * 0.2, size * 0.48);
+    visual.body.lineBetween(-size * 0.14, -size * 0.05, -size * 0.3, size * 0.2);
+    visual.body.lineBetween(size * 0.14, -size * 0.05, size * 0.3, size * 0.2);
+
+    visual.body.fillStyle(color, 1);
+    visual.body.fillRoundedRect(-size * 0.19, -size * 0.16, size * 0.38, size * 0.48, Math.max(5, size * 0.12));
+    visual.body.fillStyle(outline, 1);
+    visual.body.fillCircle(0, -size * 0.32, size * 0.16);
+    visual.body.fillStyle(this.#options.theme.skin, 1);
+    visual.body.fillCircle(0, -size * 0.32, size * 0.12);
+
+    const badgeRadius = Math.max(10, size * 0.2);
+    const badgeX = size * 0.34;
+    const badgeY = -size * 0.36;
+    visual.timerBadge.clear();
+    visual.timerBadge.fillStyle(this.#options.theme.timerBackground, 1);
+    visual.timerBadge.fillCircle(badgeX, badgeY, badgeRadius);
+    visual.timer.setPosition(badgeX, badgeY);
+    visual.timer.setFontSize(Math.round(badgeRadius * 1.1));
+  }
+
+  #drawBoard(): void {
+    const { x, y, side, cell } = this.#geometry;
+    const targets = new Map<string, number>();
+    for (const passenger of this.#state.passengers) {
+      if (passenger.status !== 'waiting') continue;
+      const target = targetCell(passenger.target);
+      targets.set(`${String(target.row)}:${String(target.col)}`, this.#options.theme.colors[passenger.color].fill);
+    }
+
+    this.#grid.clear();
+    this.#grid.fillStyle(this.#options.theme.board, 1);
+    this.#grid.fillRoundedRect(x - 6, y - 6, side + 12, side + 12, 22);
+    for (let row = 0; row < 5; row += 1) {
+      for (let col = 0; col < 5; col += 1) {
+        const cellX = x + col * cell + 2;
+        const cellY = y + row * cell + 2;
+        const cellSize = cell - 4;
+        const radius = Math.max(5, cell * 0.12);
+        this.#grid.fillStyle(this.#options.theme.cell, 1);
+        this.#grid.fillRoundedRect(cellX, cellY, cellSize, cellSize, radius);
+        const targetColor = targets.get(`${String(row)}:${String(col)}`);
+        if (targetColor !== undefined) {
+          this.#grid.fillStyle(targetColor, 0.22);
+          this.#grid.fillRoundedRect(cellX, cellY, cellSize, cellSize, radius);
+          this.#grid.lineStyle(Math.max(2, cell * 0.055), targetColor, 0.95);
+          this.#grid.strokeRoundedRect(cellX + 1, cellY + 1, cellSize - 2, cellSize - 2, radius);
+        }
+      }
+    }
   }
 
   #layout(width: number, height: number): void {
     this.#geometry = boardGeometry(width, height);
-    const { x, y, side, cell } = this.#geometry;
-
-    this.#grid.clear();
-    this.#grid.fillStyle(this.#options.theme.board, 1);
-    this.#grid.fillRoundedRect(x - 5, y - 5, side + 10, side + 10, 16);
-    for (let row = 0; row < 5; row += 1) {
-      for (let col = 0; col < 5; col += 1) {
-        this.#grid.fillStyle(this.#options.theme.cell, 1);
-        this.#grid.fillRoundedRect(
-          x + col * cell + 2,
-          y + row * cell + 2,
-          cell - 4,
-          cell - 4,
-          Math.max(5, cell * 0.12),
-        );
-      }
-    }
+    this.#drawBoard();
 
     for (const taxi of this.#state.taxis) {
       const visual = this.#taxis.get(taxi.id);
@@ -196,7 +283,7 @@ export class LevelScene extends Phaser.Scene {
   #passengerPoint(passenger: PassengerDefinition): { x: number; y: number } {
     const cell = targetCell(passenger.target);
     const point = this.#cellPoint(cell.row, cell.col);
-    const offset = this.#geometry.cell * 0.58;
+    const offset = this.#geometry.cell * 0.82;
     switch (passenger.target.side) {
       case 'top':
         return { x: point.x, y: this.#geometry.y - offset };
@@ -224,8 +311,8 @@ export class LevelScene extends Phaser.Scene {
     for (const passenger of this.#state.passengers) {
       if (passenger.status !== 'waiting') continue;
       const visual = this.#passengers.get(passenger.id) ?? this.#createPassenger(passenger);
-      const radius = Math.max(15, this.#geometry.cell * 0.27);
-      visual.container.setScale(radius / 18);
+      this.#drawPassenger(visual, passenger);
+      visual.container.setScale(1);
       visual.container.setPosition(...Object.values(this.#passengerPoint(passenger)) as [number, number]);
       visual.timer.setText(String(passenger.patience));
     }
@@ -257,6 +344,7 @@ export class LevelScene extends Phaser.Scene {
   async #swipe(action: SwipeAction): Promise<void> {
     const outcome = resolveSwipe(this.#options.level, this.#state, action);
     const visual = this.#taxis.get(action.taxiId);
+    const taxiBeforeMove = this.#state.taxis.find((taxi) => taxi.id === action.taxiId);
     if (outcome.ignored) return;
     if (!outcome.valid) {
       if (visual !== undefined) await invalidShake(visual.container);
@@ -268,6 +356,12 @@ export class LevelScene extends Phaser.Scene {
       this.#firstActionReported = true;
       this.#options.onFirstAction();
     }
+
+    this.#taxiOrientations.set(
+      action.taxiId,
+      action.direction === 'left' || action.direction === 'right' ? 'side' : 'front',
+    );
+    if (visual !== undefined && taxiBeforeMove !== undefined) this.#drawTaxi(visual, taxiBeforeMove);
 
     this.#state = outcome.state;
     this.#options.onStateChange(this.#state);
@@ -285,6 +379,17 @@ export class LevelScene extends Phaser.Scene {
       if (taxiVisual === undefined || passengerDefinition === undefined) continue;
       const passengerVisual =
         this.#passengers.get(pickup.passengerId) ?? this.#createPassenger(passengerDefinition);
+      this.#taxiOrientations.set(
+        pickup.taxiId,
+        passengerDefinition.target.side === 'left' || passengerDefinition.target.side === 'right'
+          ? 'side'
+          : 'front',
+      );
+      const pickupTaxi = taxiBeforeMove?.id === pickup.taxiId
+        ? taxiBeforeMove
+        : this.#options.level.taxis.find((taxi) => taxi.id === pickup.taxiId);
+      if (pickupTaxi !== undefined) this.#drawTaxi(taxiVisual, pickupTaxi);
+      this.#drawPassenger(passengerVisual, passengerDefinition);
       passengerVisual.container.setPosition(
         this.#passengerPoint(passengerDefinition).x,
         this.#passengerPoint(passengerDefinition).y,
@@ -300,6 +405,7 @@ export class LevelScene extends Phaser.Scene {
     }
 
     this.#syncPassengers();
+    this.#drawBoard();
     this.#busy = false;
 
     if (this.#state.status === 'failed') {
