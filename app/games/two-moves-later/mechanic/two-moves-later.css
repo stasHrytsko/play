@@ -1,47 +1,27 @@
 .two-moves-later-surface {
-  background: var(--surface);
+  background: #f6f7fa;
   touch-action: none;
 }
 
+/* .game-surface has no explicit height, so fill it absolutely. */
 .two-moves-later-layout {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  gap: var(--space-2);
-  padding: var(--space-2);
 }
 
+/* Counters stay in the DOM for tests and analytics, but the screen shows
+   only the field (§7.1 макет). */
 .two-moves-later-hud {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-2);
-  flex: none;
-}
-
-.two-moves-later-hud .ui-counter {
-  width: 100%;
-  min-width: 0;
-  padding-inline: var(--space-2);
+  display: none;
 }
 
 .two-moves-later-board {
   position: relative;
-  flex: none;
-  height: clamp(310px, 58vh, 520px);
-  min-height: 310px;
+  flex: 1;
+  min-height: 280px;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
-  border-radius: var(--radius-lg);
-  background: var(--surface-raised);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 48%);
-}
-
-@media (max-width: 480px) {
-  .two-moves-later-hud {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 .two-moves-later-board canvas {
@@ -51,34 +31,4 @@
   max-width: 100%;
   max-height: 100%;
   touch-action: none;
-}
-
-.two-moves-later-hint {
-  flex: none;
-  min-height: 32px;
-  display: grid;
-  place-items: center;
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-md);
-  background: var(--surface-soft);
-  color: var(--text-muted);
-  font-size: 13px;
-  text-align: center;
-}
-
-@media (max-height: 680px) {
-  .two-moves-later-layout {
-    gap: var(--space-1);
-    padding: var(--space-1);
-  }
-
-  .two-moves-later-board {
-    height: 58vh;
-    min-height: 250px;
-  }
-
-  .two-moves-later-hint {
-    min-height: 26px;
-    padding-block: var(--space-1);
-  }
 }

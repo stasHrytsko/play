@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import type { CreateLevelParams, LevelSession, MechanicHost } from '../../../src/shell-contract.ts';
-import { counter, uiEl } from '../../../src/ui-kit/index.ts';
+import { uiEl } from '../../../src/ui-kit/index.ts';
 import type { LevelState } from './engine/types.ts';
 import { getLevel } from './levels/loadLevels.ts';
 import { LevelScene } from './render/LevelScene.ts';
@@ -10,13 +10,9 @@ export function createMechanicHost(): MechanicHost {
   return {
     createLevel(params: CreateLevelParams): LevelSession {
       const level = getLevel(params.levelIndex);
-      // Scoped to this game's own container, not document.documentElement:
-      // two-moves-later.css overrides --piece-* under .two-moves-later-surface,
-      // so this game's canvas gets its own palette while everything outside
-      // the canvas (buttons, onboarding, rating) still reads the shared
-      // tokens.css unchanged.
-      params.container.classList.add('two-moves-later-surface');
-      const theme = readTheme(params.container);
+      // The canvas palette is hard-coded from the §7.1 mockup; the class only
+      // scopes the surface background and touch handling in two-moves-later.css.
+      const theme = readTheme();
 
       const layout = uiEl('div', { className: 'two-moves-later-layout' });
       const hud = uiEl('div', {
@@ -27,45 +23,11 @@ export function createMechanicHost(): MechanicHost {
         className: 'two-moves-later-board',
         testId: 'taxi-board',
       });
-      const hint = uiEl('div', {
-        className: 'two-moves-later-hint',
-        text: 'Проведи такси в соседнюю пустую клетку',
-        testId: 'taxi-hint',
-      });
-      layout.append(hud, board, hint);
+      layout.append(hud, board);
       params.container.append(layout);
 
       const onStateChange = (state: LevelState): void => {
         const waiting = state.passengers.filter((passenger) => passenger.status === 'waiting');
-        const minimumPatience =
-          waiting.length === 0 ? '—' : Math.min(...waiting.map((passenger) => passenger.patience));
-        hud.replaceChildren(
-          counter({
-            label: 'Такси',
-            value: state.taxis.length,
-            icon: '▣',
-            testId: 'taxis-left',
-          }),
-          counter({
-            label: 'Уехали',
-            value: state.served,
-            icon: '✓',
-            testId: 'served-count',
-          }),
-          counter({
-            label: 'Ходы',
-            value: state.moves,
-            icon: '↗',
-            testId: 'move-count',
-          }),
-          counter({
-            label: 'Терпение',
-            value: minimumPatience,
-            icon: '◷',
-            tone: minimumPatience === 1 ? 'warning' : 'default',
-            testId: 'minimum-patience',
-          }),
-        );
         hud.dataset['remaining'] = String(state.taxis.length);
         hud.dataset['served'] = String(state.served);
         hud.dataset['moves'] = String(state.moves);
@@ -73,7 +35,11 @@ export function createMechanicHost(): MechanicHost {
         hud.dataset['status'] = state.status;
       };
 
+      // Render at device resolution so the tiles stay crisp on phones; the
+      // canvas is scaled back down to the board box by CSS.
+      const pixelRatio = Math.min(Math.max(window.devicePixelRatio || 1, 1), 3);
       const scene = new LevelScene({
+        pixelRatio,
         level,
         theme,
         onFirstAction: params.onFirstAction,
@@ -83,17 +49,21 @@ export function createMechanicHost(): MechanicHost {
       });
 
       const game = new Phaser.Game({
-        type: Phaser.AUTO,
+        type: Phaser.CANVAS,
         parent: board,
         backgroundColor: theme.background,
         audio: { noAudio: true },
-        scale: { mode: Phaser.Scale.RESIZE, width: '100%', height: '100%' },
+        scale: {
+          mode: Phaser.Scale.NONE,
+          width: Math.max(1, board.clientWidth) * pixelRatio,
+          height: Math.max(1, board.clientHeight) * pixelRatio,
+        },
         scene: [scene],
       });
 
       const observer = new ResizeObserver(() => {
         const { width, height } = board.getBoundingClientRect();
-        if (width > 0 && height > 0) game.scale.resize(width, height);
+        if (width > 0 && height > 0) game.scale.resize(width * pixelRatio, height * pixelRatio);
       });
       observer.observe(board);
 

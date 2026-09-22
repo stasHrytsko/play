@@ -20,7 +20,6 @@ import type { SceneTheme } from './theme.ts';
 
 const SWIPE_THRESHOLD = 18;
 const MOVE_DURATION = 135;
-type TaxiOrientation = 'front' | 'side';
 
 interface TaxiVisual {
   readonly container: Phaser.GameObjects.Container;
@@ -29,10 +28,14 @@ interface TaxiVisual {
 }
 
 interface PassengerVisual {
+  /** The disc outside the board edge. */
   readonly container: Phaser.GameObjects.Container;
   readonly body: Phaser.GameObjects.Graphics;
-  readonly timerBadge: Phaser.GameObjects.Graphics;
   readonly timer: Phaser.GameObjects.Text;
+  /** The small patience badge in the corner of the pickup cell. */
+  readonly badge: Phaser.GameObjects.Container;
+  readonly badgeBody: Phaser.GameObjects.Graphics;
+  readonly badgeTimer: Phaser.GameObjects.Text;
 }
 
 interface Gesture {
@@ -48,13 +51,14 @@ export interface LevelSceneOptions {
   readonly onComplete: () => void;
   readonly onFail: (reason: string) => void;
   readonly onStateChange: (state: LevelState) => void;
+  /** Canvas pixels per CSS pixel; the scene lays out in CSS pixels. */
+  readonly pixelRatio: number;
 }
 
 export class LevelScene extends Phaser.Scene {
   readonly #options: LevelSceneOptions;
   #grid!: Phaser.GameObjects.Graphics;
   readonly #taxis = new Map<string, TaxiVisual>();
-  readonly #taxiOrientations = new Map<string, TaxiOrientation>();
   readonly #passengers = new Map<string, PassengerVisual>();
 
   #state: LevelState;
@@ -66,7 +70,7 @@ export class LevelScene extends Phaser.Scene {
 
   #handleResize = (size: Phaser.Structs.Size): void => {
     this.cameras.resize(size.width, size.height);
-    this.#layout(size.width, size.height);
+    this.#layout(size.width / this.#options.pixelRatio, size.height / this.#options.pixelRatio);
   };
 
   constructor(options: LevelSceneOptions) {
@@ -77,6 +81,7 @@ export class LevelScene extends Phaser.Scene {
 
   create(): void {
     this.cameras.main.setBackgroundColor(this.#options.theme.background);
+    this.cameras.main.setOrigin(0, 0).setZoom(this.#options.pixelRatio);
     this.#grid = this.add.graphics();
 
     for (const taxi of this.#options.level.taxis) this.#createTaxi(taxi);
@@ -91,7 +96,7 @@ export class LevelScene extends Phaser.Scene {
       this.input.off(Phaser.Input.Events.POINTER_UP);
     });
 
-    this.#layout(this.scale.width, this.scale.height);
+    this.#layout(this.scale.width / this.#options.pixelRatio, this.scale.height / this.#options.pixelRatio);
     this.#options.onStateChange(this.#state);
   }
 
@@ -109,151 +114,129 @@ export class LevelScene extends Phaser.Scene {
       Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN,
       (pointer: Phaser.Input.Pointer) => {
         if (this.#busy || this.#over) return;
-        this.#gesture = { taxiId: taxi.id, x: pointer.x, y: pointer.y };
+        this.#gesture = { taxiId: taxi.id, x: pointer.worldX, y: pointer.worldY };
         void punch(container, { scale: 1.06, duration: 100 });
       },
     );
-    const numericId = Number.parseInt(taxi.id.replace(/\D/g, ''), 10);
-    this.#taxiOrientations.set(taxi.id, numericId % 2 === 0 ? 'front' : 'side');
     this.#taxis.set(taxi.id, { container, body, hitArea });
   }
 
   #createPassenger(passenger: PassengerDefinition): PassengerVisual {
+    const text = (): Phaser.GameObjects.Text => {
+      const label = this.add.text(0, 0, String(passenger.initialPatience), {
+        fontFamily: 'system-ui, sans-serif',
+        color: this.#options.theme.badgeText,
+        fontStyle: '800',
+      });
+      label.setOrigin(0.5);
+      label.setResolution(this.#options.pixelRatio);
+      return label;
+    };
     const body = this.add.graphics();
-    const timerBadge = this.add.graphics();
-    const timer = this.add.text(0, 0, String(passenger.initialPatience), {
-      fontFamily: 'system-ui, sans-serif',
-      color: this.#options.theme.timerText,
-      fontStyle: '800',
-    });
-    timer.setOrigin(0.5);
-    const container = this.add.container(0, 0, [body, timerBadge, timer]);
+    const timer = text();
+    const container = this.add.container(0, 0, [body, timer]);
     container.setDepth(4);
-    const visual = { container, body, timerBadge, timer };
+    const badgeBody = this.add.graphics();
+    const badgeTimer = text();
+    const badge = this.add.container(0, 0, [badgeBody, badgeTimer]);
+    badge.setDepth(3);
+    const visual = { container, body, timer, badge, badgeBody, badgeTimer };
     this.#passengers.set(passenger.id, visual);
     return visual;
   }
 
   #drawTaxi(visual: TaxiVisual, taxi: Taxi): void {
-    const size = this.#geometry.cell * 0.8;
-    const orientation = this.#taxiOrientations.get(taxi.id) ?? 'front';
-    const color = this.#options.theme.colors[taxi.color].fill;
-    const shadow = this.#options.theme.textDark;
-    visual.body.clear();
+    const { cell } = this.#geometry;
+    const size = cell * 0.47;
+    const half = size / 2;
+    const radius = size * 0.24;
+    const depth = Math.max(2, size * 0.07);
+    const color = this.#options.theme.colors[taxi.color];
+    const g = visual.body;
+    g.clear();
 
-    if (orientation === 'side') {
-      const width = size;
-      const height = size * 0.56;
-      const x = -width / 2;
-      const y = -height / 2;
-      const wheel = Math.max(4, size * 0.11);
+    // Soft drop shadow, darker bottom edge, face, then the white roof sign.
+    g.fillStyle(this.#options.theme.shadow, 0.1);
+    g.fillRoundedRect(-half, -half + depth * 2, size, size, radius);
+    g.fillStyle(color.edge, 1);
+    g.fillRoundedRect(-half, -half + depth, size, size, radius);
+    g.fillStyle(color.fill, 1);
+    g.fillRoundedRect(-half, -half, size, size, radius);
 
-      visual.body.fillStyle(shadow, 0.16);
-      visual.body.fillRoundedRect(x, y + 3, width, height, Math.max(7, size * 0.15));
-      visual.body.fillStyle(color, 1);
-      visual.body.fillRoundedRect(x, y, width, height, Math.max(7, size * 0.15));
-      visual.body.lineStyle(2, shadow, 0.15);
-      visual.body.strokeRoundedRect(x, y, width, height, Math.max(7, size * 0.15));
+    const pillWidth = size * 0.4;
+    const pillHeight = size * 0.14;
+    g.fillStyle(this.#options.theme.pill, 0.78);
+    g.fillRoundedRect(-pillWidth / 2, -pillHeight / 2, pillWidth, pillHeight, pillHeight / 2);
 
-      const windowWidth = width * 0.46;
-      const windowHeight = height * 0.38;
-      const windowX = -windowWidth / 2;
-      const windowY = y + height * 0.14;
-      visual.body.fillStyle(this.#options.theme.glass, 1);
-      visual.body.fillRoundedRect(windowX, windowY, windowWidth, windowHeight, Math.max(3, size * 0.06));
-      visual.body.fillStyle(this.#options.theme.glassDivider, 0.5);
-      visual.body.fillRect(-1, windowY, 2, windowHeight);
-
-      visual.body.fillStyle(this.#options.theme.wheel, 1);
-      visual.body.fillRoundedRect(x + width * 0.14, y + height - wheel * 0.35, wheel, wheel * 0.7, 3);
-      visual.body.fillRoundedRect(x + width * 0.76, y + height - wheel * 0.35, wheel, wheel * 0.7, 3);
-    } else {
-      const width = size * 0.66;
-      const height = size;
-      const x = -width / 2;
-      const y = -height / 2;
-      const wheelWidth = Math.max(4, size * 0.08);
-
-      visual.body.fillStyle(shadow, 0.16);
-      visual.body.fillRoundedRect(x, y + 3, width, height, Math.max(7, size * 0.15));
-      visual.body.fillStyle(color, 1);
-      visual.body.fillRoundedRect(x, y, width, height, Math.max(7, size * 0.15));
-      visual.body.lineStyle(2, shadow, 0.15);
-      visual.body.strokeRoundedRect(x, y, width, height, Math.max(7, size * 0.15));
-
-      const windowWidth = width * 0.68;
-      const windowHeight = height * 0.28;
-      visual.body.fillStyle(this.#options.theme.glass, 1);
-      visual.body.fillRoundedRect(-windowWidth / 2, y + height * 0.15, windowWidth, windowHeight, Math.max(3, size * 0.06));
-
-      visual.body.fillStyle(this.#options.theme.wheel, 1);
-      visual.body.fillRoundedRect(x - wheelWidth * 0.45, y + height * 0.25, wheelWidth, height * 0.24, 3);
-      visual.body.fillRoundedRect(x + width - wheelWidth * 0.55, y + height * 0.25, wheelWidth, height * 0.24, 3);
-      visual.body.fillRoundedRect(x - wheelWidth * 0.45, y + height * 0.65, wheelWidth, height * 0.18, 3);
-      visual.body.fillRoundedRect(x + width - wheelWidth * 0.55, y + height * 0.65, wheelWidth, height * 0.18, 3);
-    }
-
-    visual.hitArea.setTo(-size / 2, -size / 2, size, size);
+    // The whole cell is the swipe target, not only the painted tile.
+    visual.hitArea.setTo(-cell / 2, -cell / 2, cell, cell);
   }
 
   #drawPassenger(visual: PassengerVisual, passenger: PassengerDefinition): void {
-    const size = Math.max(34, this.#geometry.cell * 0.62);
+    const { cell } = this.#geometry;
     const color = this.#options.theme.colors[passenger.color].fill;
-    const outline = this.#options.theme.passengerRing;
+
+    const radius = Math.max(13, cell * 0.17);
+    const ring = Math.max(2, radius * 0.18);
     visual.body.clear();
-
-    visual.body.fillStyle(this.#options.theme.textDark, 0.14);
-    visual.body.fillEllipse(0, size * 0.43, size * 0.64, size * 0.18);
-
-    visual.body.lineStyle(Math.max(4, size * 0.12), color, 1);
-    visual.body.lineBetween(-size * 0.1, size * 0.16, -size * 0.2, size * 0.48);
-    visual.body.lineBetween(size * 0.1, size * 0.16, size * 0.2, size * 0.48);
-    visual.body.lineBetween(-size * 0.14, -size * 0.05, -size * 0.3, size * 0.2);
-    visual.body.lineBetween(size * 0.14, -size * 0.05, size * 0.3, size * 0.2);
-
+    visual.body.fillStyle(this.#options.theme.shadow, 0.14);
+    visual.body.fillCircle(0, ring, radius + ring);
+    visual.body.fillStyle(this.#options.theme.badgeRing, 1);
+    visual.body.fillCircle(0, 0, radius + ring);
     visual.body.fillStyle(color, 1);
-    visual.body.fillRoundedRect(-size * 0.19, -size * 0.16, size * 0.38, size * 0.48, Math.max(5, size * 0.12));
-    visual.body.fillStyle(outline, 1);
-    visual.body.fillCircle(0, -size * 0.32, size * 0.16);
-    visual.body.fillStyle(this.#options.theme.skin, 1);
-    visual.body.fillCircle(0, -size * 0.32, size * 0.12);
+    visual.body.fillCircle(0, 0, radius);
+    visual.timer.setFontSize(Math.round(radius * 0.95));
 
-    const badgeRadius = Math.max(10, size * 0.2);
-    const badgeX = size * 0.34;
-    const badgeY = -size * 0.36;
-    visual.timerBadge.clear();
-    visual.timerBadge.fillStyle(this.#options.theme.timerBackground, 1);
-    visual.timerBadge.fillCircle(badgeX, badgeY, badgeRadius);
-    visual.timer.setPosition(badgeX, badgeY);
-    visual.timer.setFontSize(Math.round(badgeRadius * 1.1));
+    const badgeRadius = Math.max(7, cell * 0.08);
+    visual.badgeBody.clear();
+    visual.badgeBody.fillStyle(this.#options.theme.badgeRing, 1);
+    visual.badgeBody.fillCircle(0, 0, badgeRadius + 1.5);
+    visual.badgeBody.fillStyle(color, 1);
+    visual.badgeBody.fillCircle(0, 0, badgeRadius);
+    visual.badgeTimer.setFontSize(Math.round(badgeRadius * 1.15));
   }
 
   #drawBoard(): void {
     const { x, y, side, cell } = this.#geometry;
+    const theme = this.#options.theme;
     const targets = new Map<string, number>();
     for (const passenger of this.#state.passengers) {
       if (passenger.status !== 'waiting') continue;
       const target = targetCell(passenger.target);
-      targets.set(`${String(target.row)}:${String(target.col)}`, this.#options.theme.colors[passenger.color].fill);
+      targets.set(`${String(target.row)}:${String(target.col)}`, theme.colors[passenger.color].fill);
     }
+    const occupied = new Set(this.#state.taxis.map((taxi) => `${String(taxi.row)}:${String(taxi.col)}`));
 
-    this.#grid.clear();
-    this.#grid.fillStyle(this.#options.theme.board, 1);
-    this.#grid.fillRoundedRect(x - 6, y - 6, side + 12, side + 12, 22);
+    const frame = Math.max(4, cell * 0.07);
+    const line = Math.max(1, cell * 0.018);
+    const g = this.#grid;
+    g.clear();
+
+    g.fillStyle(theme.shadow, 0.06);
+    g.fillRoundedRect(x - frame, y - frame + frame * 1.2, side + frame * 2, side + frame * 2, frame * 2.4);
+    g.fillStyle(theme.frame, 1);
+    g.fillRoundedRect(x - frame, y - frame, side + frame * 2, side + frame * 2, frame * 2.4);
+    g.fillStyle(theme.gridLine, 1);
+    g.fillRoundedRect(x, y, side, side, frame * 1.2);
+
     for (let row = 0; row < 5; row += 1) {
       for (let col = 0; col < 5; col += 1) {
-        const cellX = x + col * cell + 2;
-        const cellY = y + row * cell + 2;
-        const cellSize = cell - 4;
-        const radius = Math.max(5, cell * 0.12);
-        this.#grid.fillStyle(this.#options.theme.cell, 1);
-        this.#grid.fillRoundedRect(cellX, cellY, cellSize, cellSize, radius);
-        const targetColor = targets.get(`${String(row)}:${String(col)}`);
+        const key = `${String(row)}:${String(col)}`;
+        const cellX = x + col * cell + line / 2;
+        const cellY = y + row * cell + line / 2;
+        const cellSize = cell - line;
+        const empty = !occupied.has(key);
+        g.fillStyle(empty ? theme.empty : theme.cell, 1);
+        g.fillRect(cellX, cellY, cellSize, cellSize);
+        if (empty) {
+          g.fillStyle(theme.emptyDot, 1);
+          g.fillCircle(cellX + cellSize / 2, cellY + cellSize / 2, Math.max(2.5, cell * 0.045));
+        }
+        const targetColor = targets.get(key);
         if (targetColor !== undefined) {
-          this.#grid.fillStyle(targetColor, 0.22);
-          this.#grid.fillRoundedRect(cellX, cellY, cellSize, cellSize, radius);
-          this.#grid.lineStyle(Math.max(2, cell * 0.055), targetColor, 0.95);
-          this.#grid.strokeRoundedRect(cellX + 1, cellY + 1, cellSize - 2, cellSize - 2, radius);
+          const stroke = Math.max(2, cell * 0.025);
+          g.lineStyle(stroke, targetColor, 1);
+          g.strokeRect(cellX + stroke / 2, cellY + stroke / 2, cellSize - stroke, cellSize - stroke);
         }
       }
     }
@@ -283,7 +266,7 @@ export class LevelScene extends Phaser.Scene {
   #passengerPoint(passenger: PassengerDefinition): { x: number; y: number } {
     const cell = targetCell(passenger.target);
     const point = this.#cellPoint(cell.row, cell.col);
-    const offset = this.#geometry.cell * 0.82;
+    const offset = this.#geometry.cell * 0.5;
     switch (passenger.target.side) {
       case 'top':
         return { x: point.x, y: this.#geometry.y - offset };
@@ -296,6 +279,13 @@ export class LevelScene extends Phaser.Scene {
     }
   }
 
+  #badgePoint(passenger: PassengerDefinition): { x: number; y: number } {
+    const cell = targetCell(passenger.target);
+    const center = this.#cellPoint(cell.row, cell.col);
+    const inset = this.#geometry.cell * 0.36;
+    return { x: center.x + inset, y: center.y - inset };
+  }
+
   #syncPassengers(): void {
     const waitingIds = new Set(
       this.#state.passengers
@@ -305,6 +295,7 @@ export class LevelScene extends Phaser.Scene {
     for (const [id, visual] of this.#passengers) {
       if (!waitingIds.has(id)) {
         visual.container.destroy();
+        visual.badge.destroy();
         this.#passengers.delete(id);
       }
     }
@@ -313,8 +304,12 @@ export class LevelScene extends Phaser.Scene {
       const visual = this.#passengers.get(passenger.id) ?? this.#createPassenger(passenger);
       this.#drawPassenger(visual, passenger);
       visual.container.setScale(1);
-      visual.container.setPosition(...Object.values(this.#passengerPoint(passenger)) as [number, number]);
+      const point = this.#passengerPoint(passenger);
+      visual.container.setPosition(point.x, point.y);
+      const badge = this.#badgePoint(passenger);
+      visual.badge.setPosition(badge.x, badge.y);
       visual.timer.setText(String(passenger.patience));
+      visual.badgeTimer.setText(String(passenger.patience));
     }
   }
 
@@ -322,8 +317,8 @@ export class LevelScene extends Phaser.Scene {
     const gesture = this.#gesture;
     this.#gesture = null;
     if (gesture === null || this.#busy || this.#over) return;
-    const dx = pointer.x - gesture.x;
-    const dy = pointer.y - gesture.y;
+    const dx = pointer.worldX - gesture.x;
+    const dy = pointer.worldY - gesture.y;
     if (Math.max(Math.abs(dx), Math.abs(dy)) < SWIPE_THRESHOLD) return;
 
     const direction: Direction =
@@ -344,7 +339,6 @@ export class LevelScene extends Phaser.Scene {
   async #swipe(action: SwipeAction): Promise<void> {
     const outcome = resolveSwipe(this.#options.level, this.#state, action);
     const visual = this.#taxis.get(action.taxiId);
-    const taxiBeforeMove = this.#state.taxis.find((taxi) => taxi.id === action.taxiId);
     if (outcome.ignored) return;
     if (!outcome.valid) {
       if (visual !== undefined) await invalidShake(visual.container);
@@ -357,14 +351,9 @@ export class LevelScene extends Phaser.Scene {
       this.#options.onFirstAction();
     }
 
-    this.#taxiOrientations.set(
-      action.taxiId,
-      action.direction === 'left' || action.direction === 'right' ? 'side' : 'front',
-    );
-    if (visual !== undefined && taxiBeforeMove !== undefined) this.#drawTaxi(visual, taxiBeforeMove);
-
     this.#state = outcome.state;
     this.#options.onStateChange(this.#state);
+    this.#drawBoard();
 
     if (visual !== undefined && outcome.to !== null) {
       const destination = this.#cellPoint(outcome.to.row, outcome.to.col);
@@ -379,16 +368,6 @@ export class LevelScene extends Phaser.Scene {
       if (taxiVisual === undefined || passengerDefinition === undefined) continue;
       const passengerVisual =
         this.#passengers.get(pickup.passengerId) ?? this.#createPassenger(passengerDefinition);
-      this.#taxiOrientations.set(
-        pickup.taxiId,
-        passengerDefinition.target.side === 'left' || passengerDefinition.target.side === 'right'
-          ? 'side'
-          : 'front',
-      );
-      const pickupTaxi = taxiBeforeMove?.id === pickup.taxiId
-        ? taxiBeforeMove
-        : this.#options.level.taxis.find((taxi) => taxi.id === pickup.taxiId);
-      if (pickupTaxi !== undefined) this.#drawTaxi(taxiVisual, pickupTaxi);
       this.#drawPassenger(passengerVisual, passengerDefinition);
       passengerVisual.container.setPosition(
         this.#passengerPoint(passengerDefinition).x,
@@ -399,6 +378,7 @@ export class LevelScene extends Phaser.Scene {
       await Promise.all([
         fadeCollapse(taxiVisual.container, { duration: 130 }),
         fadeCollapse(passengerVisual.container, { duration: 130 }),
+        fadeCollapse(passengerVisual.badge, { duration: 130 }),
       ]);
       this.#taxis.delete(pickup.taxiId);
       this.#passengers.delete(pickup.passengerId);

@@ -1,54 +1,43 @@
-import { readUiTheme } from '../../../../src/ui-kit/index.ts';
 import type { TaxiColor } from '../engine/types.ts';
 
 export interface ColorStyle {
   readonly fill: number;
+  /** Darker bottom edge that gives the taxi tile its depth. */
+  readonly edge: number;
 }
 
 export interface SceneTheme {
   readonly background: number;
-  readonly board: number;
+  readonly frame: number;
+  readonly gridLine: number;
   readonly cell: number;
   readonly empty: number;
-  readonly border: number;
-  readonly text: string;
-  readonly textDark: number;
-  readonly passengerRing: number;
-  readonly glass: number;
-  readonly glassDivider: number;
-  readonly wheel: number;
-  readonly skin: number;
-  readonly timerBackground: number;
-  readonly timerText: string;
+  readonly emptyDot: number;
+  readonly shadow: number;
+  readonly pill: number;
+  readonly badgeRing: number;
+  readonly badgeText: string;
   readonly colors: Readonly<Record<TaxiColor, ColorStyle>>;
 }
 
-function hex(value: string): number {
-  const match = /^#?([0-9a-f]{6})$/i.exec(value.trim());
-  return match?.[1] === undefined ? 0x000000 : Number.parseInt(match[1], 16);
-}
-
-export function readTheme(root: Element = document.documentElement): SceneTheme {
-  const ui = readUiTheme(root);
+// Taxi Slide paints its own light board straight from the §7.1 mockup
+// (specs/screens/02-two-moves-later.png) rather than from shared tokens.
+export function readTheme(): SceneTheme {
   return {
-    background: hex(ui.surface),
-    board: 0x4a5058,
-    cell: 0x5a616a,
-    empty: hex(ui.border),
-    border: hex(ui.textMuted),
-    text: ui.text,
-    textDark: hex(ui.text),
-    passengerRing: hex(ui.surfaceRaised),
-    glass: 0xd8edf1,
-    glassDivider: 0x536670,
-    wheel: 0x242a31,
-    skin: 0xe9b58e,
-    timerBackground: hex(ui.text),
-    timerText: ui.surfaceRaised,
+    background: 0xf6f7fa,
+    frame: 0xe3e7ee,
+    gridLine: 0xe6e9ef,
+    cell: 0xfbfbfc,
+    empty: 0xeef0f4,
+    emptyDot: 0xc9ced7,
+    shadow: 0x1f2a3d,
+    pill: 0xffffff,
+    badgeRing: 0xffffff,
+    badgeText: '#ffffff',
     colors: {
-      red: { fill: 0xe9685d },
-      blue: { fill: 0x4f83d7 },
-      yellow: { fill: 0xe2b53f },
+      red: { fill: 0xef6461, edge: 0xd9504d },
+      blue: { fill: 0x5b8def, edge: 0x4574d6 },
+      yellow: { fill: 0xebb93b, edge: 0xd6a22a },
     },
   };
 }
