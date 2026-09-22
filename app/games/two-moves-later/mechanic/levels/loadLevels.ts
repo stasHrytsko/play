@@ -88,7 +88,13 @@ export function parseLevelPack(raw: unknown, expectedLevelCount: number): Level[
           side: side as Side,
           index: integer(rawTarget['index'], 'passenger.target.index', 0, 4),
         },
-        initialPatience: integer(value['initialPatience'], 'passenger.initialPatience', 3, 6),
+        // Upper bound was 6 until level 1: passenger-3 needs exactly 6 moves
+        // to reach along the authored route, so patience:6 left zero slack —
+        // any exploratory move while it waited failed the level outright.
+        // Raised to 9 so a first-time player has real room to explore the
+        // "reposition a taxi that isn't the target colour" mechanic instead
+        // of needing to already know the one valid route.
+        initialPatience: integer(value['initialPatience'], 'passenger.initialPatience', 3, 9),
         unlockAfterServed: integer(value['unlockAfterServed'], 'passenger.unlockAfterServed', 0, 21),
       };
     });

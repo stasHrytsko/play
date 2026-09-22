@@ -31,7 +31,7 @@
       "passengers": [
         { "id": "passenger-1", "color": "yellow", "target": { "side": "bottom", "index": 3 }, "initialPatience": 6, "unlockAfterServed": 0 },
         { "id": "passenger-2", "color": "red", "target": { "side": "bottom", "index": 3 }, "initialPatience": 6, "unlockAfterServed": 1 },
-        { "id": "passenger-3", "color": "yellow", "target": { "side": "right", "index": 4 }, "initialPatience": 6, "unlockAfterServed": 2 },
+        { "id": "passenger-3", "color": "yellow", "target": { "side": "right", "index": 4 }, "initialPatience": 9, "unlockAfterServed": 2 },
         { "id": "passenger-4", "color": "blue", "target": { "side": "right", "index": 1 }, "initialPatience": 3, "unlockAfterServed": 3 },
         { "id": "passenger-5", "color": "red", "target": { "side": "top", "index": 4 }, "initialPatience": 4, "unlockAfterServed": 4 },
         { "id": "passenger-6", "color": "blue", "target": { "side": "right", "index": 1 }, "initialPatience": 4, "unlockAfterServed": 4 },
