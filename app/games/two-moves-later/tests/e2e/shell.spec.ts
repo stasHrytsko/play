@@ -2,9 +2,8 @@ import { expect, test } from '@playwright/test';
 import { openLevel, testId } from './helpers.ts';
 
 test.describe('Taxi Slide mobile shell', () => {
-  test('opens one level and fits the board inside a phone viewport', async ({ page }) => {
+  test('opens a level and fits the board inside a phone viewport', async ({ page }) => {
     await openLevel(page);
-    await expect(testId(page, 'level-2')).toHaveCount(0);
 
     const board = testId(page, 'taxi-board');
     const canvas = board.locator('canvas');

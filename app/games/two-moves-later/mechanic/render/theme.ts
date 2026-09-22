@@ -17,6 +17,8 @@ export interface SceneTheme {
   readonly pill: number;
   readonly badgeRing: number;
   readonly badgeText: string;
+  /** Last-swipe warning and the timeout moment. */
+  readonly danger: number;
   readonly colors: Readonly<Record<TaxiColor, ColorStyle>>;
 }
 
@@ -34,6 +36,7 @@ export function readTheme(): SceneTheme {
     pill: 0xffffff,
     badgeRing: 0xffffff,
     badgeText: '#ffffff',
+    danger: 0xe0403c,
     colors: {
       red: { fill: 0xef6461, edge: 0xd9504d },
       blue: { fill: 0x5b8def, edge: 0x4574d6 },

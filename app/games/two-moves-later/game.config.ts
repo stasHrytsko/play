@@ -5,7 +5,7 @@ export const GAME: GameDefinition = {
   title: 'Такси-пятнашки',
   tagline: 'Сдвигай такси и успевай к пассажирам',
   version: 1,
-  levelCount: 1,
+  levelCount: 4,
 
   onboarding: {
     version: 1,

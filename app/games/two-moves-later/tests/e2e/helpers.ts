@@ -17,6 +17,7 @@ export async function openLevel(page: Page): Promise<void> {
   await expect(testId(page, 'onboarding')).toBeVisible();
   await testId(page, 'onboarding-continue').click();
   await testId(page, 'level-1').click();
+  await expect(testId(page, 'mechanic-hud')).toHaveAttribute('data-moves', '0');
   await expect(testId(page, 'taxi-board').locator('canvas')).toBeVisible();
 }
 

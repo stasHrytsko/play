@@ -47,12 +47,14 @@ export function parseLevelPack(raw: unknown, expectedLevelCount: number): Level[
 
     const rawTaxis = rawLevel['taxis'];
     const rawPassengers = rawLevel['passengers'];
-    if (!Array.isArray(rawTaxis) || rawTaxis.length !== 22) {
-      throw new Error('Every slice level must contain 22 taxis.');
+    // At least two holes, or nothing on the grid can move.
+    if (!Array.isArray(rawTaxis) || rawTaxis.length < 1 || rawTaxis.length > 23) {
+      throw new Error('A level must contain 1 to 23 taxis.');
     }
-    if (!Array.isArray(rawPassengers) || rawPassengers.length !== 22) {
-      throw new Error('Every slice level must contain 22 passengers.');
+    if (!Array.isArray(rawPassengers) || rawPassengers.length < 1 || rawPassengers.length > rawTaxis.length) {
+      throw new Error('A level needs 1 passenger or more, and no more passengers than taxis.');
     }
+    const passengerCount = rawPassengers.length;
 
     const ids = new Set<string>();
     const cells = new Set<string>();
@@ -88,30 +90,25 @@ export function parseLevelPack(raw: unknown, expectedLevelCount: number): Level[
           side: side as Side,
           index: integer(rawTarget['index'], 'passenger.target.index', 0, 4),
         },
-        // Upper bound was 6 until level 1: passenger-3 needs exactly 6 moves
-        // to reach along the authored route, so patience:6 left zero slack —
-        // any exploratory move while it waited failed the level outright.
-        // Raised to 9 so a first-time player has real room to explore the
-        // "reposition a taxi that isn't the target colour" mechanic instead
-        // of needing to already know the one valid route.
-        initialPatience: integer(value['initialPatience'], 'passenger.initialPatience', 3, 9),
-        unlockAfterServed: integer(value['unlockAfterServed'], 'passenger.unlockAfterServed', 0, 21),
+        // Patience is set per passenger by the level generator: the moves its
+        // known route needs plus the level's slack (tools/generate-levels.ts).
+        initialPatience: integer(value['initialPatience'], 'passenger.initialPatience', 2, 15),
+        unlockAfterServed: integer(
+          value['unlockAfterServed'],
+          'passenger.unlockAfterServed',
+          0,
+          passengerCount - 1,
+        ),
       };
     });
 
     for (const color of COLORS) {
       const taxiCount = taxis.filter((taxi) => taxi.color === color).length;
-      const passengerCount = passengers.filter((passenger) => passenger.color === color).length;
-      if (taxiCount !== passengerCount) throw new Error(`Color ${color} must balance.`);
+      const wanted = passengers.filter((passenger) => passenger.color === color).length;
+      if (taxiCount < wanted) throw new Error(`Not enough ${color} taxis for the ${color} passengers.`);
     }
     if (passengers.filter((passenger) => passenger.unlockAfterServed === 0).length !== 1) {
-      throw new Error('The slice must start with exactly one passenger.');
-    }
-    if (!passengers.some((passenger) => passenger.unlockAfterServed === 4)) {
-      throw new Error('The slice must reach a two-passenger wave.');
-    }
-    if (!passengers.some((passenger) => passenger.unlockAfterServed === 12)) {
-      throw new Error('The slice must reach a three-passenger wave.');
+      throw new Error('A level must start with exactly one passenger.');
     }
 
     return { id, gridSize: 5, taxis, passengers };

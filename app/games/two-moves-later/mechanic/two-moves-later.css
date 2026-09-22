@@ -11,10 +11,62 @@
   flex-direction: column;
 }
 
-/* Counters stay in the DOM for tests and analytics, but the screen shows
-   only the field (§7.1 макет). */
+/* One quiet row above the field: tools on the left, passengers still to
+   deliver on the right. Icons only — the labels are for screen readers. */
 .two-moves-later-hud {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-2) 0;
+  flex: none;
+}
+
+.two-moves-later-tools {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.two-moves-later-tool {
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: 14px;
+  color: #3a4252;
+}
+
+.two-moves-later-tool .ui-button__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.two-moves-later-tool svg,
+.two-moves-later-left svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.two-moves-later-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgb(31 42 61 / 10%);
+  color: #3a4252;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
 }
 
 .two-moves-later-board {

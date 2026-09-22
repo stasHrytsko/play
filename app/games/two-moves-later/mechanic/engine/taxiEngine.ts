@@ -115,7 +115,7 @@ export function createState(level: Level): LevelState {
     status: 'queued',
   }));
   const resolved = resolveAutomaticPickups(level.taxis, passengerStates, 0);
-  const won = resolved.taxis.length === 0 && resolved.served === level.passengers.length;
+  const won = resolved.served === level.passengers.length;
 
   return {
     taxis: resolved.taxis,
@@ -225,9 +225,9 @@ export function resolveSwipe(
 
   const automatic = resolveAutomaticPickups(taxis, passengers, served);
   pickups.push(...automatic.pickups);
-  const won =
-    automatic.taxis.length === 0 &&
-    automatic.served === level.passengers.length;
+  // Taxis outside the passenger list are blockers: the level ends when every
+  // passenger has left, whatever is still standing on the grid.
+  const won = automatic.served === level.passengers.length;
 
   return {
     state: {
