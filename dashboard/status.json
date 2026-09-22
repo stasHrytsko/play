@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-21T18:11:02.738Z",
-  "today": "2026-09-21",
+  "generatedAt": "2026-09-22T19:35:49.421Z",
+  "today": "2026-09-22",
   "counts": {
     "ideas": 31,
     "rejected": 0,
@@ -40,7 +40,7 @@
     },
     {
       "stage": "срез",
-      "count": 1
+      "count": 2
     },
     {
       "stage": "собрана",
@@ -61,13 +61,14 @@
       "slug": "two-moves-later",
       "number": 2,
       "day": 2,
-      "stage": "спека",
-      "waiting": "принять спеку",
+      "stage": "срез",
+      "waiting": "сыграть срез",
       "action": {
         "actor": "человек",
-        "open": "specs/02-two-moves-later.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 4 на приёмке",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "run": "cd app && npm run dev -- --host   # открой с телефона",
+        "note": "ссылки нет: project.labUrl в games.json пустой, см. docs/PLAY.md → Лаборатория",
+        "read": "раздел 6 в ideas/active/02-two-moves-later.md — лучший игровой момент; §7.1 спеки — как должен выглядеть экран",
+        "write": "app/games/two-moves-later/review.md — review: approved | rework | rejected, reviewed: дата. Три минуты и три ответа: идём / доработать / убить"
       }
     },
     {
@@ -318,6 +319,19 @@
       }
     },
     {
+      "slug": "screw-budget",
+      "number": 27,
+      "day": 22,
+      "stage": "спека",
+      "waiting": "принять спеку",
+      "action": {
+        "actor": "человек",
+        "open": "specs/27-screw-budget.md",
+        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 3 на приёмке",
+        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+      }
+    },
+    {
       "slug": "skip",
       "number": 28,
       "day": 23,
@@ -440,15 +454,16 @@
       "slug": "two-moves-later",
       "number": 2,
       "day": 2,
-      "stage": "спека",
-      "waiting": "принять спеку",
-      "note": "",
+      "stage": "срез",
+      "waiting": "сыграть срез",
+      "note": "1 из 5 уровней",
       "releasedAt": null,
       "action": {
         "actor": "человек",
-        "open": "specs/02-two-moves-later.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 4 на приёмке",
-        "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
+        "run": "cd app && npm run dev -- --host   # открой с телефона",
+        "note": "ссылки нет: project.labUrl в games.json пустой, см. docs/PLAY.md → Лаборатория",
+        "read": "раздел 6 в ideas/active/02-two-moves-later.md — лучший игровой момент; §7.1 спеки — как должен выглядеть экран",
+        "write": "app/games/two-moves-later/review.md — review: approved | rework | rejected, reviewed: дата. Три минуты и три ответа: идём / доработать / убить"
       }
     },
     {
@@ -741,13 +756,13 @@
       "number": 27,
       "day": 22,
       "stage": "спека",
-      "waiting": null,
-      "note": "ждёт приёмки",
+      "waiting": "принять спеку",
+      "note": "",
       "releasedAt": null,
       "action": {
         "actor": "человек",
         "open": "specs/27-screw-budget.md",
-        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана",
+        "read": "спеку целиком — из каждого пункта должен писаться тест; и §7.1 — приложен ли макет экрана. Следующая по расписанию из 3 на приёмке",
         "write": "в шапке: spec_status: approved | draft и spec_reviewed: дата; при draft — раздел «Замечания» внизу файла"
       }
     },
